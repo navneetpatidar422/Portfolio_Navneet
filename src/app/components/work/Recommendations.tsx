@@ -5,8 +5,8 @@ import { ArrowUpRight } from "lucide-react";
 const projects = [
   {
     id: "pratham",
-    title: "JEWELLERY RETAIL MANAGEMENT SYSTEM",
-    subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential jewellery retailer.",
+    title: "RETAIL MANAGEMENT SYSTEM",
+    subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential RETAILer.",
     year: "2026",
     image: "/projects/pratham-thumb.jpg",
     tags: ["Paid Project", "Confidential"],

@@ -25,10 +25,10 @@ export const PrathamCaseStudy = () => {
           </span>
         </div>
         <h1 className="text-4xl md:text-6xl font-display uppercase tracking-tight text-[#1E352F] mb-6 leading-none">
-          JEWELLERY RETAIL MANAGEMENT SYSTEM
+          RETAIL MANAGEMENT SYSTEM
         </h1>
         <p className="text-xl md:text-2xl font-serif text-[#6A6A66] max-w-3xl leading-relaxed italic">
-          Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential jewellery retailer.
+          Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential RETAILer.
         </p>
 
         {/* Metadata Details Table */}
@@ -271,7 +271,7 @@ export const PrathamCaseStudy = () => {
         <div className="relative w-full overflow-hidden rounded-3xl bg-white/60 border border-yellow-100 shadow-md p-6 md:p-10">
           <img
             src="/mockups/pratham.png"
-            alt="Pratham Retail System Mockups"
+            alt="Retail Management System Mockups"
             className="w-full h-auto object-contain rounded-2xl"
             loading="lazy"
           />
