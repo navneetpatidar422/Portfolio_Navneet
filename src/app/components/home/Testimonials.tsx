@@ -5,15 +5,15 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 const testimonials = [
   {
     step: "01",
-    quote: "Working with Navneet on our Jewellery Retail system was seamless. He designed a clear, functional inventory dashboard that saved us hours of daily manual tracking.",
+    quote: "abhi baaki h",
     author: "Avishek Somani",
-    role: "Managing Director - Vedam Advisors",
+    role: "Managing Partner - Vedam Advisors",
     initial: "AS",
     linkedin: "https://www.linkedin.com/in/avisheksomani/"
   },
   {
     step: "02",
-    quote: "Navneet brought a thoughtful, user-centered approach to our product. His attention to detail and UX recommendations significantly improved the overall experience of our Jewellery Pricing Application. It was a pleasure working with him, and we look forward to collaborating again.",
+    quote: "Thank you for your excellent UI/UX consultation for our Jewellery Pricing Application. Your insights, attention to detail, and user-centric approach have significantly improved the product's overall experience. We truly appreciate your valuable contribution and look forward to working with you again.",
     author: "Divyansh Kotnala",
     role: "Director and founder - Kotnala Consultancy",
     initial: "DK",
@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     step: "03",
-    quote: "In high-pressure designathons, Navneet is the designer you want. He quickly translates complex ideas into clickable, functional interactive prototypes.",
+    quote: "abhi baaki h",
     author: "Dheeraj Rajput",
     role: "Founder - InstantAI",
     initial: "DR",
