@@ -19,7 +19,7 @@ const projectLinks = [
   { name: "Flashback", href: "/work/flashback" },
   { name: "ISRO 2.0", href: "/work/isro" },
   { name: "Amazon Redesign", href: "/work/amazon" },
-  { name: "RETAIL MANAGEMENT SYSTEM", href: "/work/Retail_Management" },
+  { name: "Jewellery Retail MANAGEMENT SYSTEM", href: "/work/Retail_Management" },
 ];
 
 const socials = [

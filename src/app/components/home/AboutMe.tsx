@@ -42,7 +42,7 @@ const tabsData = [
       "Pursuing B.Tech in Industrial Internet of Things (IIoT).",
       "Discovered design through a curiosity about user-technology interactions.",
       "Worked on freelance, internships, hackathons, and personal concepts.",
-      "Designed across fintech, retail, healthcare, and AI domains."
+      "Designed across fintech, Jewellery Retail, healthcare, and AI domains."
     ]
   },
   {
@@ -174,7 +174,7 @@ export const AboutMe = () => {
             An aspiring Product Designer with an engineering background and a passion for creating digital experiences that are simple, intuitive, and meaningful.
           </p>
           <p className="text-neutral-600 text-lg leading-relaxed font-body">
-            Currently pursuing my B.Tech in Industrial Internet of Things (IIoT) at USAR, GGSIPU, I discovered design through a curiosity about how people interact with technology. Since then, I've worked on freelance projects, internships, hackathons, and personal concepts across fintech, retail, healthcare, and AI.
+            Currently pursuing my B.Tech in Industrial Internet of Things (IIoT) at USAR, GGSIPU, I discovered design through a curiosity about how people interact with technology. Since then, I've worked on freelance projects, internships, hackathons, and personal concepts across fintech, Jewellery Retail, healthcare, and AI.
           </p>
           <p className="text-neutral-600 text-lg leading-relaxed font-body">
             I enjoy simplifying complex problems, designing user-centered products, and continuously learning. My goal is to build products that create real value while growing as a designer alongside talented teams.

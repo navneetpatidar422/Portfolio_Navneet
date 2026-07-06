@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 const projects = [
   {
     id: "Retail_Management",
-    title: "RETAIL MANAGEMENT SYSTEM",
+    title: "Jewellery Retail MANAGEMENT SYSTEM",
     subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential client.",
     year: "2026",
     image: "/projects/Retail_Management-thumb.jpg",
