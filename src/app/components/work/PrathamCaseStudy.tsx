@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { ArrowLeft, Lock, Calculator, Database, Star, Sparkles, ShieldAlert, LayoutDashboard } from "lucide-react";
 import { ProjectReview } from "./ProjectReview";
 
-export const PrathamCaseStudy = () => {
+export const Retail_ManagementCaseStudy = () => {
   return (
     <div className="bg-transparent min-h-screen text-[#1C1C1A] selection:bg-[#C5A059] selection:text-white font-body pt-24 pb-16">
       {/* Top Banner */}
@@ -270,7 +270,7 @@ export const PrathamCaseStudy = () => {
         </h2>
         <div className="relative w-full overflow-hidden rounded-3xl bg-white/60 border border-yellow-100 shadow-md p-6 md:p-10">
           <img
-            src="/mockups/pratham.png"
+            src="/mockups/Retail_Management.png"
             alt="Retail Management System Mockups"
             className="w-full h-auto object-contain rounded-2xl"
             loading="lazy"
@@ -279,10 +279,10 @@ export const PrathamCaseStudy = () => {
       </section>
 
       {/* Project Review */}
-      <ProjectReview projectId="pratham" accentColor="#D4AF37" />
+      <ProjectReview projectId="Retail_Management" accentColor="#D4AF37" />
 
       {/* Recommendations Section */}
-      <Recommendations currentId="pratham" />
+      <Recommendations currentId="Retail_Management" />
     </div>
   );
 };

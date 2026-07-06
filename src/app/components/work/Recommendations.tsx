@@ -4,13 +4,13 @@ import { ArrowUpRight } from "lucide-react";
 // ← Uses the actual local project thumbnails from /public/projects/
 const projects = [
   {
-    id: "pratham",
+    id: "Retail_Management",
     title: "RETAIL MANAGEMENT SYSTEM",
     subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential RETAILer.",
     year: "2026",
-    image: "/projects/pratham-thumb.jpg",
+    image: "/projects/Retail_Management-thumb.jpg",
     tags: ["Paid Project", "Confidential"],
-    path: "/work/pratham"
+    path: "/work/Retail_Management"
   },
   {
     id: "paygo",

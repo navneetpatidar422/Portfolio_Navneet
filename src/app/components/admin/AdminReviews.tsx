@@ -55,7 +55,7 @@ export const AdminReviews = () => {
     bharatvibe: "#FF6B35",
     isro: "#2563EB",
     amazon: "#FF9900",
-    pratham: "#D4AF37",
+    Retail_Management: "#D4AF37",
   };
 
   return (

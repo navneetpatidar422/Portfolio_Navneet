@@ -21,7 +21,7 @@ import { CursorRippleEffect } from "./components/shared/CursorRippleEffect";
 import { Toaster } from "./components/ui/sonner";
 
 // Import Case Study Pages
-import { PrathamCaseStudy } from "./components/work/PrathamCaseStudy";
+import { Retail_ManagementCaseStudy } from "./components/work/Retail_ManagementCaseStudy";
 import { PaygoCaseStudy } from "./components/work/PaygoCaseStudy";
 import { BharatVibeCaseStudy } from "./components/work/BharatVibeCaseStudy";
 import { FlashbackCaseStudy } from "./components/work/FlashbackCaseStudy";
@@ -112,7 +112,7 @@ function App() {
             <Routes>
               <Route path="/" element={<MainHome />} />
               <Route path="/work" element={<div className="pt-16"><Work /></div>} />
-              <Route path="/work/pratham" element={<PrathamCaseStudy />} />
+              <Route path="/work/Retail_Management" element={<Retail_ManagementCaseStudy />} />
               <Route path="/work/paygo" element={<PaygoCaseStudy />} />
               <Route path="/work/bharatvibe" element={<BharatVibeCaseStudy />} />
               <Route path="/work/flashback" element={<FlashbackCaseStudy />} />
