@@ -9,23 +9,23 @@ const testimonials = [
     author: "Avishek Somani",
     role: "Managing Director - Vedam Advisors",
     initial: "AS",
-    linkedin: "https://www.linkedin.com/in/navneet-patidar/"
+    linkedin: "https://www.linkedin.com/in/avisheksomani/"
   },
   {
     step: "02",
     quote: "Navneet brought a thoughtful, user-centered approach to our product. His attention to detail and UX recommendations significantly improved the overall experience of our Jewellery Pricing Application. It was a pleasure working with him, and we look forward to collaborating again.",
     author: "Divyansh Kotnala",
     role: "Director and founder - Kotnala Consultancy",
-    initial: "DR",
+    initial: "DK",
     linkedin: "https://www.linkedin.com/in/divyanshkotnala/"
   },
   {
     step: "03",
     quote: "In high-pressure designathons, Navneet is the designer you want. He quickly translates complex ideas into clickable, functional interactive prototypes.",
-    author: "Arman Singh",
-    role: "Designathon Teammate",
-    initial: "AS",
-    linkedin: "https://www.linkedin.com/in/navneet-patidar/"
+    author: "Dheeraj Rajput",
+    role: "Founder - InstantAI",
+    initial: "DR",
+    linkedin: "https://www.linkedin.com/in/dheeraj-rajput/"
   }
 ];
 
