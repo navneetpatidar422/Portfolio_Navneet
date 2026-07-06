@@ -14,12 +14,12 @@ const navLinks = [
 ];
 
 const projectLinks = [
-  { name: "PayGo — Voice UPI", href: "/work/paygo" },
+  { name: "PayGo", href: "/work/paygo" },
   { name: "BharatVibe", href: "/work/bharatvibe" },
-  { name: "Flashback Jaipur", href: "/work/flashback" },
+  { name: "Flashback", href: "/work/flashback" },
   { name: "ISRO 2.0", href: "/work/isro" },
   { name: "Amazon Redesign", href: "/work/amazon" },
-  { name: "Pratham (Private)", href: "/work/pratham" },
+  { name: "JEWELLERY RETAIL MANAGEMENT SYSTEM", href: "/work/pratham" },
 ];
 
 const socials = [
@@ -81,7 +81,7 @@ export const Footer = () => {
 
             <p className="text-neutral-400 text-sm leading-relaxed max-w-xs">
               Designing research-backed, accessible interfaces and engineering them cleanly.
-              Based in New Delhi, India.
+              New Delhi, India.
             </p>
 
             {/* Socials */}
@@ -187,7 +187,7 @@ export const Footer = () => {
             © {new Date().getFullYear()} Navneet Patidar. All Rights Reserved.
           </p>
           <p className="text-neutral-600 text-[10px] font-mono uppercase tracking-widest">
-            Designed with Passion &amp; Code — New Delhi, India
+            Designed with Passion &amp; Love by Navneet
           </p>
         </div>
 
