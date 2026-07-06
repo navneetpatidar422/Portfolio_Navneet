@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 const testimonials = [
   {
     step: "01",
-    quote: "abhi baaki h",
+    quote: "Navneet demonstrated strong creativity, an excellent eye for design, and remarkable attention to detail throughout. He made valuable contributions across logo design and social media creatives, consistently delivering thoughtful, user-centric work with professionalism and ownership. He was a pleasure to work with..",
     author: "Avishek Somani",
     role: "Managing Partner - Vedam Advisors",
     initial: "AS",
@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     step: "03",
-    quote: "abhi baaki h",
+    quote: "Navneet consistently delivered high-quality visual assets that strengthened our brand presence across social media. Beyond graphic design, he contributed thoughtful UI/UX suggestions that helped us refine the overall user experience. His creativity, responsiveness, and collaborative approach made him a valuable part of the team.",
     author: "Dheeraj Rajput",
     role: "Founder - InstantAI",
     initial: "DR",

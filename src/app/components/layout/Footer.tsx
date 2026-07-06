@@ -187,7 +187,7 @@ export const Footer = () => {
             © {new Date().getFullYear()} Navneet Patidar. All Rights Reserved.
           </p>
           <p className="text-neutral-600 text-[10px] font-mono uppercase tracking-widest">
-            Designed with Passion &amp; Love by Navneet
+            Designed with Passion &amp; Love by Navneet...
           </p>
         </div>
 

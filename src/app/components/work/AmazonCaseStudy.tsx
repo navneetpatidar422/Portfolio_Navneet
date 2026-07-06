@@ -154,11 +154,11 @@ export const AmazonCaseStudy = () => {
       {/* Mockup Showcase */}
       <section className="max-w-5xl mx-auto px-6 mb-20">
         <h2 className="text-3xl font-display uppercase text-[#FF9900] tracking-wide mb-8">
-          Design Mockups
+          Old v/s Redesign
         </h2>
         <div className="relative w-full overflow-hidden rounded-3xl bg-white/60 border border-amber-100 shadow-md p-6 md:p-10">
           <img
-            src="/mockups/amazon.png"
+            src="/mockups/Amazon_Redesign.png"
             alt="Amazon Headphone Redesign Mockups"
             className="w-full h-auto object-contain rounded-2xl"
             loading="lazy"
