@@ -16,7 +16,7 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
-  base: '/Portfolio_Navneet/',
+  // base: '/Portfolio_Navneet/',
 
   plugins: [
     figmaAssetResolver(),
