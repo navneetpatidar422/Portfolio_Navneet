@@ -6,7 +6,7 @@ const projects = [
   {
     id: "Retail_Management",
     title: "RETAIL MANAGEMENT SYSTEM",
-    subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential RETAILer.",
+    subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential client.",
     year: "2026",
     image: "/projects/Retail_Management-thumb.jpg",
     tags: ["Paid Project", "Confidential"],
