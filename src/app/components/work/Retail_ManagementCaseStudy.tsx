@@ -28,7 +28,7 @@ export const Retail_ManagementCaseStudy = () => {
           RETAIL MANAGEMENT SYSTEM
         </h1>
         <p className="text-xl md:text-2xl font-serif text-[#6A6A66] max-w-3xl leading-relaxed italic">
-          Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential RETAILer.
+          Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential client.
         </p>
 
         {/* Metadata Details Table */}

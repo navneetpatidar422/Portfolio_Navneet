@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router";
 
 const navLinks = [
+  { name: "Home", href: "#home" },
   { name: "Work", href: "#work" },
   { name: "About", href: "#about" },
 ];
@@ -36,6 +37,15 @@ export const Navbar = () => {
     e.preventDefault();
     setIsOpen(false);
     
+    if (href === "#home") {
+      if (location.pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        navigate("/");
+      }
+      return;
+    }
+
     if (href.startsWith("#")) {
       const sectionId = href.slice(1);
       if (location.pathname === "/") {
@@ -177,7 +187,7 @@ export const Navbar = () => {
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.5 }}
                 className="text-5xl font-display font-black text-black tracking-tight hover:text-amber-800 transition-colors uppercase cursor-pointer"
               >
                 Resume
@@ -190,7 +200,7 @@ export const Navbar = () => {
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.6 }}
                 className="mt-4 inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] text-white text-base font-bold uppercase tracking-widest rounded-2xl shadow-md w-fit"
               >
                 Let's Talk on WhatsApp

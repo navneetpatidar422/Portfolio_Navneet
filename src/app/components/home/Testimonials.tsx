@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Quote, MessageSquare, Star } from "lucide-react";
+import { Quote, MessageSquare, Star, Linkedin } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 
 const testimonials = [
@@ -8,21 +8,24 @@ const testimonials = [
     quote: "Working with Navneet on our retail system was seamless. He designed a clear, functional inventory dashboard that saved us hours of daily manual tracking.",
     author: "Avishek Somani",
     role: "Managing Director - Vedam Advisors",
-    initial: "AS"
+    initial: "AS",
+    linkedin: "https://www.linkedin.com/in/navneet-patidar/"
   },
   {
     step: "02",
     quote: "Navneet brings a perfect mix of technical understanding and design aesthetics. His work on our club graphics and event layouts stood out immediately.",
     author: "Dheeraj Rajput",
     role: "Founder - InstantAI",
-    initial: "DR"
+    initial: "DR",
+    linkedin: "https://www.linkedin.com/in/navneet-patidar/"
   },
   {
     step: "03",
     quote: "In high-pressure designathons, Navneet is the designer you want. He quickly translates complex ideas into clickable, functional interactive prototypes.",
     author: "Arman Singh",
     role: "Designathon Teammate",
-    initial: "AS"
+    initial: "AS",
+    linkedin: "https://www.linkedin.com/in/navneet-patidar/"
   }
 ];
 
@@ -109,17 +112,30 @@ export const Testimonials = () => {
                   </p>
                 </div>
 
-                {/* Author Info */}
-                <div className="w-full flex items-center gap-4 pt-6 border-t border-neutral-100 relative z-10">
-                  <Avatar className="h-10 w-10 border border-neutral-200 bg-neutral-50">
-                    <AvatarFallback className="text-neutral-600 font-bold text-xs uppercase group-hover:bg-neutral-900 group-hover:text-white transition-all">
-                      {t.initial}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h4 className="text-neutral-900 text-sm font-bold tracking-tight">{t.author}</h4>
-                    <p className="text-neutral-400 text-[10px] font-mono uppercase tracking-widest">{t.role}</p>
+                {/* Author Info & LinkedIn Link */}
+                <div className="w-full flex items-center justify-between pt-6 border-t border-neutral-100 relative z-10">
+                  <div className="flex items-center gap-4">
+                    <Avatar className="h-10 w-10 border border-neutral-200 bg-neutral-50">
+                      <AvatarFallback className="text-neutral-600 font-bold text-xs uppercase group-hover:bg-neutral-900 group-hover:text-white transition-all">
+                        {t.initial}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h4 className="text-neutral-900 text-sm font-bold tracking-tight">{t.author}</h4>
+                      <p className="text-neutral-400 text-[10px] font-mono uppercase tracking-widest">{t.role}</p>
+                    </div>
                   </div>
+                  {t.linkedin && (
+                    <a
+                      href={t.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg text-neutral-400 hover:text-[#0A66C2] hover:bg-blue-50/50 transition-colors duration-300 shrink-0"
+                      title="View LinkedIn Profile"
+                    >
+                      <Linkedin className="w-4 h-4 fill-current stroke-none" />
+                    </a>
+                  )}
                 </div>
 
                 {/* Bottom Accent Line */}
