@@ -129,6 +129,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Text selection — light mode: dark charcoal bg + cream text */
+  ::selection {
+    background-color: #111111;
+    color: #F7F4EE;
+  }
+
+  /* Text selection — dark mode: vivid purple bg + white text */
+  .dark ::selection {
+    background-color: #7c3aed;
+    color: #ffffff;
+  }
 }
 
 /**

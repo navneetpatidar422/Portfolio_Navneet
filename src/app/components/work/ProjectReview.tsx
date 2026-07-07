@@ -14,6 +14,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [text, setText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,7 +37,8 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
       projectId,
       rating,
       text: text.trim(),
-      name: name.trim() || "Anonymous"
+      name: name.trim() || "Anonymous",
+      email: email.trim() || ""
     });
 
     // 2. Save submission to local storage fallback for Admin Dashboard Excel export
@@ -46,6 +48,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
       rating,
       text: text.trim(),
       name: name.trim() || "Anonymous",
+      email: email.trim() || "",
       createdAt: new Date().toISOString(),
     };
 
@@ -58,6 +61,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
     toast.success("Thank you for your review! 🙏");
     setRating(0);
     setName("");
+    setEmail("");
     setText("");
     setIsOpen(false);
   };
@@ -71,9 +75,9 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
             <MessageSquare className="w-6 h-6 text-neutral-600" />
           </div>
           <div>
-            <h3 className="font-bold text-lg text-neutral-900 mb-1">Leave a Review</h3>
+            <h3 className="font-bold text-lg text-neutral-900 mb-1">What did you think?</h3>
             <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
-              Did this project resonate with you? Share your thoughts — your feedback helps me grow.
+              Every perspective helps me become a better designer.
             </p>
           </div>
         </div>
@@ -109,8 +113,8 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
               className="fixed inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 top-1/2 -translate-y-1/2 z-50 w-full md:w-[520px] bg-white dark:bg-neutral-900 rounded-[2rem] shadow-2xl border border-neutral-100 dark:border-neutral-800 p-8 md:p-10 text-foreground transition-colors duration-500"
             >
               {/* Header */}
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold tracking-tight">Share Your Review</h3>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-xl font-bold tracking-tight">What did you think?</h3>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-foreground"
@@ -118,6 +122,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                   <X className="w-5 h-5" />
                 </button>
               </div>
+              <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-6">Every perspective helps me become a better designer.</p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Star Rating */}
@@ -150,13 +155,27 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                 {/* Name */}
                 <div>
                   <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
-                    Your Name (optional)
+                    Your Name <span className="normal-case tracking-normal">(optional)</span>
                   </label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Anonymous"
+                    className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
+                    Your Email <span className="normal-case tracking-normal">(optional — so I can thank you!)</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
                     className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
                   />
                 </div>
