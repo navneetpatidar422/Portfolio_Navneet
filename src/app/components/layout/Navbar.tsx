@@ -12,6 +12,16 @@ const navLinks = [
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
 const RESUME_URL = "https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing";
 
+const getProgressBarColor = (pathname: string): string => {
+  if (pathname.includes("/work/paygo")) return "#662AB2"; // Violet
+  if (pathname.includes("/work/isro")) return "#2563EB"; // Royal Blue
+  if (pathname.includes("/work/Retail_Management")) return "#C5A059"; // Gold
+  if (pathname.includes("/work/bharatvibe")) return "#FF6B35"; // Orange
+  if (pathname.includes("/work/flashback")) return "#900C3F"; // Maroon
+  if (pathname.includes("/work/amazon")) return "#FF9900"; // Amazon Orange
+  return "#7c3aed"; // Default Purple-600
+};
+
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -149,8 +159,12 @@ export const Navbar = () => {
 
         {/* Scroll progress underline bar */}
         <div 
-          className="absolute bottom-0 left-0 h-[2px] bg-purple-600 transition-all duration-75" 
-          style={{ width: `${scrollProgress}%` }} 
+          className="absolute bottom-0 left-0 h-[2px]" 
+          style={{ 
+            width: `${scrollProgress}%`,
+            backgroundColor: getProgressBarColor(location.pathname),
+            transition: "width 75ms linear, background-color 500ms ease"
+          }} 
         />
       </motion.nav>
 
