@@ -98,7 +98,7 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
         <motion.div
             ref={cardRef}
             variants={cardVariants}
-            className="group block w-full bg-[#FAF9F5] dark:bg-neutral-900/40 border border-black/5 dark:border-white/5 rounded-[2.5rem] overflow-hidden hover:shadow-xl hover:border-black/10 dark:hover:border-white/10 transition-all duration-500"
+            className="group block w-full bg-[#FAF9F5] dark:bg-neutral-900/40 border border-black/5 dark:border-white/5 rounded-[2.5rem] overflow-hidden hover:shadow-xl hover:border-black/10 dark:hover:border-white transition-all duration-500"
         >
             <Link to={project.path} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-8 md:p-12 items-center cursor-pointer">
                 

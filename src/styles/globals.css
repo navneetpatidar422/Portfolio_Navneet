@@ -380,3 +380,59 @@ html {
     color: var(--foreground) !important;
   }
 }
+
+/* ── Dark mode: opaque card backgrounds ── */
+/* Makes all cards, panels, and containers deep black
+   so ambient gradient noise doesn't bleed through */
+.dark {
+  /* Tab/nav buttons & interactive cards */
+  .bg-neutral-900,
+  .bg-neutral-900\/50,
+  .dark\:bg-neutral-900 {
+    background-color: oklch(0.10 0 0) !important;
+  }
+
+  /* Lighter panels, section backgrounds */
+  .bg-neutral-800,
+  .bg-neutral-800\/40,
+  .dark\:bg-neutral-800,
+  .dark\:bg-neutral-800\/40 {
+    background-color: oklch(0.13 0 0) !important;
+  }
+
+  /* Input fields & inset surfaces */
+  .bg-neutral-950,
+  .dark\:bg-neutral-950 {
+    background-color: oklch(0.07 0 0) !important;
+  }
+
+  /* Generic white/light cards overridden for dark mode */
+  .dark\:bg-neutral-900\/80,
+  .dark\:bg-neutral-900\/60 {
+    background-color: oklch(0.10 0 0 / 0.92) !important;
+  }
+
+  /* Borders: slightly brighter so card edges are legible */
+  .dark\:border-neutral-800 {
+    border-color: rgba(255, 255, 255, 0.10) !important;
+  }
+}
+
+/* ── Dark mode: white card border on hover ── */
+.dark {
+  /* Testimonial cards, Work cards, AboutMe tabs */
+  .dark\:hover\:border-white\/10:hover,
+  .dark\:hover\:border-white\/20:hover,
+  .dark\:hover\:border-white\/30:hover,
+  .dark\:hover\:border-neutral-800:hover,
+  .dark\:hover\:border-neutral-700:hover {
+    border-color: rgba(255, 255, 255, 0.75) !important;
+  }
+
+  /* group-hover border via parent group */
+  .group:hover .dark\:group-hover\:border-white,
+  .group:hover .group-hover\:border-neutral-200,
+  .group:hover .group-hover\:border-black\/10 {
+    border-color: rgba(255, 255, 255, 0.75) !important;
+  }
+}

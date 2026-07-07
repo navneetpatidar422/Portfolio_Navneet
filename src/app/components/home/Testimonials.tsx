@@ -94,7 +94,7 @@ export const Testimonials = () => {
               </div>
 
               {/* Card Container */}
-              <div className="h-full p-8 pt-10 rounded-[2rem] bg-white dark:bg-neutral-900/40 border border-neutral-100 dark:border-white/5 hover:border-neutral-200 dark:hover:border-white/10 transition-all duration-700 flex flex-col justify-between items-start text-left group-hover:-translate-y-2 relative overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]">
+              <div className="h-full p-8 pt-10 rounded-[2rem] bg-white dark:bg-neutral-900/40 border border-neutral-100 dark:border-white/5 hover:border-neutral-300 dark:hover:border-white transition-all duration-700 flex flex-col justify-between items-start text-left group-hover:-translate-y-2 relative overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]">
                 
                 {/* Step Number */}
                 <div className="absolute top-6 right-8 font-mono text-5xl font-bold text-neutral-100 dark:text-neutral-800/20 group-hover:text-neutral-950/5 dark:group-hover:text-white/5 transition-colors duration-500 select-none">

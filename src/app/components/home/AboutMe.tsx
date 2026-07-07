@@ -213,7 +213,7 @@ export const AboutMe = () => {
                             className={`w-full text-left p-6 rounded-2xl transition-all duration-300 border group relative overflow-hidden ${
                                 activeTab === tab.id 
                                 ? "bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.04)]" 
-                                : "bg-transparent border-transparent hover:bg-neutral-50 dark:hover:bg-neutral-800/40 hover:border-neutral-200 dark:hover:border-neutral-800"
+                                : "bg-transparent border-transparent hover:bg-neutral-50 dark:hover:bg-neutral-800/40 hover:border-neutral-200 dark:hover:border-white"
                             }`}
                         >
                             <div className="flex items-center justify-between relative z-10">

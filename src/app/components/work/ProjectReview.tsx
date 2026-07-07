@@ -30,7 +30,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
     }
 
     setIsSubmitting(true);
-    
+
     // 1. Submit to Google Sheets (if configured)
     await submitToBackend({
       type: "review",
@@ -41,7 +41,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
       email: email.trim() || ""
     });
 
-    // 2. Save submission to local storage fallback for Admin Dashboard Excel export
+    // 2. Save to localStorage fallback for Admin Dashboard
     const review = {
       id: Math.random().toString(36).substring(2, 9),
       projectId,
@@ -68,7 +68,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
 
   return (
     <section className="max-w-5xl mx-auto px-6 mb-24">
-      {/* Trigger */}
+      {/* Trigger Card */}
       <div className="border border-dashed border-neutral-200 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-start gap-4">
           <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-neutral-200 dark:border-none shadow-sm">
@@ -95,122 +95,130 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
+            {/* Backdrop — doubles as scrollable container */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
-            />
-
-            {/* Modal Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 80, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 40, scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 top-1/2 -translate-y-1/2 z-50 w-full md:w-[520px] bg-white dark:bg-neutral-900 rounded-[2rem] shadow-2xl border border-neutral-100 dark:border-neutral-800 p-8 md:p-10 text-foreground transition-colors duration-500"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 overflow-y-auto pt-20 pb-8"
             >
-              {/* Header */}
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-xl font-bold tracking-tight">What did you think?</h3>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-foreground"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-6">Every perspective helps me become a better designer.</p>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Star Rating */}
-                <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3 block">
-                    Your Rating
-                  </label>
-                  <div className="flex gap-2">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button
-                        key={star}
-                        type="button"
-                        onMouseEnter={() => setHoverRating(star)}
-                        onMouseLeave={() => setHoverRating(0)}
-                        onClick={() => setRating(star)}
-                        className="transition-transform hover:scale-110"
-                      >
-                        <Star
-                          className={`w-8 h-8 transition-colors ${
-                            star <= (hoverRating || rating)
-                              ? "text-amber-400 fill-amber-400"
-                              : "text-neutral-200 fill-neutral-200 dark:text-neutral-800 dark:fill-neutral-800"
-                          }`}
-                        />
-                      </button>
-                    ))}
+              {/* Modal Card — click stops backdrop dismiss */}
+              <motion.div
+                initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 30, scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative mx-auto mb-8 w-[calc(100%-2rem)] md:w-[520px] bg-white dark:bg-neutral-900 rounded-[2rem] shadow-2xl border border-neutral-100 dark:border-neutral-800 text-foreground transition-colors duration-500 overflow-hidden"
+              >
+                {/* Sticky Header — always visible, close button always reachable */}
+                <div className="sticky top-0 z-10 bg-white dark:bg-neutral-900 px-8 pt-8 pb-3 border-b border-neutral-100 dark:border-neutral-800">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-xl font-bold tracking-tight">What did you think?</h3>
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-foreground"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
                   </div>
+                  <p className="text-sm text-neutral-500 dark:text-neutral-400">Every perspective helps me become a better designer.</p>
                 </div>
 
-                {/* Name */}
-                <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
-                    Your Name <span className="normal-case tracking-normal">(optional)</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Anonymous"
-                    className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
-                  />
-                </div>
+                {/* Scrollable Form Body */}
+                <div className="px-8 pb-8 pt-5">
+                  <form onSubmit={handleSubmit} className="space-y-5">
 
-                {/* Email */}
-                <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
-                    Your Email <span className="normal-case tracking-normal">(optional — so I can thank you!)</span>
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
-                  />
-                </div>
+                    {/* Star Rating */}
+                    <div>
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3 block">
+                        Your Rating
+                      </label>
+                      <div className="flex gap-2">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onMouseEnter={() => setHoverRating(star)}
+                            onMouseLeave={() => setHoverRating(0)}
+                            onClick={() => setRating(star)}
+                            className="transition-transform hover:scale-110"
+                          >
+                            <Star
+                              className={`w-8 h-8 transition-colors ${
+                                star <= (hoverRating || rating)
+                                  ? "text-amber-400 fill-amber-400"
+                                  : "text-neutral-200 fill-neutral-200 dark:text-neutral-700 dark:fill-neutral-700"
+                              }`}
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
-                {/* Review Text */}
-                <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
-                    Your Feedback *
-                  </label>
-                  <textarea
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    placeholder="What did you think about this project? What stood out?"
-                    rows={4}
-                    className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all resize-none"
-                  />
-                </div>
+                    {/* Name */}
+                    <div>
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
+                        Your Name <span className="normal-case tracking-normal">(optional)</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Anonymous"
+                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
+                      />
+                    </div>
 
-                {/* Submit */}
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 bg-neutral-950 dark:bg-[#FAF9F5] text-white dark:text-black font-bold text-sm uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors disabled:opacity-60"
-                >
-                  {isSubmitting ? (
-                    "Submitting..."
-                  ) : (
-                    <>
-                      Submit Review <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </motion.button>
-              </form>
+                    {/* Email */}
+                    <div>
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
+                        Your Email <span className="normal-case tracking-normal">(optional — so I can thank you!)</span>
+                      </label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="your@email.com"
+                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
+                      />
+                    </div>
+
+                    {/* Review Text */}
+                    <div>
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
+                        Your Feedback *
+                      </label>
+                      <textarea
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        placeholder="What did you think about this project? What stood out?"
+                        rows={4}
+                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all resize-none"
+                      />
+                    </div>
+
+                    {/* Submit */}
+                    <motion.button
+                      type="submit"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full h-12 bg-neutral-950 dark:bg-[#FAF9F5] text-white dark:text-black font-bold text-sm uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors disabled:opacity-60"
+                    >
+                      {isSubmitting ? (
+                        "Submitting..."
+                      ) : (
+                        <>
+                          Submit Review <Send className="w-4 h-4" />
+                        </>
+                      )}
+                    </motion.button>
+
+                  </form>
+                </div>
+              </motion.div>
             </motion.div>
           </>
         )}

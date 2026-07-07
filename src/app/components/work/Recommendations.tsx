@@ -83,7 +83,7 @@ export const Recommendations = ({ currentId }: { currentId: string }) => {
           <Link
             key={project.id}
             to={project.path}
-            className="group block w-[280px] md:w-[320px] shrink-0 snap-start bg-[#FAF9F5] border border-black/5 rounded-[1.5rem] p-4 flex flex-col justify-between hover:shadow-lg hover:border-black/10 transition-all duration-300"
+            className="group block w-[280px] md:w-[320px] shrink-0 snap-start bg-[#FAF9F5] dark:bg-neutral-900/40 border border-black/5 dark:border-white/5 rounded-[1.5rem] p-4 flex flex-col justify-between hover:shadow-lg hover:border-black/10 dark:hover:border-white transition-all duration-300"
           >
             <div>
               {/* Thumbnail */}

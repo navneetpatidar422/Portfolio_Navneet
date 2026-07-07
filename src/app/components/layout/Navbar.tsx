@@ -134,7 +134,7 @@ export const Navbar = () => {
                 onClick={(e) => handleNavClick(e, link.href)}
                 className="relative px-5 py-2 text-xs font-bold text-neutral-600 dark:text-neutral-300 uppercase tracking-widest group overflow-hidden rounded-full transition-colors"
               >
-                <span className="relative z-10 group-hover:text-white dark:group-hover:text-black transition-colors duration-300">
+                <span className="relative z-10 group-hover:text-white dark:group-hover:text-white transition-colors duration-300">
                   {link.name}
                 </span>
                 <div className="absolute inset-0 bg-neutral-900 dark:bg-neutral-100 rounded-full translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] -z-0" />
@@ -147,7 +147,7 @@ export const Navbar = () => {
               rel="noopener noreferrer"
               className="relative flex items-center px-5 py-2 text-xs font-bold text-neutral-600 dark:text-neutral-300 uppercase tracking-widest group overflow-hidden rounded-full transition-colors"
             >
-              <span className="relative z-10 group-hover:text-white dark:group-hover:text-black transition-colors duration-300">Resume</span>
+              <span className="relative z-10 group-hover:text-white dark:group-hover:text-white transition-colors duration-300">Resume</span>
               <div className="absolute inset-0 bg-neutral-900 dark:bg-neutral-100 rounded-full translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] -z-0" />
             </a>
           </div>
