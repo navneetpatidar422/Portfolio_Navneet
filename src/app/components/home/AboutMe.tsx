@@ -144,7 +144,7 @@ export const AboutMe = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="mb-16 md:mb-24 flex flex-col lg:flex-row lg:items-center justify-between gap-12 lg:gap-16">
           <motion.div 
             className="space-y-4 max-w-xl text-left"
             initial={{ opacity: 0, y: 30 }}
@@ -170,13 +170,28 @@ export const AboutMe = () => {
             <div className="pt-2">
               <a href="#contact">
                 <Button
-  variant="outline"
-  className="rounded-full border-neutral-200 dark:border-neutral-800 bg-white/10 dark:bg-neutral-900 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black hover:border-white transition-all duration-300 px-8 h-12 shadow-sm water-btn"
->
-  Let's Collaborate
-</Button>
+                  variant="outline"
+                  className="rounded-full border-neutral-200 dark:border-neutral-800 bg-white/10 dark:bg-neutral-900 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black hover:border-white transition-all duration-300 px-8 h-12 shadow-sm water-btn"
+                >
+                  Let's Collaborate
+                </Button>
               </a>
             </div>
+          </motion.div>
+
+          {/* Right Side Image */}
+          <motion.div
+            className="flex justify-center lg:justify-end w-full lg:w-auto shrink-0"
+            initial={{ opacity: 0, scale: 0.95, x: 30 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+          >
+            <img 
+              src="/about-photo.png" 
+              alt="Navneet Patidar"
+              className="w-64 h-auto md:w-72 lg:w-80 object-contain transform hover:scale-[1.03] transition-transform duration-500 ease-out"
+            />
           </motion.div>
         </div>
 
