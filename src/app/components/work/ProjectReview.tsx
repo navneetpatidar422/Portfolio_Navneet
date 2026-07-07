@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Star, Send, MessageSquare, X } from "lucide-react";
 import { toast } from "sonner";
+import { submitToBackend } from "../../utils/formSubmit";
 
 interface ProjectReviewProps {
   projectId: string;
@@ -28,8 +29,17 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
     }
 
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 800));
+    
+    // 1. Submit to Google Sheets (if configured)
+    await submitToBackend({
+      type: "review",
+      projectId,
+      rating,
+      text: text.trim(),
+      name: name.trim() || "Anonymous"
+    });
 
+    // 2. Save submission to local storage fallback for Admin Dashboard Excel export
     const review = {
       id: Math.random().toString(36).substring(2, 9),
       projectId,

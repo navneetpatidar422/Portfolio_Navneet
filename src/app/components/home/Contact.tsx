@@ -15,6 +15,7 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { toast } from "sonner";
+import { submitToBackend } from "../../utils/formSubmit";
 
 const SocialLink = ({ href, icon: Icon }: { href: string; icon: any }) => {
     return (
@@ -65,10 +66,15 @@ export const Contact = () => {
 
         setIsSubmitting(true);
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // 1. Submit to Google Sheets (if configured)
+        await submitToBackend({
+            type: "contact",
+            name: formState.name,
+            email: formState.email,
+            description: formState.description
+        });
         
-        // Save submission to local storage for Admin Dashboard Excel export
+        // 2. Save submission to local storage for Admin Dashboard Excel export fallback
         const newSubmission = {
             id: Math.random().toString(36).substring(2, 9),
             name: formState.name,
