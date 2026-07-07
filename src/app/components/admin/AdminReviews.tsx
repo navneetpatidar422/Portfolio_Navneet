@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Download, Star, Trash2, RefreshCw } from "lucide-react";
+import { useNavigate } from "react-router";
 
 interface Review {
   id: string;
@@ -13,6 +14,7 @@ interface Review {
 
 export const AdminReviews = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
+  const navigate = useNavigate();
 
   const load = () => {
     const data = localStorage.getItem("portfolio_project_reviews");
@@ -20,8 +22,13 @@ export const AdminReviews = () => {
   };
 
   useEffect(() => {
-    load();
-  }, []);
+    const authStatus = sessionStorage.getItem("admin_authenticated");
+    if (authStatus !== "true") {
+      navigate("/admin");
+    } else {
+      load();
+    }
+  }, [navigate]);
 
   const deleteReview = (id: string) => {
     const updated = reviews.filter((r) => r.id !== id);
