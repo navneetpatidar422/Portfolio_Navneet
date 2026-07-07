@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { CreativeLoader } from "./components/shared/CreativeLoader";
@@ -46,8 +46,8 @@ function MainHome() {
 function GlobalBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none select-none z-[1] overflow-hidden">
-      {/* Base Cream Background */}
-      <div className="absolute inset-0 bg-[#F4F0EA]" />
+      {/* Base Background (dynamic light/dark) */}
+      <div className="absolute inset-0 bg-[#F4F0EA] dark:bg-[#0A0A0A] transition-colors duration-500" />
       
       {/* Animated Fluid Gradients */}
       <motion.div 
@@ -58,7 +58,7 @@ function GlobalBackground() {
               opacity: [0.4, 0.7, 0.4, 0.4]
           }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-gradient-to-br from-orange-300/40 to-amber-200/40 rounded-full blur-[96px] mix-blend-multiply"
+          className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-gradient-to-br from-orange-300/40 to-amber-200/40 dark:from-purple-950/20 dark:to-indigo-900/20 rounded-full blur-[96px] mix-blend-multiply dark:mix-blend-screen"
       />
       <motion.div 
           animate={{ 
@@ -68,7 +68,7 @@ function GlobalBackground() {
               opacity: [0.4, 0.6, 0.4, 0.4]
           }}
           transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[-10%] right-[-20%] w-[600px] h-[600px] bg-gradient-to-tr from-rose-300/40 to-orange-200/40 rounded-full blur-[80px] mix-blend-multiply"
+          className="absolute bottom-[-10%] right-[-20%] w-[600px] h-[600px] bg-gradient-to-tr from-rose-300/40 to-orange-200/40 dark:from-blue-950/20 dark:to-purple-900/20 rounded-full blur-[80px] mix-blend-multiply dark:mix-blend-screen"
       />
        <motion.div 
           animate={{ 
@@ -77,14 +77,14 @@ function GlobalBackground() {
               scale: [1, 1.3, 0.8, 1],
           }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[40%] left-[30%] w-[400px] h-[400px] bg-gradient-to-br from-yellow-300/30 to-red-200/30 rounded-full blur-[64px] mix-blend-multiply"
+          className="absolute top-[40%] left-[30%] w-[400px] h-[400px] bg-gradient-to-br from-yellow-300/30 to-red-200/30 dark:from-fuchsia-950/15 dark:to-violet-900/15 rounded-full blur-[64px] mix-blend-multiply dark:mix-blend-screen"
       />
 
       {/* Refined Noise Texture */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-darken" />
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] dark:opacity-[0.04] mix-blend-darken dark:mix-blend-overlay" />
       
       {/* Technical Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]" />
     </div>
   );
 }
@@ -92,9 +92,20 @@ function GlobalBackground() {
 function App() {
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Initialise Theme settings from localStorage or System preference
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
   return (
     <BrowserRouter>
-      <div className="bg-[#F7F4EE] min-h-screen text-[#111111] selection:bg-[#111111] selection:text-white font-body relative">
+      <div className="bg-background min-h-screen text-foreground selection:bg-foreground selection:text-background font-body relative transition-colors duration-500">
         <AnimatePresence mode="wait">
           {loading && (
             <CreativeLoader onComplete={() => setLoading(false)} />

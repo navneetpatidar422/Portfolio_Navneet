@@ -106,14 +106,14 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 40, scale: 0.97 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 top-1/2 -translate-y-1/2 z-50 w-full md:w-[520px] bg-white rounded-[2rem] shadow-2xl border border-neutral-100 p-8 md:p-10"
+              className="fixed inset-x-4 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 top-1/2 -translate-y-1/2 z-50 w-full md:w-[520px] bg-white dark:bg-neutral-900 rounded-[2rem] shadow-2xl border border-neutral-100 dark:border-neutral-800 p-8 md:p-10 text-foreground transition-colors duration-500"
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold tracking-tight">Share Your Review</h3>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-full hover:bg-neutral-100 transition-colors"
+                  className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-foreground"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -122,7 +122,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Star Rating */}
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-3 block">
+                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3 block">
                     Your Rating
                   </label>
                   <div className="flex gap-2">
@@ -139,7 +139,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                           className={`w-8 h-8 transition-colors ${
                             star <= (hoverRating || rating)
                               ? "text-amber-400 fill-amber-400"
-                              : "text-neutral-200 fill-neutral-200"
+                              : "text-neutral-200 fill-neutral-200 dark:text-neutral-800 dark:fill-neutral-800"
                           }`}
                         />
                       </button>
@@ -149,7 +149,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
 
                 {/* Name */}
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2 block">
+                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
                     Your Name (optional)
                   </label>
                   <input
@@ -157,13 +157,13 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Anonymous"
-                    className="w-full border border-neutral-200 rounded-xl px-4 py-3 text-sm bg-neutral-50 focus:outline-none focus:border-purple-400 focus:bg-white transition-all"
+                    className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
                   />
                 </div>
 
                 {/* Review Text */}
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-2 block">
+                  <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
                     Your Feedback *
                   </label>
                   <textarea
@@ -171,7 +171,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                     onChange={(e) => setText(e.target.value)}
                     placeholder="What did you think about this project? What stood out?"
                     rows={4}
-                    className="w-full border border-neutral-200 rounded-xl px-4 py-3 text-sm bg-neutral-50 focus:outline-none focus:border-purple-400 focus:bg-white transition-all resize-none"
+                    className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all resize-none"
                   />
                 </div>
 
@@ -181,7 +181,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                   disabled={isSubmitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full h-12 bg-neutral-950 text-white font-bold text-sm uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-800 transition-colors disabled:opacity-60"
+                  className="w-full h-12 bg-neutral-950 dark:bg-[#FAF9F5] text-white dark:text-black font-bold text-sm uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors disabled:opacity-60"
                 >
                   {isSubmitting ? (
                     "Submitting..."

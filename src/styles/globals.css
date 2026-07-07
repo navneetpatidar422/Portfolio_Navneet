@@ -249,3 +249,122 @@ html {
     opacity: 0;
   }
 }
+
+/* Accessibility overrides for Case Studies in Dark Mode */
+.dark {
+  /* Override case study container root text colors */
+  div[class*="min-h-screen"][class*="text-[#111111]"],
+  div[class*="min-h-screen"][class*="text-[#1D0C00]"],
+  div[class*="min-h-screen"][class*="text-[#1C1C1A]"] {
+    color: var(--foreground) !important;
+  }
+
+  /* Override text colors to ensure high contrast in dark mode */
+  .text-neutral-900,
+  .text-neutral-800,
+  .text-neutral-700,
+  .text-neutral-600,
+  .text-\[\#1D0C00\],
+  .text-\[\#1C1C1A\],
+  .text-\[\#1E352F\] {
+    color: #e5e5e5 !important;
+  }
+
+  .text-neutral-500,
+  .text-neutral-400 {
+    color: #a3a3a3 !important;
+  }
+
+  /* Override background containers/panels in case studies */
+  .bg-white,
+  .bg-neutral-50,
+  .bg-\[\#FAF6F0\],
+  .bg-\[\#F3EFE9\],
+  .bg-\[\#F4F0EA\],
+  .bg-\[\#FAF9F5\] {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+  }
+
+  /* Overrides for opacity bg combinations */
+  .bg-white\/60,
+  .bg-purple-50\/50,
+  .bg-\[\#F3EFE9\]\/30,
+  .bg-amber-50\/50,
+  .bg-orange-50\/50,
+  .bg-rose-50\/50,
+  .bg-teal-50\/50 {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+  }
+
+  /* Table head and special text boxes inside case studies */
+  .bg-\[\#1D0C00\] th,
+  .bg-\[\#1D0C00\] {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+  }
+
+  tr.bg-\[\#FAF6F0\]\/30 {
+    background-color: rgba(255, 255, 255, 0.01) !important;
+  }
+
+  .bg-\[\#FF9933\]\/15,
+  .bg-\[\#128807\]\/15 {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    color: #f7f4ee !important;
+  }
+
+  /* Core user flow steps: override white bubbles */
+  .bg-white.border-2.border-\[\#1E352F\]\/10,
+  .bg-white.border.border-\[\#1E352F\]\/10 {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+  }
+
+  .text-\[\#1E352F\] {
+    color: #e5e5e5 !important;
+  }
+  .text-\[\#6A6A66\] {
+    color: #a3a3a3 !important;
+  }
+  .bg-white.p-4.rounded-xl.shadow-sm {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: #ffffff !important;
+  }
+
+  /* Neutral and thematic borders override */
+  .border-neutral-200,
+  .border-purple-100,
+  .border-amber-100,
+  .border-orange-100,
+  .border-rose-100,
+  .border-teal-100,
+  .border-black\/5,
+  .border-\[\#1D0C00\]\/10,
+  .border-\[\#1D0C00\]\/5,
+  .border-\[\#1E352F\]\/10 {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Specific user flow path connector */
+  .bg-gradient-to-b.from-\[\#1E352F\].via-\[\#C5A059\].to-\[\#1E352F\] {
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.1), #C5A059, rgba(255,255,255,0.1)) !important;
+  }
+
+  /* Left border quote blocks (such as in Paygo) */
+  .border-l-4.border-\[\#662AB2\] {
+    border-left-color: #a78bfa !important;
+  }
+  .border-l-4.border-purple-600 {
+    border-left-color: #a78bfa !important;
+  }
+
+  /* Headings on case study pages */
+  h2.text-\[\#662AB2\],
+  h2.text-\[\#662AB2\],
+  h2.text-purple-600,
+  h2.text-amber-800,
+  h2.text-\[\#1D0C00\],
+  h2.text-\[\#1E352F\] {
+    color: var(--foreground) !important;
+  }
+}

@@ -39,7 +39,7 @@ export const Skills = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section id="skills" className="py-24 lg:py-32 px-6 bg-transparent text-[#111111] relative overflow-hidden min-h-[700px] flex items-center justify-center">
+    <section id="skills" className="py-24 lg:py-32 px-6 bg-transparent text-foreground relative overflow-hidden min-h-[700px] flex items-center justify-center transition-colors duration-500">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -69,7 +69,7 @@ export const Skills = () => {
                     y1="50%"
                     x2={pos.left}
                     y2={pos.top}
-                    className="stroke-purple-300/40 md:stroke-purple-300/30"
+                    className="stroke-purple-300/40 md:stroke-purple-300/30 dark:stroke-purple-800/30"
                     strokeWidth="1.5"
                     strokeDasharray="4 4"
                   />
@@ -81,7 +81,7 @@ export const Skills = () => {
             <motion.div 
               animate={{ rotate: 360 }}
               transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              className={`absolute inset-0 rounded-full border border-purple-200/20 border-dashed pointer-events-none transition-opacity duration-1000 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 rounded-full border border-purple-200/20 dark:border-purple-800/20 border-dashed pointer-events-none transition-opacity duration-1000 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
             />
 
             {/* Scattered Bubbles */}
@@ -119,12 +119,12 @@ export const Skills = () => {
                       ease: "easeInOut",
                       delay: Math.random() * 2
                     }}
-                    className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/95 backdrop-blur-xl shadow-[0_10px_40px_rgba(107,33,168,0.15)] border border-purple-100 flex flex-col items-center justify-center text-center p-2 hover:scale-110 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300 cursor-default group relative overflow-hidden"
+                    className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl shadow-[0_10px_40px_rgba(107,33,168,0.15)] dark:shadow-[0_10px_40px_rgba(0,0,0,0.4)] border border-purple-100 dark:border-neutral-800 flex flex-col items-center justify-center text-center p-2 hover:scale-110 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300 cursor-default group relative overflow-hidden"
                   >
                     {/* Hover Reveal Gradient */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-purple-600 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
-                    <span className="font-bold text-neutral-900 text-[9px] md:text-xs tracking-wider group-hover:text-white transition-colors relative z-10">
+                    <span className="font-bold text-neutral-900 dark:text-neutral-200 text-[9px] md:text-xs tracking-wider group-hover:text-white transition-colors relative z-10">
                       {skill.name}
                     </span>
                   </motion.div>
@@ -141,7 +141,7 @@ export const Skills = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               viewport={{ once: true }}
-              className="relative z-30 flex flex-col items-center justify-center w-32 h-32 md:w-44 md:h-44 rounded-full bg-neutral-950 shadow-[0_0_80px_rgba(0,0,0,0.3)] border border-neutral-800 cursor-pointer group"
+              className="relative z-30 flex flex-col items-center justify-center w-32 h-32 md:w-44 md:h-44 rounded-full bg-neutral-950 dark:bg-neutral-900 shadow-[0_0_80px_rgba(0,0,0,0.3)] dark:shadow-[0_0_80px_rgba(0,0,0,0.6)] border border-neutral-800 dark:border-neutral-700 cursor-pointer group transition-colors duration-500"
             >
               {/* Inner Pulsing Core */}
               <div className={`absolute inset-0 rounded-full bg-purple-500/20 blur-xl transition-all duration-500 ${isOpen ? 'opacity-100 scale-110' : 'opacity-40 scale-100 group-hover:opacity-80 animate-pulse'}`} />
@@ -168,11 +168,11 @@ export const Skills = () => {
             viewport={{ once: true }}
             className="space-y-6"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-[1.1] text-neutral-900 tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-[1.1] text-neutral-900 dark:text-white tracking-tight transition-colors duration-500">
               Great products don't start with beautiful interfaces.
             </h2>
-            <p className="text-lg md:text-xl text-neutral-500 font-light leading-relaxed">
-              They start with <span className="text-purple-600 font-medium">understanding people</span>, questioning assumptions, and solving the right problems.
+            <p className="text-lg md:text-xl text-neutral-500 dark:text-neutral-400 font-light leading-relaxed transition-colors duration-500">
+              They start with <span className="text-purple-600 dark:text-purple-400 font-medium">understanding people</span>, questioning assumptions, and solving the right problems.
             </p>
           </motion.div>
 
@@ -184,7 +184,7 @@ export const Skills = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xs md:text-sm font-mono tracking-[0.2em] text-neutral-400 uppercase mb-5">
+              <h3 className="text-xs md:text-sm font-mono tracking-[0.2em] text-neutral-400 dark:text-neutral-500 uppercase mb-5">
                 Core Expertise
               </h3>
               <ul className="space-y-3">
@@ -195,7 +195,7 @@ export const Skills = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-center text-neutral-800 font-medium text-sm md:text-base group"
+                    className="flex items-center text-neutral-800 dark:text-neutral-300 font-medium text-sm md:text-base group transition-colors duration-500"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-purple-500/30 group-hover:bg-purple-500 mr-3 transition-colors" />
                     {item}
@@ -211,7 +211,7 @@ export const Skills = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xs md:text-sm font-mono tracking-[0.2em] text-neutral-400 uppercase mb-5">
+              <h3 className="text-xs md:text-sm font-mono tracking-[0.2em] text-neutral-400 dark:text-neutral-500 uppercase mb-5">
                 Tools
               </h3>
               <div className="flex flex-wrap gap-2.5">
@@ -222,7 +222,7 @@ export const Skills = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.6 + i * 0.05 }}
                     viewport={{ once: true }}
-                    className="px-3.5 py-1.5 bg-white border border-neutral-200/60 shadow-sm rounded-full text-xs font-medium text-neutral-600 hover:border-purple-300 hover:text-purple-700 hover:shadow-md transition-all duration-300 cursor-default"
+                    className="px-3.5 py-1.5 bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800 shadow-sm rounded-full text-xs font-medium text-neutral-600 dark:text-neutral-300 hover:border-purple-300 hover:text-purple-700 hover:shadow-md transition-all duration-500 cursor-default"
                   >
                     {tool}
                   </motion.span>

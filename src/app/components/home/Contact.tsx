@@ -41,9 +41,9 @@ const SocialLink = ({ href, icon: Icon }: { href: string; icon: any }) => {
             rel="noopener noreferrer"
             whileHover={{ y: -3, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="p-3 border border-neutral-200 rounded-full bg-white hover:bg-black hover:text-white hover:border-black transition-colors duration-300 shadow-sm"
+            className="group p-3 border border-neutral-200 dark:border-neutral-800 rounded-full bg-white dark:bg-neutral-900 hover:bg-black dark:hover:bg-white hover:border-black dark:hover:border-white transition-all duration-300 shadow-sm"
         >
-            <Icon className="w-5 h-5" />
+            <Icon className="w-5 h-5 text-neutral-800 dark:text-neutral-200 group-hover:text-white dark:group-hover:text-black transition-colors duration-300" />
         </motion.a>
     );
 };
@@ -63,8 +63,9 @@ export const Contact = () => {
         email: "",
         description: ""
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [copiedEmail, setCopiedEmail] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText("designer.navneet.patidar@gmail.com");
@@ -142,7 +143,7 @@ export const Contact = () => {
         <section 
             ref={containerRef}
             id="contact" 
-            className="py-32 px-6 bg-transparent text-black relative overflow-hidden"
+            className="py-32 px-6 bg-transparent text-foreground relative overflow-hidden transition-colors duration-500"
         >
              {/* Background Elements - Parallax & Grain */}
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] pointer-events-none"></div>
@@ -166,7 +167,7 @@ export const Contact = () => {
                         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-7xl font-bold tracking-tighter mb-8 leading-[1.1]">
+                        <h2 className="text-4xl md:text-7xl font-bold tracking-tighter mb-8 leading-[1.1] text-foreground">
                             Let's create something <br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-600 to-purple-700 animate-gradient-x">
                                 AMAZING...
@@ -174,7 +175,7 @@ export const Contact = () => {
                             <br />
                             together.
                         </h2>
-                        <p className="text-xl text-neutral-600 max-w-md mb-12 font-light leading-relaxed font-body">
+                        <p className="text-xl text-neutral-600 dark:text-neutral-300 max-w-md mb-12 font-light leading-relaxed font-body transition-colors duration-500">
                             Interested in working together? Fill out the form, send an email, or connect via WhatsApp or socials.
                         </p>
 
@@ -187,14 +188,14 @@ export const Contact = () => {
                             >
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-amber-500/20 rounded-full blur-md group-hover:blur-lg transition-all" />
-                                    <div className="relative p-4 rounded-full bg-white border border-neutral-200 group-hover:border-amber-500/50 transition-colors">
-                                        <Mail className="w-6 h-6 text-black" />
+                                    <div className="relative p-4 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group-hover:border-amber-500/50 transition-colors">
+                                        <Mail className="w-6 h-6 text-foreground" />
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-neutral-500 uppercase tracking-widest font-semibold mb-1 font-mono">Email Me</p>
+                                    <p className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-widest font-semibold mb-1 font-mono transition-colors duration-500">Email Me</p>
                                     <div className="flex items-center gap-3 font-body">
-                                        <span className="text-sm md:text-base font-bold text-black group-hover:text-amber-800 transition-colors block">
+                                        <span className="text-sm md:text-base font-bold text-foreground group-hover:text-amber-800 dark:group-hover:text-amber-300 transition-colors block">
                                             designer.navneet.patidar@gmail.com
                                         </span>
                                         <motion.div
@@ -204,7 +205,7 @@ export const Contact = () => {
                                         >
                                             <Check className="w-4 h-4 text-green-600" />
                                         </motion.div>
-                                        {!copiedEmail && <Copy className="w-4 h-4 text-neutral-400 group-hover:text-black transition-colors opacity-0 group-hover:opacity-100 shrink-0" />}
+                                        {!copiedEmail && <Copy className="w-4 h-4 text-neutral-400 dark:text-neutral-500 group-hover:text-foreground transition-colors opacity-0 group-hover:opacity-100 shrink-0" />}
                                     </div>
                                 </div>
                             </motion.div>
@@ -217,13 +218,13 @@ export const Contact = () => {
                             >
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-md group-hover:blur-lg transition-all opacity-0 group-hover:opacity-100" />
-                                    <div className="relative p-4 rounded-full bg-white border border-neutral-200 group-hover:border-purple-500/50 transition-colors">
-                                        <Phone className="w-6 h-6 text-black" />
+                                    <div className="relative p-4 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group-hover:border-purple-500/50 transition-colors">
+                                        <Phone className="w-6 h-6 text-foreground" />
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-neutral-500 uppercase tracking-widest font-semibold mb-1 font-mono">Call Me</p>
-                                    <span className="text-sm md:text-base font-bold text-black group-hover:text-purple-800 transition-colors font-body">
+                                    <p className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-widest font-semibold mb-1 font-mono transition-colors duration-500">Call Me</p>
+                                    <span className="text-sm md:text-base font-bold text-foreground group-hover:text-purple-800 dark:group-hover:text-purple-300 transition-colors font-body">
                                         +91 7878913449
                                     </span>
                                 </div>
@@ -248,8 +249,8 @@ export const Contact = () => {
                     viewport={{ once: true }}
                     className="relative"
                 >
-                    <div className="absolute -inset-1 bg-gradient-to-b from-black/5 to-transparent rounded-[2rem] blur-sm -z-10" />
-                    <div className="bg-white/80 backdrop-blur-xl border border-black/5 p-8 md:p-10 rounded-[2rem] shadow-2xl relative overflow-hidden">
+                    <div className="absolute -inset-1 bg-gradient-to-b from-black/5 dark:from-white/5 to-transparent rounded-[2rem] blur-sm -z-10" />
+                    <div className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-xl border border-black/5 dark:border-white/5 p-8 md:p-10 rounded-[2rem] shadow-2xl relative overflow-hidden transition-colors duration-500">
                          
                          {/* Subtle Form Texture */}
                          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-[80px] pointer-events-none" />
@@ -261,13 +262,13 @@ export const Contact = () => {
                                     <Input 
                                         id="name" 
                                         placeholder=" " 
-                                        className="peer bg-transparent border-0 border-b border-neutral-200 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-purple-500 transition-colors"
+                                        className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-purple-500 transition-colors text-foreground"
                                         value={formState.name}
                                         onChange={(e) => setFormState({...formState, name: e.target.value})}
                                     />
                                     <Label 
                                         htmlFor="name" 
-                                        className="absolute left-0 top-6 text-neutral-500 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-purple-600 peer-focus:text-xs pointer-events-none"
+                                        className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-purple-600 dark:peer-focus:text-purple-400 peer-focus:text-xs pointer-events-none"
                                     >
                                         What's your name?
                                     </Label>
@@ -278,13 +279,13 @@ export const Contact = () => {
                                         id="email" 
                                         type="email" 
                                         placeholder=" " 
-                                        className="peer bg-transparent border-0 border-b border-neutral-200 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-purple-500 transition-colors"
+                                        className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-purple-500 transition-colors text-foreground"
                                         value={formState.email}
                                         onChange={(e) => setFormState({...formState, email: e.target.value})}
                                     />
                                     <Label 
                                         htmlFor="email" 
-                                        className="absolute left-0 top-6 text-neutral-500 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-purple-600 peer-focus:text-xs pointer-events-none"
+                                        className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-purple-600 dark:peer-focus:text-purple-400 peer-focus:text-xs pointer-events-none"
                                     >
                                         What's your email?
                                     </Label>
@@ -292,11 +293,11 @@ export const Contact = () => {
                             </div>
 
                             <div className="space-y-4 pt-4">
-                                <Label htmlFor="description" className="text-neutral-400 text-xs uppercase font-bold tracking-widest font-mono">Description / Message</Label>
+                                <Label htmlFor="description" className="text-neutral-400 dark:text-neutral-500 text-xs uppercase font-bold tracking-widest font-mono">Description / Message</Label>
                                 <Textarea 
                                     id="description" 
                                     placeholder="Tell me about your goals, timeline, and any specific requirements..." 
-                                    className="bg-neutral-50 border-neutral-200 focus:border-purple-500 min-h-[150px] resize-none text-base p-4 rounded-xl"
+                                    className="bg-neutral-50 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 focus:border-purple-500 dark:focus:border-purple-400 min-h-[150px] resize-none text-base p-4 rounded-xl text-foreground"
                                     value={formState.description}
                                     onChange={(e) => setFormState({...formState, description: e.target.value})}
                                 />
@@ -310,7 +311,7 @@ export const Contact = () => {
                                     onMouseMove={handleBtnMouseMove}
                                     onMouseLeave={handleBtnMouseLeave}
                                     style={{ x: xSpring, y: ySpring }}
-                                    className="relative w-full h-16 bg-black text-white font-bold text-lg rounded-xl overflow-hidden group cursor-pointer water-btn"
+                                    className="relative w-full h-16 bg-black dark:bg-[#FAF9F5] text-white dark:text-black font-bold text-lg rounded-xl overflow-hidden group cursor-pointer water-btn transition-colors duration-500"
                                 >
                                     <span className="relative z-10 flex items-center justify-center gap-3">
                                         {isSubmitting ? "Sending..." : "Send Message"}

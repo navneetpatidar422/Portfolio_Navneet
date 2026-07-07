@@ -98,13 +98,13 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
         <motion.div
             ref={cardRef}
             variants={cardVariants}
-            className="group block w-full bg-[#FAF9F5] border border-black/5 rounded-[2.5rem] overflow-hidden hover:shadow-xl hover:border-black/10 transition-all duration-500"
+            className="group block w-full bg-[#FAF9F5] dark:bg-neutral-900/40 border border-black/5 dark:border-white/5 rounded-[2.5rem] overflow-hidden hover:shadow-xl hover:border-black/10 dark:hover:border-white/10 transition-all duration-500"
         >
             <Link to={project.path} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-8 md:p-12 items-center cursor-pointer">
                 
                 {/* Left Side: Thumbnail container */}
-                <div className="lg:col-span-6 overflow-hidden rounded-[2rem] bg-neutral-100 aspect-square w-full relative border border-black/5">
-                    <div className="absolute inset-0 bg-neutral-200" />
+                <div className="lg:col-span-6 overflow-hidden rounded-[2rem] bg-neutral-100 dark:bg-neutral-800 aspect-square w-full relative border border-black/5 dark:border-white/5">
+                    <div className="absolute inset-0 bg-neutral-200 dark:bg-neutral-800" />
                     
                     <motion.div style={{ y }} className="w-full h-[110%] -mt-[5%]">
                         <img 
@@ -123,7 +123,7 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
                     <div className="flex flex-wrap gap-2 items-center">
                         {/* Timeline tag */}
                         <Badge 
-                            className="bg-[#C5A059] text-white rounded-full px-4 py-1.5 text-xs font-bold font-mono tracking-wider"
+                            className="bg-[#C5A059] text-white rounded-full px-4 py-1.5 text-xs font-bold font-mono tracking-wider border-none"
                         >
                             {project.year}
                         </Badge>
@@ -131,7 +131,7 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
                         {project.tags.map((tag) => (
                             <Badge 
                                 key={tag} 
-                                className="bg-black text-white rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition-transform hover:scale-105"
+                                className="bg-black dark:bg-[#FAF9F5] text-white dark:text-black rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider transition-transform hover:scale-105 border-none"
                             >
                                 {tag}
                             </Badge>
@@ -139,18 +139,18 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
                     </div>
 
                     {/* Headline Title */}
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-neutral-900 leading-tight font-body group-hover:text-amber-800 transition-colors duration-300">
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white leading-tight font-body group-hover:text-amber-800 dark:group-hover:text-amber-400 transition-colors duration-300">
                         {project.title}
                     </h3>
 
                     {/* Description Subparagraph */}
-                    <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-light font-body">
+                    <p className="text-neutral-500 dark:text-neutral-400 text-sm md:text-base leading-relaxed font-light font-body">
                         {project.subtitle}
                     </p>
 
                     {/* Prominent CTA Button - Hover is local to button only */}
                     <div className="pt-4">
-                        <span className="inline-flex items-center gap-2 bg-black text-[#F7F4EE] px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#C5A059] hover:text-white transition-all duration-300 shadow-sm select-none border border-transparent water-btn">
+                        <span className="inline-flex items-center gap-2 bg-black dark:bg-[#FAF9F5] text-[#F7F4EE] dark:text-black px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#C5A059] dark:hover:bg-[#C5A059] dark:hover:text-white transition-all duration-300 shadow-sm select-none border border-transparent water-btn">
                             <span>View Project</span>
                             <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                         </span>
@@ -165,7 +165,7 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
 
 export const Work = () => {
   return (
-    <section id="work" className="py-24 lg:py-32 px-6 bg-transparent text-black min-h-screen border-t border-black/5">
+    <section id="work" className="py-24 lg:py-32 px-6 bg-transparent text-foreground min-h-screen border-t border-black/5 dark:border-white/5 transition-colors duration-500">
       <div className="max-w-6xl mx-auto">
         
         {/* Section Header */}
@@ -177,11 +177,11 @@ export const Work = () => {
                 viewport={{ once: true }}
             >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="h-1.5 w-12 bg-neutral-900" />
-                  <span className="text-neutral-500 font-bold uppercase tracking-widest text-xs font-mono">My Portfolio</span>
+                  <span className="h-1.5 w-12 bg-neutral-900 dark:bg-neutral-100 transition-colors duration-500" />
+                  <span className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs font-mono transition-colors duration-500">My Portfolio</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-display uppercase tracking-tight text-neutral-900 mb-4">From Problems to Products</h2>
-                <p className="text-neutral-600 max-w-lg text-lg leading-relaxed font-light">
+                <h2 className="text-4xl md:text-6xl font-display uppercase tracking-tight text-neutral-900 dark:text-white mb-4 transition-colors duration-500">From Problems to Products</h2>
+                <p className="text-neutral-600 dark:text-neutral-300 max-w-lg text-lg leading-relaxed font-light transition-colors duration-500">
                     A collection of products shaped by real challenges, thoughtful decisions, and a belief that great design begins long before the first screen is created.
                 </p>
             </motion.div>
