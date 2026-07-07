@@ -71,8 +71,8 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
       {/* Trigger */}
       <div className="border border-dashed border-neutral-200 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-start gap-4">
-          <div className="p-3 rounded-2xl bg-neutral-100 border border-neutral-200">
-            <MessageSquare className="w-6 h-6 text-neutral-800 dark:text-white" />
+          <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-neutral-200 dark:border-none shadow-sm">
+            <MessageSquare className="w-6 h-6 text-[#000000]" />
           </div>
           <div>
             <h3 className="font-bold text-lg text-neutral-900 mb-1">What did you think?</h3>
