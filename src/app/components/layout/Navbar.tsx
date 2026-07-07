@@ -26,14 +26,13 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() =>
+    document.documentElement.classList.contains("dark")
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // Initialise dark mode state on mount
-    setIsDarkMode(document.documentElement.classList.contains("dark"));
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       

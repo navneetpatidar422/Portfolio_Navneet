@@ -89,18 +89,16 @@ function GlobalBackground() {
   );
 }
 
+// Always default to light. Only apply dark if user explicitly chose it before.
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark") {
+  document.documentElement.classList.add("dark");
+} else {
+  document.documentElement.classList.remove("dark");
+}
+
 function App() {
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Always default to light. Only apply dark if user explicitly chose it before.
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
 
   return (
     <BrowserRouter>
