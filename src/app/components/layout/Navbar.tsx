@@ -153,15 +153,52 @@ export const Navbar = () => {
             </a>
           </div>
 
-          {/* Theme Toggle Button */}
+          {/* Theme Toggle — Creative Pill */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             onClick={toggleTheme}
-            className="w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center justify-center text-foreground shadow-sm hover:shadow transition-all duration-300 cursor-pointer"
             title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            className="relative flex items-center cursor-pointer focus:outline-none"
+            whileTap={{ scale: 0.94 }}
+            aria-label="Toggle theme"
           >
-            {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-purple-600" />}
+            {/* Track — h-10 to match Let's Talk button height */}
+            <motion.div
+              animate={{
+                backgroundColor: isDarkMode ? "#1e1b4b" : "#fef3c7",
+                borderColor: isDarkMode ? "#4338ca" : "#f59e0b",
+              }}
+              transition={{ duration: 0.4 }}
+              className="relative w-[4.5rem] h-10 rounded-full border-2 flex items-center px-1 overflow-hidden"
+            >
+              {/* Stars in dark mode */}
+              <motion.div
+                animate={{ opacity: isDarkMode ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 flex items-center justify-end pr-3 gap-1 pointer-events-none"
+              >
+                <span className="w-[3px] h-[3px] rounded-full bg-white/80 block" />
+                <span className="w-[2px] h-[2px] rounded-full bg-white/60 block" />
+                <span className="w-[2px] h-[2px] rounded-full bg-white/40 block" />
+              </motion.div>
+
+              {/* Sliding Knob */}
+              <motion.div
+                animate={{ x: isDarkMode ? 34 : 0 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                className="relative z-10 w-7 h-7 rounded-full shadow-md flex items-center justify-center shrink-0"
+                style={{ background: isDarkMode ? "#818cf8" : "#f59e0b" }}
+              >
+                <motion.div
+                  animate={{ rotate: isDarkMode ? 0 : 360 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  {isDarkMode
+                    ? <Moon className="w-4 h-4 text-white" />
+                    : <Sun className="w-4 h-4 text-white" />
+                  }
+                </motion.div>
+              </motion.div>
+            </motion.div>
           </motion.button>
 
           {/* Let's Talk → WhatsApp */}
@@ -178,13 +215,40 @@ export const Navbar = () => {
 
         {/* Mobile Toggle */}
         <div className="flex md:hidden items-center gap-2">
-          {/* Mobile Theme Toggle */}
+          {/* Mobile Theme Toggle — Pill */}
           <motion.button
-            whileTap={{ scale: 0.95 }}
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center justify-center text-foreground cursor-pointer"
+            whileTap={{ scale: 0.92 }}
+            aria-label="Toggle theme"
+            className="relative flex items-center cursor-pointer focus:outline-none"
           >
-            {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-purple-600" />}
+            <motion.div
+              animate={{
+                backgroundColor: isDarkMode ? "#1e1b4b" : "#fef3c7",
+                borderColor: isDarkMode ? "#4338ca" : "#f59e0b",
+              }}
+              transition={{ duration: 0.4 }}
+              className="relative w-[3.5rem] h-8 rounded-full border-2 flex items-center px-0.5 overflow-hidden"
+            >
+              <motion.div
+                animate={{ opacity: isDarkMode ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 flex items-center justify-end pr-2 gap-0.5 pointer-events-none"
+              >
+                <span className="w-[3px] h-[3px] rounded-full bg-white/70 block" />
+                <span className="w-[2px] h-[2px] rounded-full bg-white/50 block" />
+              </motion.div>
+              <motion.div
+                animate={{ x: isDarkMode ? 26 : 0 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                className="relative z-10 w-6 h-6 rounded-full shadow flex items-center justify-center shrink-0"
+                style={{ background: isDarkMode ? "#818cf8" : "#f59e0b" }}
+              >
+                <motion.div animate={{ rotate: isDarkMode ? 0 : 360 }} transition={{ duration: 0.5 }}>
+                  {isDarkMode ? <Moon className="w-3.5 h-3.5 text-white" /> : <Sun className="w-3.5 h-3.5 text-white" />}
+                </motion.div>
+              </motion.div>
+            </motion.div>
           </motion.button>
 
           <button
