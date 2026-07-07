@@ -214,8 +214,9 @@ export const Hero = () => {
                     <div className="absolute inset-0 bg-neutral-800 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 -z-10" />
                 </button>
                 <a 
-                    href="/assets/navneet-patidar-resume.pdf"
-                    download="navneet-patidar-resume.pdf"
+                    href="https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="px-8 py-4 bg-white/50 backdrop-blur-sm border border-neutral-200 text-black text-sm font-bold uppercase tracking-widest rounded-full hover:bg-white hover:border-neutral-300 transition-all shadow-sm cursor-pointer water-btn"
                 >
                     Download Resume

@@ -1,6 +1,6 @@
 import { Recommendations } from "./Recommendations";
 import { Link } from "react-router";
-import { ArrowLeft, Lock, Calculator, Database, Star, Sparkles, ShieldAlert, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, Lock, Calculator, Database, Star, Sparkles, ShieldAlert, LayoutDashboard, Quote, Linkedin, ArrowDown, ScanLine, ShoppingCart, Receipt, CreditCard, PackageCheck, BookOpen } from "lucide-react";
 import { ProjectReview } from "./ProjectReview";
 
 export const Retail_ManagementCaseStudy = () => {
@@ -263,18 +263,127 @@ export const Retail_ManagementCaseStudy = () => {
         </div>
       </section>
 
-      {/* Mockup Showcase */}
+      {/* ───────── User Flow ───────── */}
       <section className="max-w-5xl mx-auto px-6 mb-20">
-        <h2 className="text-3xl font-display uppercase text-[#D4AF37] tracking-wide mb-8">
-          Screen Mockups
+        <div className="mb-10">
+          <h2 className="text-3xl font-display uppercase text-[#1E352F] tracking-wide mb-3 border-b border-[#1E352F]/10 pb-2">
+            Core User Flow
+          </h2>
+          <p className="text-neutral-500 text-sm leading-relaxed max-w-2xl">
+            The primary operational journey from employee login to automated sales record — every step designed to minimise friction and maximise speed.
+          </p>
+        </div>
+
+        {/* Flow steps */}
+        <div className="relative">
+          {/* Vertical connector line */}
+          <div className="absolute left-[27px] top-10 bottom-10 w-[2px] bg-gradient-to-b from-[#1E352F] via-[#C5A059] to-[#1E352F] opacity-20 rounded-full hidden md:block" />
+
+          {/* Steps list */}
+          <div className="space-y-3">
+            {[
+              { icon: Lock,          label: "Login",                           desc: "Secure employee authentication",                       phase: "Entry" },
+              { icon: LayoutDashboard, label: "Dashboard",                     desc: "View live Gold / Silver / Diamond rates",               phase: "Awareness" },
+              { icon: ScanLine,      label: "Scan Jewellery Tag / OCR",        desc: "Camera scan or manual tag entry",                     phase: "Discovery" },
+              { icon: Database,      label: "Product Details Retrieved",        desc: "Formulae applied automatically to fetched data",       phase: "Processing" },
+              { icon: ShoppingCart,  label: "Add to Wishlist",                 desc: "Optional — continue scanning more products",           phase: "Selection", optional: true },
+              { icon: Star,          label: "Customer Finalizes Selection",     desc: "Staff confirms items with customer",                  phase: "Decision" },
+              { icon: Receipt,       label: "Generate Bill",                   desc: "System compiles selected items into invoice",          phase: "Billing" },
+              { icon: Calculator,    label: "Automatic Price Calculation",      desc: "Tax, making charges, stone weight auto-applied",      phase: "Calculation" },
+              { icon: CreditCard,    label: "Payment Completed",               desc: "Multiple payment mode support",                       phase: "Checkout" },
+              { icon: PackageCheck,  label: "Inventory Updated Automatically",  desc: "Sold items deducted from live stock in real-time",    phase: "Sync" },
+              { icon: BookOpen,      label: "Sales Record Saved",              desc: "Transaction archived for reporting & analytics",      phase: "Archive" },
+            ].map((step, i, arr) => (
+              <div key={step.label}>
+                <div className="group flex items-start gap-5 p-4 rounded-2xl hover:bg-[#1E352F]/[0.03] transition-colors duration-300 cursor-default">
+                  {/* Node */}
+                  <div className="relative flex flex-col items-center shrink-0">
+                    <div className="w-14 h-14 rounded-2xl bg-white border-2 border-[#1E352F]/10 group-hover:border-[#C5A059] shadow-sm flex items-center justify-center text-[#1E352F] group-hover:text-[#C5A059] transition-all duration-300 shrink-0">
+                      <step.icon className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  {/* Text */}
+                  <div className="pt-1 flex-1">
+                    <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                      <h4 className="font-bold text-[#1E352F] text-base leading-tight">{step.label}</h4>
+                      <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border border-[#1E352F]/10 text-[#6A6A66] bg-white">{step.phase}</span>
+                      {step.optional && (
+                        <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700">Optional</span>
+                      )}
+                    </div>
+                    <p className="text-neutral-500 text-sm leading-snug">{step.desc}</p>
+                  </div>
+
+                  {/* Step number */}
+                  <div className="hidden sm:flex items-center justify-end shrink-0 min-w-[2rem] pt-2">
+                    <span className="text-3xl font-display font-black text-[#1E352F]/5 group-hover:text-[#C5A059]/20 transition-colors select-none">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                </div>
+
+                {/* Connector arrow between steps */}
+                {i < arr.length - 1 && (
+                  <div className="flex items-center justify-start pl-[22px] py-1">
+                    <div className="flex flex-col items-center gap-[2px]">
+                      <div className="w-[2px] h-3 bg-[#1E352F]/10 rounded-full" />
+                      <ArrowDown className="w-3 h-3 text-[#C5A059]/60" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ───────── Client Testimonial ───────── */}
+      <section className="max-w-5xl mx-auto px-6 mb-20">
+        <h2 className="text-3xl font-display uppercase text-[#1E352F] tracking-wide mb-8 border-b border-[#1E352F]/10 pb-2">
+          Feedback from Client
         </h2>
-        <div className="relative w-full overflow-hidden rounded-3xl bg-white/60 border border-yellow-100 shadow-md p-6 md:p-10">
-          <img
-            src="/mockups/Retail_Management.png"
-            alt="Jewellery Retail Management System Mockups"
-            className="w-full h-auto object-contain rounded-2xl"
-            loading="lazy"
-          />
+        <div className="relative overflow-hidden rounded-3xl bg-[#1E352F] p-8 md:p-12 shadow-xl">
+          {/* Decorative background quotation mark */}
+          <div className="absolute top-4 right-6 text-[180px] font-serif leading-none text-white/5 select-none pointer-events-none">&ldquo;</div>
+
+          {/* Gold accent top bar */}
+          <div className="absolute top-0 left-0 w-24 h-1 bg-gradient-to-r from-[#C5A059] to-transparent rounded-tr-full" />
+
+          <div className="relative z-10">
+            {/* Quote icon */}
+            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-8">
+              <Quote className="w-5 h-5 text-[#C5A059]" />
+            </div>
+
+            {/* Quote text */}
+            <blockquote className="text-[#EAE6DC] text-xl md:text-2xl font-serif italic leading-relaxed mb-10 max-w-3xl">
+              &ldquo;Thank you for your excellent UI/UX consultation for our Jewellery Pricing Application. Your insights, attention to detail, and user-centric approach have significantly improved the product's overall experience. We truly appreciate your valuable contribution and look forward to working with you again.&rdquo;
+            </blockquote>
+
+            {/* Author row */}
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-4">
+                {/* Avatar monogram */}
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#C5A059] to-amber-300 flex items-center justify-center font-display font-black text-[#1E352F] text-sm tracking-wider shadow-lg">
+                  DK
+                </div>
+                <div>
+                  <h4 className="text-white font-bold text-base tracking-tight">Divyansh Kotnala</h4>
+                  <p className="text-[#C5A059] text-[10px] font-mono uppercase tracking-widest mt-0.5">Director and founder - Kotnala Consultancy</p>
+                </div>
+              </div>
+
+              {/* LinkedIn link */}
+              <a
+                href="https://www.linkedin.com/in/divyanshkotnala/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs font-mono uppercase tracking-widest"
+              >
+                <Linkedin className="w-3.5 h-3.5 fill-current stroke-none" />
+                View on LinkedIn
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

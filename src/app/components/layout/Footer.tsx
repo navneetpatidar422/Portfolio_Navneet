@@ -3,7 +3,7 @@ import { ArrowUpRight, Github, Linkedin, Globe, Mail, MessageCircle, FileText } 
 import { Link, useNavigate, useLocation } from "react-router";
 
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
-const RESUME_URL = "https://drive.google.com/file/d/1I5bBvM_Tvy0PvlMaoCCJFiGETKJvvXjB/view?usp=sharing";
+const RESUME_URL = "https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing";
 
 const navLinks = [
   { name: "Work", href: "#work" },

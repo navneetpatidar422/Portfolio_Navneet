@@ -10,8 +10,7 @@ const navLinks = [
 ];
 
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
-// ↓ replace this URL with your actual hosted resume PDF link
-const RESUME_URL = "https://drive.google.com/file/d/1I5bBvM_Tvy0PvlMaoCCJFiGETKJvvXjB/view?usp=sharing";
+const RESUME_URL = "https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
