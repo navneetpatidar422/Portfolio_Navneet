@@ -10,7 +10,7 @@ const navLinks = [
 ];
 
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
-const RESUME_URL = "https://drive.google.com/file/d/1FXNe7o7wE_YJ577Rdg97g8CovU-QTllL/view?usp=sharing";
+const RESUME_URL = "https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing";
 
 const getProgressBarColor = (pathname: string): string => {
   if (pathname.includes("/work/paygo")) return "#662AB2"; // Violet
