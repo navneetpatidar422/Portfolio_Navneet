@@ -66,17 +66,33 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
     setIsOpen(false);
   };
 
+  const isDarkPage = projectId === "isro";
+
   return (
     <section className="max-w-5xl mx-auto px-6 mb-24">
       {/* Trigger Card */}
-      <div className="border border-dashed border-neutral-200 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className={`border border-dashed rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 ${
+        isDarkPage 
+          ? "border-neutral-850 bg-[#0d0d12]" 
+          : "border-neutral-200 dark:border-neutral-800 bg-transparent"
+      }`}>
         <div className="flex items-start gap-4">
-          <div className="p-3 rounded-2xl bg-[#FFFFFF] border border-neutral-200 dark:border-none shadow-sm">
-            <MessageSquare className="w-6 h-6 text-[#000000]" />
+          <div className={`p-3 rounded-2xl shadow-sm border ${
+            isDarkPage 
+              ? "bg-neutral-900 border-neutral-800 text-white" 
+              : "bg-white border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 text-neutral-900 dark:text-white"
+          }`}>
+            <MessageSquare className="w-6 h-6 text-inherit" />
           </div>
           <div>
-            <h3 className="font-bold text-lg text-neutral-900 mb-1">What did you think?</h3>
-            <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
+            <h3 className={`font-bold text-lg mb-1 ${
+              isDarkPage ? "text-white" : "text-neutral-900 dark:text-white"
+            }`}>
+              What did you think?
+            </h3>
+            <p className={`text-sm leading-relaxed max-w-sm ${
+              isDarkPage ? "text-neutral-400" : "text-neutral-500 dark:text-neutral-450"
+            }`}>
               Every perspective helps me become a better designer.
             </p>
           </div>
@@ -85,7 +101,12 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => setIsOpen(true)}
-          className="shrink-0 px-8 py-3 bg-neutral-950 text-white text-sm font-bold uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all"
+          style={isDarkPage ? { backgroundColor: accentColor } : undefined}
+          className={`shrink-0 px-8 py-3 text-sm font-bold uppercase tracking-widest rounded-full shadow-sm hover:shadow-md transition-all ${
+            isDarkPage 
+              ? "text-white hover:brightness-115" 
+              : "bg-neutral-950 text-white dark:bg-neutral-100 dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200"
+          }`}
         >
           Write Review
         </motion.button>

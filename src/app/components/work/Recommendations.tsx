@@ -61,16 +61,21 @@ const projects = [
 
 export const Recommendations = ({ currentId }: { currentId: string }) => {
   const recommended = projects.filter(p => p.id !== currentId);
+  const isDarkPage = currentId === "isro";
 
   return (
-    <section className="max-w-5xl mx-auto px-6 pt-16 mt-20 border-t border-black/10">
+    <section className={`max-w-5xl mx-auto px-6 pt-16 mt-20 border-t ${
+      isDarkPage ? "border-white/10" : "border-black/10"
+    }`}>
       <style>{`
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
       <div className="flex items-center justify-between mb-8">
-        <h3 className="text-xl md:text-2xl font-display uppercase tracking-tight text-neutral-900">
+        <h3 className={`text-xl md:text-2xl font-display uppercase tracking-tight ${
+          isDarkPage ? "text-white" : "text-neutral-900"
+        }`}>
           Other Projects
         </h3>
         <span className="text-xs text-neutral-400 font-mono hidden sm:inline-block">
@@ -83,11 +88,17 @@ export const Recommendations = ({ currentId }: { currentId: string }) => {
           <Link
             key={project.id}
             to={project.path}
-            className="group block w-[280px] md:w-[320px] shrink-0 snap-start bg-[#FAF9F5] dark:bg-neutral-900/40 border border-black/5 dark:border-white/5 rounded-[1.5rem] p-4 flex flex-col justify-between hover:shadow-lg hover:border-black/10 dark:hover:border-white transition-all duration-300"
+            className={`group block w-[280px] md:w-[320px] shrink-0 snap-start rounded-[1.5rem] p-4 flex flex-col justify-between hover:shadow-lg transition-all duration-300 border ${
+              isDarkPage 
+                ? "bg-neutral-900/40 border-white/5 hover:border-white/20" 
+                : "bg-[#FAF9F5] border-black/5 dark:bg-neutral-900/40 dark:border-white/5 hover:border-black/10 dark:hover:border-white"
+            }`}
           >
             <div>
               {/* Thumbnail */}
-              <div className="overflow-hidden rounded-xl aspect-[4/3] bg-neutral-100 mb-4 border border-black/5 relative">
+              <div className={`overflow-hidden rounded-xl aspect-[4/3] bg-neutral-100 mb-4 border relative ${
+                isDarkPage ? "border-white/5" : "border-black/5"
+              }`}>
                 <img
                   src={project.image}
                   alt={project.title}
@@ -106,13 +117,21 @@ export const Recommendations = ({ currentId }: { currentId: string }) => {
                 </span>
               </div>
 
-              <h4 className="text-base font-bold tracking-tight text-neutral-900 dark:text-white font-body leading-snug line-clamp-2 min-h-[2.5rem] group-hover:!text-amber-800 dark:group-hover:!text-[#C5A059] transition-colors duration-300">
+              <h4 className={`text-base font-bold tracking-tight font-body leading-snug line-clamp-2 min-h-[2.5rem] transition-colors duration-300 ${
+                isDarkPage 
+                  ? "text-white group-hover:text-[#C5A059]" 
+                  : "text-neutral-900 dark:text-white group-hover:text-amber-800 dark:group-hover:text-[#C5A059]"
+              }`}>
                 {project.title}
               </h4>
             </div>
 
             <div className="pt-4 mt-auto">
-              <span className="inline-flex items-center gap-1.5 bg-black text-[#F7F4EE] px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider group-hover:bg-[#C5A059] group-hover:text-white transition-all duration-300 shadow-sm select-none">
+              <span className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 shadow-sm select-none ${
+                isDarkPage 
+                  ? "bg-white text-neutral-950 group-hover:bg-[#C5A059] group-hover:text-white" 
+                  : "bg-black text-[#F7F4EE] group-hover:bg-[#C5A059] group-hover:text-white"
+              }`}>
                 <span>View Project</span>
                 <ArrowUpRight className="w-3 h-3" />
               </span>
