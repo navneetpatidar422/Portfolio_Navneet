@@ -190,7 +190,12 @@ export const AboutMe = () => {
             <img 
               src="/about-photo.png" 
               alt="Navneet Patidar"
-              className="w-64 h-auto md:w-72 lg:w-80 object-contain transform hover:scale-[1.03] transition-transform duration-500 ease-out"
+              className="block dark:hidden w-64 h-auto md:w-72 lg:w-80 object-contain transform hover:scale-[1.03] transition-transform duration-500 ease-out"
+            />
+            <img 
+              src="/about-photo-dark.png" 
+              alt="Navneet Patidar"
+              className="hidden dark:block w-64 h-auto md:w-72 lg:w-80 object-contain transform hover:scale-[1.03] transition-transform duration-500 ease-out"
             />
           </motion.div>
         </div>
