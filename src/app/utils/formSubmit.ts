@@ -2,7 +2,7 @@
 export const BACKEND_CONFIG = {
   // Paste your Google Apps Script Web App URL here after deploying:
   // e.g. "https://script.google.com/macros/s/AKfycb.../exec"
-  GOOGLE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbyi2gPWfl-eHNE2wMFxIG78JZNihUOCTjvjmjzd5Xj0YLgCIupPoqX3KeOHdqlGfViD/exec" 
+  GOOGLE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzYjX4q3DG8nuUK7matlEC_vi3UqDxXzewc5UKxEwxYu9XWqDoB6K_3dYdCngxfAi2i/exec" 
 };
 
 export interface ContactPayload {
