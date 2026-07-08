@@ -6,7 +6,7 @@ import { ProjectReview } from "./ProjectReview";
 
 export const FlashbackCaseStudy = () => {
   return (
-    <div className="bg-transparent min-h-screen text-[#111111] font-karla pt-24 pb-16 selection:bg-[#900C3F] selection:text-white">
+    <div className="case-study-page bg-transparent min-h-screen text-[#111111] font-karla pt-24 pb-16 selection:bg-[#900C3F] selection:text-white">
       {/* Top Navigation */}
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <Link 

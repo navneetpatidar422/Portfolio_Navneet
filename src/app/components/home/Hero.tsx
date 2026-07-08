@@ -57,7 +57,7 @@ export const Hero = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden text-foreground flex flex-col justify-center py-32 md:pt-0 md:pb-24">
+    <section id="home" className="relative min-h-screen w-full overflow-hidden text-foreground flex flex-col justify-center py-32 md:pt-0 md:pb-24">
       
       {/* Background Image with Parallax */}
       <motion.div 

@@ -6,7 +6,7 @@ import { ProjectReview } from "./ProjectReview";
 
 export const PaygoCaseStudy = () => {
   return (
-    <div className="bg-transparent min-h-screen text-[#111111] font-noto pt-24 pb-16">
+    <div className="case-study-page bg-transparent min-h-screen text-[#111111] font-noto pt-24 pb-16">
       {/* Top Navigation */}
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <Link 
@@ -136,28 +136,28 @@ export const PaygoCaseStudy = () => {
           Key Features & Technical Architecture
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="border border-neutral-200 p-6 rounded-2xl hover:border-[#662AB2] transition-colors bg-white">
+          <div className="border border-neutral-200 p-6 rounded-2xl hover:!border-[#662AB2] transition-colors bg-white">
             <Mic className="w-8 h-8 text-[#662AB2] mb-4" />
             <h4 className="font-bold text-neutral-800 mb-2 uppercase text-xs tracking-wider">Voice-Guided Input</h4>
             <p className="text-neutral-500 text-xs leading-relaxed">
               Removes cognitive load by letting the user speak actions instead of searching and tapping.
             </p>
           </div>
-          <div className="border border-neutral-200 p-6 rounded-2xl hover:border-[#662AB2] transition-colors bg-white">
+          <div className="border border-neutral-200 p-6 rounded-2xl hover:!border-[#662AB2] transition-colors bg-white">
             <ShieldAlert className="w-8 h-8 text-[#662AB2] mb-4" />
             <h4 className="font-bold text-neutral-800 mb-2 uppercase text-xs tracking-wider">Verbal Confirmations</h4>
             <p className="text-neutral-500 text-xs leading-relaxed">
               Prevents accidental money transfers by requiring an explicit verbal "YES" before transactions.
             </p>
           </div>
-          <div className="border border-neutral-200 p-6 rounded-2xl hover:border-[#662AB2] transition-colors bg-white">
+          <div className="border border-neutral-200 p-6 rounded-2xl hover:!border-[#662AB2] transition-colors bg-white">
             <Languages className="w-8 h-8 text-[#662AB2] mb-4" />
             <h4 className="font-bold text-neutral-800 mb-2 uppercase text-xs tracking-wider">Multi-Language</h4>
             <p className="text-neutral-500 text-xs leading-relaxed">
               Widens accessibility across India's regional linguistic diversity (Hindi, Marathi, Tamil, etc.).
             </p>
           </div>
-          <div className="border border-neutral-200 p-6 rounded-2xl hover:border-[#662AB2] transition-colors bg-white">
+          <div className="border border-neutral-200 p-6 rounded-2xl hover:!border-[#662AB2] transition-colors bg-white">
             <Cpu className="w-8 h-8 text-[#662AB2] mb-4" />
             <h4 className="font-bold text-neutral-800 mb-2 uppercase text-xs tracking-wider">On-Device Edge AI</h4>
             <p className="text-neutral-500 text-xs leading-relaxed">

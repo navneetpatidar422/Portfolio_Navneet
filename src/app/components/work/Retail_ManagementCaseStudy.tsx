@@ -5,7 +5,7 @@ import { ProjectReview } from "./ProjectReview";
 
 export const Retail_ManagementCaseStudy = () => {
   return (
-    <div className="bg-transparent min-h-screen text-[#1C1C1A] selection:bg-[#C5A059] selection:text-white font-body pt-24 pb-16">
+    <div className="case-study-page bg-transparent min-h-screen text-[#1C1C1A] selection:bg-[#C5A059] selection:text-white font-body pt-24 pb-16">
       {/* Top Banner */}
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <Link 
@@ -107,7 +107,7 @@ export const Retail_ManagementCaseStudy = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* Card 1 */}
-          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:border-[#C5A059] transition-all hover:shadow-md">
+          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:!border-[#C5A059] transition-all hover:shadow-md">
             <div className="w-12 h-12 bg-[#1E352F]/5 text-[#C5A059] rounded-xl flex items-center justify-center mb-6">
               <Calculator className="w-6 h-6" />
             </div>
@@ -118,7 +118,7 @@ export const Retail_ManagementCaseStudy = () => {
           </div>
 
           {/* Card 2 */}
-          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:border-[#C5A059] transition-all hover:shadow-md">
+          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:!border-[#C5A059] transition-all hover:shadow-md">
             <div className="w-12 h-12 bg-[#1E352F]/5 text-[#C5A059] rounded-xl flex items-center justify-center mb-6">
               <Database className="w-6 h-6" />
             </div>
@@ -129,7 +129,7 @@ export const Retail_ManagementCaseStudy = () => {
           </div>
 
           {/* Card 3 */}
-          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:border-[#C5A059] transition-all hover:shadow-md">
+          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:!border-[#C5A059] transition-all hover:shadow-md">
             <div className="w-12 h-12 bg-[#1E352F]/5 text-[#C5A059] rounded-xl flex items-center justify-center mb-6">
               <Star className="w-6 h-6" />
             </div>
@@ -140,7 +140,7 @@ export const Retail_ManagementCaseStudy = () => {
           </div>
 
           {/* Card 4 */}
-          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:border-[#C5A059] transition-all hover:shadow-md">
+          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:!border-[#C5A059] transition-all hover:shadow-md">
             <div className="w-12 h-12 bg-[#1E352F]/5 text-[#C5A059] rounded-xl flex items-center justify-center mb-6">
               <Sparkles className="w-6 h-6" />
             </div>
@@ -151,7 +151,7 @@ export const Retail_ManagementCaseStudy = () => {
           </div>
 
           {/* Card 5 */}
-          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:border-[#C5A059] transition-all hover:shadow-md">
+          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:!border-[#C5A059] transition-all hover:shadow-md">
             <div className="w-12 h-12 bg-[#1E352F]/5 text-[#C5A059] rounded-xl flex items-center justify-center mb-6">
               <ShieldAlert className="w-6 h-6" />
             </div>
@@ -162,7 +162,7 @@ export const Retail_ManagementCaseStudy = () => {
           </div>
 
           {/* Card 6 */}
-          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:border-[#C5A059] transition-all hover:shadow-md">
+          <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:!border-[#C5A059] transition-all hover:shadow-md">
             <div className="w-12 h-12 bg-[#1E352F]/5 text-[#C5A059] rounded-xl flex items-center justify-center mb-6">
               <LayoutDashboard className="w-6 h-6" />
             </div>
@@ -298,7 +298,7 @@ export const Retail_ManagementCaseStudy = () => {
                 <div className="group flex items-start gap-5 p-4 rounded-2xl hover:bg-[#1E352F]/[0.03] transition-colors duration-300 cursor-default">
                   {/* Node */}
                   <div className="relative flex flex-col items-center shrink-0">
-                    <div className="w-14 h-14 rounded-2xl bg-white border-2 border-[#1E352F]/10 group-hover:border-[#C5A059] shadow-sm flex items-center justify-center text-[#1E352F] group-hover:text-[#C5A059] transition-all duration-300 shrink-0">
+                    <div className="w-14 h-14 rounded-2xl bg-white border-2 border-[#1E352F]/10 group-hover:!border-[#C5A059] shadow-sm flex items-center justify-center text-[#1E352F] group-hover:!text-[#C5A059] transition-all duration-300 shrink-0">
                       <step.icon className="w-5 h-5" />
                     </div>
                   </div>

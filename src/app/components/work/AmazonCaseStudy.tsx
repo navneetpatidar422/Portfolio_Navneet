@@ -6,7 +6,7 @@ import { ProjectReview } from "./ProjectReview";
 
 export const AmazonCaseStudy = () => {
   return (
-    <div className="bg-transparent min-h-screen text-[#111111] font-body pt-24 pb-16 selection:bg-[#FF9900] selection:text-black">
+    <div className="case-study-page bg-transparent min-h-screen text-[#111111] font-body pt-24 pb-16 selection:bg-[#FF9900] selection:text-black">
       {/* Top Navigation */}
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <Link 

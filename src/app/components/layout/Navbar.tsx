@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router";
 
 const navLinks = [
@@ -26,9 +26,6 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isDarkMode, setIsDarkMode] = useState(() =>
-    document.documentElement.classList.contains("dark")
-  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -47,17 +44,6 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    if (document.documentElement.classList.contains("dark")) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setIsDarkMode(true);
-    }
-  };
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -152,53 +138,6 @@ export const Navbar = () => {
             </a>
           </div>
 
-          {/* Theme Toggle — Creative Pill */}
-          <motion.button
-            onClick={toggleTheme}
-            title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            className="relative flex items-center cursor-pointer focus:outline-none"
-            whileTap={{ scale: 0.94 }}
-            aria-label="Toggle theme"
-          >
-            {/* Track — h-10 to match Let's Talk button height */}
-            <motion.div
-              animate={{
-                backgroundColor: isDarkMode ? "#1e1b4b" : "#fef3c7",
-                borderColor: isDarkMode ? "#4338ca" : "#f59e0b",
-              }}
-              transition={{ duration: 0.4 }}
-              className="relative w-[4.5rem] h-10 rounded-full border-2 flex items-center px-1 overflow-hidden"
-            >
-              {/* Stars in dark mode */}
-              <motion.div
-                animate={{ opacity: isDarkMode ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-end pr-3 gap-1 pointer-events-none"
-              >
-                <span className="w-[3px] h-[3px] rounded-full bg-white/80 block" />
-                <span className="w-[2px] h-[2px] rounded-full bg-white/60 block" />
-                <span className="w-[2px] h-[2px] rounded-full bg-white/40 block" />
-              </motion.div>
-
-              {/* Sliding Knob */}
-              <motion.div
-                animate={{ x: isDarkMode ? 34 : 0 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                className="relative z-10 w-7 h-7 rounded-full shadow-md flex items-center justify-center shrink-0"
-                style={{ background: isDarkMode ? "#818cf8" : "#f59e0b" }}
-              >
-                <motion.div
-                  animate={{ rotate: isDarkMode ? 0 : 360 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                >
-                  {isDarkMode
-                    ? <Moon className="w-4 h-4 text-white" />
-                    : <Sun className="w-4 h-4 text-white" />
-                  }
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </motion.button>
 
           {/* Let's Talk → WhatsApp */}
           <a
@@ -214,41 +153,6 @@ export const Navbar = () => {
 
         {/* Mobile Toggle */}
         <div className="flex md:hidden items-center gap-2">
-          {/* Mobile Theme Toggle — Pill */}
-          <motion.button
-            onClick={toggleTheme}
-            whileTap={{ scale: 0.92 }}
-            aria-label="Toggle theme"
-            className="relative flex items-center cursor-pointer focus:outline-none"
-          >
-            <motion.div
-              animate={{
-                backgroundColor: isDarkMode ? "#1e1b4b" : "#fef3c7",
-                borderColor: isDarkMode ? "#4338ca" : "#f59e0b",
-              }}
-              transition={{ duration: 0.4 }}
-              className="relative w-[3.5rem] h-8 rounded-full border-2 flex items-center px-0.5 overflow-hidden"
-            >
-              <motion.div
-                animate={{ opacity: isDarkMode ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0 flex items-center justify-end pr-2 gap-0.5 pointer-events-none"
-              >
-                <span className="w-[3px] h-[3px] rounded-full bg-white/70 block" />
-                <span className="w-[2px] h-[2px] rounded-full bg-white/50 block" />
-              </motion.div>
-              <motion.div
-                animate={{ x: isDarkMode ? 26 : 0 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                className="relative z-10 w-6 h-6 rounded-full shadow flex items-center justify-center shrink-0"
-                style={{ background: isDarkMode ? "#818cf8" : "#f59e0b" }}
-              >
-                <motion.div animate={{ rotate: isDarkMode ? 0 : 360 }} transition={{ duration: 0.5 }}>
-                  {isDarkMode ? <Moon className="w-3.5 h-3.5 text-white" /> : <Sun className="w-3.5 h-3.5 text-white" />}
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </motion.button>
 
           <button
             className="text-foreground p-2 cursor-pointer"

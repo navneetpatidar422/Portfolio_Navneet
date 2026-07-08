@@ -106,7 +106,7 @@ export const Recommendations = ({ currentId }: { currentId: string }) => {
                 </span>
               </div>
 
-              <h4 className="text-base font-bold tracking-tight text-neutral-900 font-body leading-snug line-clamp-2 min-h-[2.5rem] group-hover:text-amber-800 transition-colors duration-300">
+              <h4 className="text-base font-bold tracking-tight text-neutral-900 dark:text-white font-body leading-snug line-clamp-2 min-h-[2.5rem] group-hover:!text-amber-800 dark:group-hover:!text-[#C5A059] transition-colors duration-300">
                 {project.title}
               </h4>
             </div>

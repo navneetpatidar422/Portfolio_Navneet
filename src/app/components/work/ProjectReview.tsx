@@ -115,15 +115,15 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                 {/* Sticky Header — always visible, close button always reachable */}
                 <div className="sticky top-0 z-10 bg-white dark:bg-neutral-900 px-8 pt-8 pb-3 border-b border-neutral-100 dark:border-neutral-800">
                   <div className="flex items-center justify-between mb-1">
-                    <h3 className="text-xl font-bold tracking-tight">What did you think?</h3>
+                    <h3 className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">What did you think?</h3>
                     <button
                       onClick={() => setIsOpen(false)}
-                      className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-foreground"
+                      className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors text-neutral-500 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white"
                     >
                       <X className="w-5 h-5" />
                     </button>
                   </div>
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400">Every perspective helps me become a better designer.</p>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-300">Every perspective helps me become a better designer.</p>
                 </div>
 
                 {/* Scrollable Form Body */}
@@ -132,7 +132,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
 
                     {/* Star Rating */}
                     <div>
-                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3 block">
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-3 block">
                         Your Rating
                       </label>
                       <div className="flex gap-2">
@@ -159,7 +159,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
 
                     {/* Name */}
                     <div>
-                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2 block">
                         Your Name <span className="normal-case tracking-normal">(optional)</span>
                       </label>
                       <input
@@ -167,13 +167,13 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Anonymous"
-                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
+                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
                       />
                     </div>
 
                     {/* Email */}
                     <div>
-                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2 block">
                         Your Email <span className="normal-case tracking-normal">(optional — so I can thank you!)</span>
                       </label>
                       <input
@@ -181,13 +181,13 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="your@email.com"
-                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
+                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
                       />
                     </div>
 
                     {/* Review Text */}
                     <div>
-                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2 block">
+                      <label className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2 block">
                         Your Feedback *
                       </label>
                       <textarea
@@ -195,7 +195,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                         onChange={(e) => setText(e.target.value)}
                         placeholder="What did you think about this project? What stood out?"
                         rows={4}
-                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-foreground focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all resize-none"
+                        className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all resize-none"
                       />
                     </div>
 
@@ -205,13 +205,14 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                       disabled={isSubmitting}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full h-12 bg-neutral-950 dark:bg-[#FAF9F5] text-white dark:text-black font-bold text-sm uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors disabled:opacity-60"
+                      className="w-full h-12 bg-neutral-950 dark:!bg-neutral-100 text-white dark:!text-neutral-950 font-bold text-sm uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-neutral-800 dark:hover:!bg-neutral-200 transition-colors disabled:opacity-60"
                     >
                       {isSubmitting ? (
-                        "Submitting..."
+                        <span className="text-inherit">Submitting...</span>
                       ) : (
                         <>
-                          Submit Review <Send className="w-4 h-4" />
+                          <span className="text-inherit">Submit Review</span>
+                          <Send className="w-4 h-4 text-inherit" />
                         </>
                       )}
                     </motion.button>

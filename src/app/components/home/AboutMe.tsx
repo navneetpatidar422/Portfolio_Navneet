@@ -167,16 +167,6 @@ export const AboutMe = () => {
               I enjoy simplifying complex problems, designing user-centered products, and continuously learning. My goal is to build products that create real value while growing as a designer alongside talented teams.
             </p>
 
-            <div className="pt-2">
-              <a href="#contact">
-                <Button
-                  variant="outline"
-                  className="rounded-full border-neutral-200 dark:border-neutral-800 bg-white/10 dark:bg-neutral-900 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black hover:border-white transition-all duration-300 px-8 h-12 shadow-sm water-btn"
-                >
-                  Let's Collaborate
-                </Button>
-              </a>
-            </div>
           </motion.div>
 
           {/* Right Side Image */}

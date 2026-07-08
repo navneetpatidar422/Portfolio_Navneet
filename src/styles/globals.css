@@ -263,7 +263,7 @@ html {
 }
 
 /* Accessibility overrides for Case Studies in Dark Mode */
-.dark {
+.dark .case-study-page {
   /* Override case study container root text colors */
   div[class*="min-h-screen"][class*="text-[#111111]"],
   div[class*="min-h-screen"][class*="text-[#1D0C00]"],
