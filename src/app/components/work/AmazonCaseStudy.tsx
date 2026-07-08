@@ -153,7 +153,7 @@ export const AmazonCaseStudy = () => {
 
       {/* Mockup Showcase */}
       <section className="max-w-5xl mx-auto px-6 mb-20">
-        <h2 className="text-3xl font-display uppercase text-[#FF9900] tracking-wide mb-8">
+        <h2 className="text-3xl font-display uppercase text-neutral-900 tracking-wide mb-8">
           Old v/s Redesign
         </h2>
         <div className="relative w-full overflow-hidden rounded-3xl bg-white/60 border border-amber-100 shadow-md p-6 md:p-10">

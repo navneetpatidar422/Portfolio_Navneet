@@ -257,7 +257,7 @@ export const PaygoCaseStudy = () => {
 
       {/* Mockup Showcase */}
       <section className="max-w-5xl mx-auto px-6 mb-20">
-        <h2 className="text-3xl font-display uppercase text-[#1B998B] tracking-wide mb-8">
+        <h2 className="text-3xl font-display uppercase text-[#662AB2] tracking-wide mb-8">
           App Mockups
         </h2>
         <div className="relative w-full overflow-hidden rounded-3xl bg-white/60 border border-teal-100 shadow-md p-6 md:p-10">
