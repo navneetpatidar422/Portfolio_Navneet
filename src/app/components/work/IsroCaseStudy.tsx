@@ -100,7 +100,6 @@ export const IsroCaseStudy = () => {
           <p className="font-serif text-2xl md:text-3xl italic text-white leading-relaxed max-w-3xl mx-auto">
             &ldquo;This was my first UI/UX project, making it one of the most meaningful milestones in my journey.&rdquo;
           </p>
-          <span className="mt-4 block text-xs font-mono uppercase tracking-widest text-purple-400">— Navneet Patidar</span>
         </div>
       </section>
 
