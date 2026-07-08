@@ -104,7 +104,7 @@ export const Navbar = () => {
               Navneet Patidar
             </span>
             <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-widest leading-none mt-1">
-              UI/UX &amp; Product Design
+              UI/UX &amp; Product Designer
             </span>
           </div>
         </a>
