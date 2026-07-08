@@ -14,7 +14,7 @@ import { Button } from "../ui/button";
 
 const experiences = [
   {
-    role: "Designer",
+    role: "Graphic Designer",
     company: "InstantAI",
     period: "Apr 2026 – Present"
   },
