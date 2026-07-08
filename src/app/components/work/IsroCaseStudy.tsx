@@ -201,7 +201,7 @@ export const IsroCaseStudy = () => {
       </section>
 
       {/* Project Review */}
-      <ProjectReview projectId="isro" accentColor="#2563EB" />
+      <ProjectReview projectId="isro" accentColor="#000000" />
 
       {/* Recommendations Section */}
       <Recommendations currentId="isro" />
