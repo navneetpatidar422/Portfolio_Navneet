@@ -59,7 +59,7 @@ export const BharatVibeCaseStudy = () => {
           <p className="text-3xl md:text-4xl italic text-[#1D0C00] leading-relaxed max-w-3xl mx-auto font-serif">
             "Because freedom is not just in textbooks — it lives in our emotions, our platforms, and now… our designs."
           </p>
-          <span className="block text-xs uppercase tracking-widest font-mono text-[#5C4533] mt-6">— NAVNEET PATIDAR</span>
+        
         </div>
       </section>
 
