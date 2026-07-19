@@ -124,7 +124,7 @@ const toolsData = [
     )
   },
   {
-    name: "Microsoft Designer",
+    name: "MS Designer",
     brandColorClass: "group-hover:text-[#FC2C78] group-hover:border-[#FC2C78]/40",
     bgColorClass: "group-hover:bg-[#FC2C78]/[0.02]",
     logoBgClass: "group-hover:bg-[#FC2C78]/10 group-hover:border-[#FC2C78]/20",
