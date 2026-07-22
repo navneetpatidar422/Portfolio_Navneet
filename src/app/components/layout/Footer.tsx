@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Linkedin, Globe, Mail, MessageCircle, FileText, Instagram } from "lucide-react";
+import { ArrowUpRight, Linkedin, Mail, FileText, Instagram } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router";
 
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
@@ -66,13 +66,29 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#0E0E0E] text-white pt-20 pb-8 px-6 relative overflow-hidden">
-      {/* Top gradient line */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <footer className="text-white relative overflow-hidden bg-transparent">
+      {/* Solid Footer Background: Only covers the lower section of the footer */}
+      <div className="absolute top-[200px] sm:top-[260px] md:top-[320px] lg:top-[360px] bottom-0 left-0 right-0 bg-[#0E0E0E] z-0" />
 
-      <div className="max-w-7xl mx-auto">
+      {/* Mountain View Header Backdrop */}
+      <div className="relative w-full h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] overflow-hidden select-none pointer-events-none z-[1]">
+        {/* Mountain Image */}
+        <img
+          src="/mountains.png"
+          alt="Dark Mountain Landscape"
+          className="w-full h-full object-cover object-top block opacity-95"
+        />
 
-        {/* Main grid */}
+        {/* Bottom Black Gradient: Fades lower trees seamlessly into footer background #0E0E0E */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0E0E0E]/70 to-[#0E0E0E]" />
+      </div>
+
+      {/* Main Footer Content: Positioned over the lower dark gradient (Starting from the Blue Line in Sketch) */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 -mt-36 sm:-mt-48 md:-mt-60 lg:-mt-72 pb-8">
+        
+
+
+        {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
 
           {/* Brand + tagline */}
@@ -82,16 +98,16 @@ export const Footer = () => {
               onClick={(e) => { e.preventDefault(); navigate("/"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               className="inline-block"
             >
-              <div className="w-12 h-12 bg-white text-black rounded-xl flex items-center justify-center font-display text-xl font-bold select-none cursor-pointer">
+              <div className="w-12 h-12 bg-white text-black rounded-xl flex items-center justify-center font-display text-xl font-bold select-none cursor-pointer shadow-lg hover:scale-105 transition-transform duration-300">
                 NP
               </div>
             </a>
 
             <div>
-              <p className="text-neutral-300 text-xl font-display font-bold tracking-tight mb-1">
+              <p className="text-neutral-200 text-xl font-display font-bold tracking-tight mb-1">
                 Navneet Patidar
               </p>
-              <p className="text-neutral-500 text-sm font-mono uppercase tracking-widest">
+              <p className="text-neutral-400 text-sm font-mono uppercase tracking-widest">
                 UI/UX &amp; Product Designer
               </p>
             </div>
@@ -111,7 +127,7 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ y: -3, scale: 1.1 }}
                   title={s.name}
-                  className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-white hover:text-black transition-all duration-300"
+                  className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
                 >
                   <s.icon className="w-4 h-4" />
                 </motion.a>
@@ -121,14 +137,14 @@ export const Footer = () => {
 
           {/* Sitemap */}
           <div className="md:col-span-2 md:col-start-6">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 font-mono mb-6">Sitemap</h4>
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 font-mono mb-6">Sitemap</h4>
             <ul className="space-y-3">
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
                     onClick={(e) => handleLink(e, link.href)}
-                    className="text-neutral-400 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit cursor-pointer"
+                    className="text-neutral-300 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit cursor-pointer"
                   >
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-amber-400 shrink-0" />
                     {link.name}
@@ -140,7 +156,7 @@ export const Footer = () => {
                   href={RESUME_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-400 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit"
+                  className="text-neutral-300 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit"
                 >
                   <FileText className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                   Resume
@@ -151,13 +167,13 @@ export const Footer = () => {
 
           {/* Projects */}
           <div className="md:col-span-2">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 font-mono mb-6">Projects</h4>
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 font-mono mb-6">Projects</h4>
             <ul className="space-y-3">
               {projectLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-neutral-400 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit"
+                    className="text-neutral-300 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit"
                   >
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-amber-400 shrink-0" />
                     {link.name}
@@ -169,8 +185,8 @@ export const Footer = () => {
 
           {/* CTA column */}
           <div className="md:col-span-2">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 font-mono mb-6">Let's Connect</h4>
-            <p className="text-neutral-400 text-sm leading-relaxed mb-6">
+            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 font-mono mb-6">Let's Connect</h4>
+            <p className="text-neutral-300 text-sm leading-relaxed mb-6">
               Available for full-time roles &amp; freelance collaborations.
             </p>
 
@@ -197,7 +213,7 @@ export const Footer = () => {
               href="mailto:designer.navneet.patidar@gmail.com"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 w-full py-3.5 bg-white/5 border border-white/10 text-neutral-300 text-xs font-bold uppercase tracking-widest rounded-2xl hover:bg-white/10 transition-all duration-300"
+              className="flex items-center justify-center gap-2 w-full py-3.5 bg-white/5 border border-white/10 text-neutral-300 text-xs font-bold uppercase tracking-widest rounded-2xl hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
             >
               <Mail className="w-4 h-4" />
               Send an Email
@@ -207,10 +223,10 @@ export const Footer = () => {
 
         {/* Bottom bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-neutral-600 text-[10px] font-mono uppercase tracking-widest">
+          <p className="text-neutral-500 text-[10px] font-mono uppercase tracking-widest">
             © {new Date().getFullYear()} Navneet Patidar. All Rights Reserved.
           </p>
-          <p className="text-neutral-600 text-[10px] font-mono uppercase tracking-widest">
+          <p className="text-neutral-500 text-[10px] font-mono uppercase tracking-widest">
             Designed with Passion &amp; Love by Navneet...
           </p>
         </div>

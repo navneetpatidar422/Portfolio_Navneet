@@ -17,7 +17,7 @@ import { AdminReviews } from "./components/admin/AdminReviews";
 import { BackToTop } from "./components/shared/BackToTop";
 import { ScrollToTop } from "./components/shared/ScrollToTop";
 import { CustomCursor } from "./components/shared/CustomCursor";
-import { CursorRippleEffect } from "./components/shared/CursorRippleEffect";
+import { CursorRippleEffect } from "./components/shared/CursorRippleEffect.tsx";
 import { Toaster } from "./components/ui/sonner";
 
 // Import Case Study Pages
