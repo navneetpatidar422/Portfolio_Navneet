@@ -280,7 +280,7 @@ export const AboutMe = () => {
                                                 <p className="text-neutral-500 dark:text-neutral-400 text-xs font-mono uppercase tracking-widest">Professional Roles</p>
                                               </div>
                                             </div>
-                                            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest">{experiences.length} roles</span>
+                                            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest"></span>
                                           </div>
                                           <ExperienceTimeline />
                                         </>
