@@ -177,11 +177,11 @@ export const Work = () => {
                 viewport={{ once: true }}
             >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="h-1.5 w-12 bg-neutral-900 dark:bg-neutral-100 transition-colors duration-500" />
-                  <span className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs font-mono transition-colors duration-500">My Portfolio</span>
+                  <span className="h-1.5 w-12 bg-emerald-500 transition-colors duration-500" />
+                  <span className="text-emerald-500 font-subheading font-bold uppercase tracking-widest text-xs transition-colors duration-500">My Portfolio</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-display uppercase tracking-tight text-neutral-900 dark:text-white mb-4 transition-colors duration-500">From Problems to Products</h2>
-                <p className="text-neutral-600 dark:text-neutral-300 max-w-lg text-lg leading-relaxed font-light transition-colors duration-500">
+                <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white mb-4 transition-colors duration-500">From Problems to Products</h2>
+                <p className="text-neutral-600 dark:text-neutral-300 max-w-lg text-lg leading-relaxed font-body font-light transition-colors duration-500">
                     A collection of products shaped by real challenges, thoughtful decisions, and a belief that great design begins long before the first screen is created.
                 </p>
             </motion.div>

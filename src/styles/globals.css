@@ -2,19 +2,19 @@
 
 :root {
   --font-size: 16px;
-  --background: #F7F4EE;
+  --background: #FAFAFC;
   --foreground: #111111;
   --card: #ffffff;
   --card-foreground: #111111;
   --popover: #ffffff;
   --popover-foreground: #111111;
   --primary: #111111;
-  --primary-foreground: #F7F4EE;
-  --secondary: #EAE6DC;
+  --primary-foreground: #FAFAFC;
+  --secondary: #F1F3F5;
   --secondary-foreground: #111111;
-  --muted: #EAE6DC;
+  --muted: #F1F3F5;
   --muted-foreground: #6A6A66;
-  --accent: #EAE6DC;
+  --accent: #F1F3F5;
   --accent-foreground: #111111;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
@@ -205,14 +205,29 @@ html {
 
 
 @layer utilities {
+  .font-caveat {
+    font-family: 'Caveat', cursive;
+  }
   .font-serif {
     font-family: 'Instrument Serif', serif;
   }
-  .font-display {
-    font-family: 'Bebas Neue', sans-serif;
+  .font-heading,
+  .font-display,
+  .font-anton {
+    font-family: 'Anton', 'Archivo Black', sans-serif;
+    letter-spacing: 0.04em;
   }
-  .font-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+  .font-archivo {
+    font-family: 'Archivo Black', sans-serif;
+    letter-spacing: 0.03em;
+  }
+  .font-subheading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+  }
+  .font-body,
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
   }
   .font-noto {
     font-family: 'Noto Sans', sans-serif;
@@ -224,42 +239,29 @@ html {
     font-family: 'Karla', sans-serif;
   }
   
-  /* Custom liquid wave hover splash animation for buttons */
+  /* Button styling */
   .water-btn {
     position: relative !important;
     overflow: hidden !important;
   }
-  .water-btn::before, .water-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 140px;
-    height: 140px;
-    border: 2px solid rgba(197, 160, 89, 0.5);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .water-btn:hover::before {
-    animation: btn-splash-ring 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
-  }
-  .water-btn:hover::after {
-    animation: btn-splash-ring 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
-    animation-delay: 0.3s;
-  }
 }
 
-@keyframes btn-splash-ring {
-  0% {
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.4);
-    opacity: 0;
-  }
+/* Animated grain texture keyframes for high-visibility film noise */
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-3%, -6%); }
+  20% { transform: translate(-8%, 3%); }
+  30% { transform: translate(4%, -12%); }
+  40% { transform: translate(-3%, 12%); }
+  50% { transform: translate(-8%, 5%); }
+  60% { transform: translate(8%, 0%); }
+  70% { transform: translate(0%, 8%); }
+  80% { transform: translate(2%, 18%); }
+  90% { transform: translate(-5%, 5%); }
+}
+
+.animate-grain {
+  animation: grain-shift 4.5s steps(8) infinite;
 }
 
 /* Accessibility overrides for Case Studies in Dark Mode */

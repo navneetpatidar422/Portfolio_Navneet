@@ -357,17 +357,17 @@ export const Skills = () => {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-[1.1] text-neutral-900 dark:text-white tracking-tight transition-colors duration-500">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-anton uppercase leading-[1.1] text-neutral-900 dark:text-white tracking-tight transition-colors duration-500">
               Great products don't start with beautiful interfaces.
             </h2>
-            <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 font-light leading-relaxed transition-colors duration-500">
-              They start with <span className="text-purple-600 dark:text-purple-400 font-medium">understanding people</span>, questioning assumptions, and designing systems that scale.
+            <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 font-body font-light leading-relaxed transition-colors duration-500">
+              They start with <span className="text-emerald-500 font-subheading font-bold">understanding people</span>, questioning assumptions, and designing systems that scale.
             </p>
           </motion.div>
 
           {/* Tools Showcase Section */}
           <div className="space-y-6">
-            <h3 className="text-xs md:text-sm font-mono tracking-[0.2em] text-neutral-400 dark:text-neutral-500 uppercase">
+            <h3 className="text-xs md:text-sm font-subheading font-bold tracking-[0.2em] text-emerald-500 uppercase">
               Tools &amp; Ecosystem I Use
             </h3>
 

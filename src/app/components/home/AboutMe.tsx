@@ -153,18 +153,18 @@ export const AboutMe = () => {
             viewport={{ once: true }}
           >
             <div className="flex items-center gap-3">
-              <span className="h-1.5 w-12 bg-neutral-900 dark:bg-neutral-100 transition-colors duration-500" />
-              <span className="text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-widest text-xs font-mono transition-colors duration-500">About Me</span>
+              <span className="h-1.5 w-12 bg-emerald-500 transition-colors duration-500" />
+              <span className="text-emerald-500 font-subheading font-bold uppercase tracking-widest text-xs transition-colors duration-500">About Me</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-display uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">Engineering Meets Design</h2>
-            <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body transition-colors duration-500">
+            <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">Engineering Meets Design</h2>
+            <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
               An aspiring Product Designer with an engineering background and a passion for creating digital experiences that are simple, intuitive, and meaningful.
             </p>
-            <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body transition-colors duration-500">
+            <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
   Hi! I'm Navneet Patidar, currently pursuing my B.Tech in Industrial Internet of Things (IIoT) at USAR, GGSIPU. I discovered design through a curiosity about how people interact with technology. Since then, I've worked on internship projects, hackathons, and self-initiated product concepts across fintech, retail, social platforms, and public-sector digital experiences—always striving to create intuitive, meaningful user experiences.
 </p>
 
-<p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body transition-colors duration-500">
+<p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
   I enjoy simplifying complex problems, designing user-centered products, and continuously learning. My goal is to build products that create real value while growing as a designer alongside talented teams.
 </p>
 
@@ -203,13 +203,13 @@ export const AboutMe = () => {
                             onClick={() => setActiveTab(tab.id)}
                             className={`w-full text-left p-6 rounded-2xl transition-all duration-300 border group relative overflow-hidden ${
                                 activeTab === tab.id 
-                                ? "bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.04)]" 
+                                ? "bg-white dark:bg-neutral-900 border-emerald-500/30 shadow-[0_10px_30px_rgba(0,0,0,0.04)]" 
                                 : "bg-transparent border-transparent hover:bg-neutral-50 dark:hover:bg-neutral-800/40 hover:border-neutral-200 dark:hover:border-white"
                             }`}
                         >
                             <div className="flex items-center justify-between relative z-10">
                                 <div className="flex items-center gap-5">
-                                    <span className={`font-mono text-xs tracking-widest font-bold ${activeTab === tab.id ? "text-purple-600 dark:text-purple-400" : "text-neutral-400"}`}>
+                                    <span className={`font-mono text-xs tracking-widest font-bold ${activeTab === tab.id ? "text-emerald-500" : "text-neutral-400"}`}>
                                         {tab.step}
                                     </span>
                                     <div className="flex flex-col">

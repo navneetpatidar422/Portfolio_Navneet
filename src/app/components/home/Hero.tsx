@@ -111,15 +111,15 @@ export const Hero = () => {
                                       opacity: { duration: 0.2 },
                                       y: { repeat: Infinity, duration: 3.5, ease: "easeInOut" }
                                   }}
-                                  className="absolute top-[8%] -left-[10%] md:-left-[24%] z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm border border-neutral-200/60 dark:border-neutral-800 shadow-xl px-6 py-4.5 rounded-[2rem] max-w-[170px] md:max-w-[210px] transition-colors duration-500"
+                                  className="absolute top-[8%] -left-[10%] md:-left-[24%] z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm border border-emerald-500/20 shadow-xl px-6 py-4.5 rounded-[2rem] max-w-[170px] md:max-w-[210px] transition-colors duration-500"
                               >
-                                  <h5 className="text-[10px] font-mono font-bold text-amber-600 dark:text-amber-500 uppercase tracking-widest mb-1 select-none">THINK</h5>
+                                  <h5 className="text-[10px] font-subheading font-bold text-emerald-500 uppercase tracking-widest mb-1 select-none">THINK</h5>
                                   <p className="text-neutral-700 dark:text-neutral-300 text-xs md:text-sm leading-relaxed font-body font-light select-none">
                                       Every project starts by understanding the problem.
                                   </p>
                                   {/* Cloud bubble tail dots */}
-                                  <div className="w-3.5 h-3.5 rounded-full absolute bottom-[-10px] right-[25%] bg-white/95 dark:bg-neutral-900/95 border border-neutral-200/60 dark:border-neutral-800 shadow-sm pointer-events-none" />
-                                  <div className="w-2 h-2 rounded-full absolute bottom-[-18px] right-[18%] bg-white/95 dark:bg-neutral-900/95 border border-neutral-200/60 dark:border-neutral-800 shadow-sm pointer-events-none" />
+                                  <div className="w-3.5 h-3.5 rounded-full absolute bottom-[-10px] right-[25%] bg-white/95 dark:bg-neutral-900/95 border border-emerald-500/30 shadow-sm pointer-events-none" />
+                                  <div className="w-2 h-2 rounded-full absolute bottom-[-18px] right-[18%] bg-white/95 dark:bg-neutral-900/95 border border-emerald-500/30 shadow-sm pointer-events-none" />
                               </motion.div>
 
                               {/* Bubble 2: DESIGN (Middle-Right) */}
@@ -136,15 +136,15 @@ export const Hero = () => {
                                       opacity: { duration: 0.2 },
                                       y: { repeat: Infinity, duration: 4, ease: "easeInOut" }
                                   }}
-                                  className="absolute top-[38%] -right-[15%] md:-right-[28%] z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm border border-neutral-200/60 dark:border-neutral-800 shadow-xl px-6 py-4.5 rounded-[2rem] max-w-[170px] md:max-w-[210px] transition-colors duration-500"
+                                  className="absolute top-[38%] -right-[15%] md:-right-[28%] z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm border border-emerald-500/20 shadow-xl px-6 py-4.5 rounded-[2rem] max-w-[170px] md:max-w-[210px] transition-colors duration-500"
                               >
-                                  <h5 className="text-[10px] font-mono font-bold text-purple-600 dark:text-purple-400 uppercase tracking-widest mb-1 select-none">DESIGN</h5>
+                                  <h5 className="text-[10px] font-subheading font-bold text-emerald-500 uppercase tracking-widest mb-1 select-none">DESIGN</h5>
                                   <p className="text-neutral-700 dark:text-neutral-300 text-xs md:text-sm leading-relaxed font-body font-light select-none">
                                       Simple interfaces built around people.
                                   </p>
                                   {/* Cloud bubble tail dots */}
-                                  <div className="w-3.5 h-3.5 rounded-full absolute bottom-[-6px] left-[25%] bg-white/95 dark:bg-neutral-900/95 border border-neutral-200/60 dark:border-neutral-800 shadow-sm pointer-events-none" />
-                                  <div className="w-2 h-2 rounded-full absolute bottom-[-14px] left-[18%] bg-white/95 dark:bg-neutral-900/95 border border-neutral-200/60 shadow-sm pointer-events-none" />
+                                  <div className="w-3.5 h-3.5 rounded-full absolute bottom-[-6px] left-[25%] bg-white/95 dark:bg-neutral-900/95 border border-emerald-500/30 shadow-sm pointer-events-none" />
+                                  <div className="w-2 h-2 rounded-full absolute bottom-[-14px] left-[18%] bg-white/95 dark:bg-neutral-900/95 border border-emerald-500/30 shadow-sm pointer-events-none" />
                               </motion.div>
 
                               {/* Bubble 3: BUILD (Bottom-Left) */}
@@ -161,15 +161,15 @@ export const Hero = () => {
                                       opacity: { duration: 0.2 },
                                       y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" }
                                   }}
-                                  className="absolute bottom-[16%] -left-[12%] md:-left-[26%] z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm border border-neutral-200/60 dark:border-neutral-800 shadow-xl px-6 py-4.5 rounded-[2rem] max-w-[170px] md:max-w-[210px] transition-colors duration-500"
+                                  className="absolute bottom-[8%] -left-[12%] md:-left-[26%] z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm border border-emerald-500/20 shadow-xl px-6 py-4.5 rounded-[2rem] max-w-[170px] md:max-w-[210px] transition-colors duration-500"
                               >
-                                  <h5 className="text-[10px] font-mono font-bold text-teal-600 dark:text-teal-400 uppercase tracking-widest mb-1 select-none">BUILD</h5>
+                                  <h5 className="text-[10px] font-subheading font-bold text-emerald-500 uppercase tracking-widest mb-1 select-none">BUILD</h5>
                                   <p className="text-neutral-700 dark:text-neutral-300 text-xs md:text-sm leading-relaxed font-body font-light select-none">
-                                      Interactive prototypes ready for testing.
+                                      Crafted with speed, scalability, and precision.
                                   </p>
                                   {/* Cloud bubble tail dots */}
-                                  <div className="w-3.5 h-3.5 rounded-full absolute top-[25%] right-[-8px] bg-white/95 dark:bg-neutral-900/95 border border-neutral-200/60 dark:border-neutral-800 shadow-sm pointer-events-none" />
-                                  <div className="w-2 h-2 rounded-full absolute top-[15%] right-[-16px] bg-white/95 dark:bg-neutral-900/95 border border-neutral-200/60 shadow-sm pointer-events-none" />
+                                  <div className="w-3.5 h-3.5 rounded-full absolute top-[25%] right-[-8px] bg-white/95 dark:bg-neutral-900/95 border border-emerald-500/30 shadow-sm pointer-events-none" />
+                                  <div className="w-2 h-2 rounded-full absolute top-[15%] right-[-16px] bg-white/95 dark:bg-neutral-900/95 border border-emerald-500/30 shadow-sm pointer-events-none" />
                               </motion.div>
                           </>
                      )}
@@ -178,14 +178,14 @@ export const Hero = () => {
 
              {/* Lower Text - In front of the image */}
              <div className="relative z-30 mt-16 md:mt-24">
-                 <div className="font-serif tracking-tight"><ParallaxText baseVelocity={2}>CREATIVE DEVELOPER</ParallaxText></div>
+                 <div className="font-anton tracking-wider font-bold uppercase"><ParallaxText baseVelocity={2}>CREATIVE DEVELOPER</ParallaxText></div>
              </div>
         </motion.div>
         
         {/* Intro Text & CTAs */}
         <div className="mt-8 mb-12 md:mb-0 flex flex-col items-center gap-10 px-6 relative z-30">
             <motion.p
-                className="text-center max-w-[600px] text-neutral-600 dark:text-neutral-300 text-lg md:text-2xl leading-relaxed font-light tracking-wide min-h-[3.5rem] transition-colors duration-500"
+                className="text-center max-w-[600px] text-neutral-600 dark:text-neutral-300 text-lg md:text-2xl leading-relaxed font-body font-light tracking-wide min-h-[3.5rem] transition-colors duration-500"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
@@ -205,16 +205,15 @@ export const Hero = () => {
                         const target = document.querySelector("#contact");
                         if (target) target.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="group relative px-8 py-4 bg-black dark:bg-[#F7F4EE] text-[#F7F4EE] dark:text-black text-sm font-bold uppercase tracking-widest rounded-full overflow-hidden shadow-lg hover:shadow-xl cursor-pointer water-btn transition-colors duration-500"
+                    className="group relative px-8 py-4 bg-[#10B981] hover:bg-[#059669] text-white text-xs font-subheading font-bold uppercase tracking-widest rounded-full overflow-hidden shadow-lg hover:shadow-emerald-500/20 cursor-pointer transition-colors duration-300"
                 >
-                    <span className="relative z-10 group-hover:text-white dark:group-hover:text-black transition-colors">Start a Project</span>
-                    <div className="absolute inset-0 bg-neutral-800 dark:bg-neutral-200 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 -z-10" />
+                    <span className="relative z-10 transition-colors">Start a Project</span>
                 </button>
                 <a 
                     href="https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center px-8 py-4 bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800 text-black dark:text-white text-sm font-bold uppercase tracking-widest rounded-full hover:bg-white dark:hover:bg-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all shadow-sm cursor-pointer water-btn"
+                    className="flex items-center justify-center px-8 py-4 bg-neutral-900 dark:bg-white text-white dark:text-black text-xs font-subheading font-bold uppercase tracking-widest rounded-full hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all shadow-sm cursor-pointer"
                 >
                     Download Resume
                 </a>

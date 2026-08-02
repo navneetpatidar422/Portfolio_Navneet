@@ -44,10 +44,10 @@ export const Testimonials = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-neutral-900 border border-emerald-500/20 shadow-sm"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
-            <span className="text-[10px] font-mono font-medium tracking-widest uppercase text-neutral-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-subheading font-bold tracking-widest uppercase text-emerald-500">
               Reviews
             </span>
           </motion.div>
@@ -57,7 +57,7 @@ export const Testimonials = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold tracking-tighter text-black dark:text-white uppercase font-display transition-colors duration-500"
+            className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500"
           >
             Words from People I've Worked With
           </motion.h3>
@@ -67,7 +67,7 @@ export const Testimonials = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
             viewport={{ once: true }} 
-            className="text-neutral-500 dark:text-neutral-400 max-w-lg mx-auto text-lg font-light leading-relaxed transition-colors duration-500"
+            className="text-neutral-600 dark:text-neutral-300 max-w-lg mx-auto text-lg font-body font-light leading-relaxed transition-colors duration-500"
           >
             Real feedback from clients, teammates, and collaborators across freelance projects, internships, and competitions.
           </motion.p>

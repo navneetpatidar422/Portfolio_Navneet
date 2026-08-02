@@ -104,15 +104,15 @@ export const Footer = () => {
             </a>
 
             <div>
-              <p className="text-neutral-200 text-xl font-display font-bold tracking-tight mb-1">
+              <p className="text-neutral-200 text-2xl font-anton uppercase tracking-wide mb-1">
                 Navneet Patidar
               </p>
-              <p className="text-neutral-400 text-sm font-mono uppercase tracking-widest">
+              <p className="text-emerald-500 text-xs font-subheading font-bold uppercase tracking-widest">
                 UI/UX &amp; Product Designer
               </p>
             </div>
 
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-xs">
+            <p className="text-neutral-400 text-sm leading-relaxed max-w-xs font-body font-light">
               Designing research-backed, accessible interfaces and engineering them cleanly.
               New Delhi, India.
             </p>
@@ -127,7 +127,7 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ y: -3, scale: 1.1 }}
                   title={s.name}
-                  className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm"
+                  className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-emerald-500 hover:text-white transition-all duration-300 backdrop-blur-sm"
                 >
                   <s.icon className="w-4 h-4" />
                 </motion.a>
@@ -137,16 +137,16 @@ export const Footer = () => {
 
           {/* Sitemap */}
           <div className="md:col-span-2 md:col-start-6">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 font-mono mb-6">Sitemap</h4>
+            <h4 className="text-xs font-subheading font-bold uppercase tracking-widest text-emerald-500 mb-6">Sitemap</h4>
             <ul className="space-y-3">
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
                     onClick={(e) => handleLink(e, link.href)}
-                    className="text-neutral-300 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit cursor-pointer"
+                    className="text-neutral-300 hover:text-white text-sm font-body font-light transition-colors flex items-center gap-1.5 group w-fit cursor-pointer"
                   >
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-amber-400 shrink-0" />
+                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-emerald-500 shrink-0" />
                     {link.name}
                   </a>
                 </li>

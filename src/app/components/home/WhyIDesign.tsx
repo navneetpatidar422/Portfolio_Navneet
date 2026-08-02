@@ -9,10 +9,10 @@ export const WhyIDesign = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-neutral-900 border border-emerald-500/20 shadow-sm"
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
-          <span className="text-[10px] font-mono font-medium tracking-widest uppercase text-neutral-500">
+          <Sparkles className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
+          <span className="text-[10px] font-subheading font-bold tracking-widest uppercase text-emerald-500">
             Design Philosophy
           </span>
         </motion.div>
@@ -22,7 +22,7 @@ export const WhyIDesign = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-serif italic text-neutral-800 dark:text-neutral-200 leading-snug transition-colors duration-500"
+          className="text-4xl md:text-6xl font-caveat font-medium text-neutral-900 dark:text-white leading-snug transition-colors duration-500"
         >
           "I design because interfaces are the translation layer between human intent and machine capability. If the translation fails, the product fails."
         </motion.h2>
@@ -32,7 +32,7 @@ export const WhyIDesign = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-neutral-500 dark:text-neutral-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed font-light transition-colors duration-500"
+          className="text-neutral-600 dark:text-neutral-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed font-body font-light transition-colors duration-500"
         >
           Designing is not just about making layouts look beautiful. It's about respecting the user's attention span, building accessible flows, and shipping real engineering value.
         </motion.p>

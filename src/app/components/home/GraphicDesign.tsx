@@ -23,10 +23,10 @@ export const GraphicDesign = () => {
           viewport={{ once: true }}
           className="mb-16 md:mb-24"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-medium leading-tight text-neutral-900 dark:text-white tracking-tight uppercase transition-colors duration-500">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-anton uppercase leading-tight text-neutral-900 dark:text-white tracking-tight transition-colors duration-500">
             Visual<br />Explorations.
           </h2>
-          <p className="mt-6 text-lg md:text-xl text-neutral-500 dark:text-neutral-400 font-light max-w-2xl transition-colors duration-500">
+          <p className="mt-6 text-lg md:text-xl text-neutral-600 dark:text-neutral-300 font-body font-light max-w-2xl transition-colors duration-500">
             A curated gallery of my graphic design work — posters, brand identities, and digital art.
           </p>
         </motion.div>

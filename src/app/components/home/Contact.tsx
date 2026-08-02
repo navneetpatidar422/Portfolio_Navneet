@@ -179,15 +179,15 @@ export const Contact = () => {
                         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl md:text-7xl font-bold tracking-tighter mb-8 leading-[1.1] text-foreground">
+                        <h2 className="text-4xl md:text-7xl font-anton uppercase tracking-tight mb-8 leading-[1.1] text-foreground">
                             Let's create something <br/>
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-600 to-purple-700 animate-gradient-x">
+                            <span className="text-[#10B981]">
                                 AMAZING...
                             </span>
                             <br />
                             together.
                         </h2>
-                        <p className="text-xl text-neutral-600 dark:text-neutral-300 max-w-md mb-12 font-light leading-relaxed font-body transition-colors duration-500">
+                        <p className="text-xl text-neutral-600 dark:text-neutral-300 max-w-md mb-12 font-body font-light leading-relaxed transition-colors duration-500">
                             Interested in working together? Fill out the form, send an email, or connect via WhatsApp or socials.
                         </p>
 
