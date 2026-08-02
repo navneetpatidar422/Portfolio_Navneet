@@ -26,17 +26,48 @@ import { BharatVibeCaseStudy } from "./components/work/BharatVibeCaseStudy";
 import { FlashbackCaseStudy } from "./components/work/FlashbackCaseStudy";
 import { AmazonCaseStudy } from "./components/work/AmazonCaseStudy";
 import { IsroCaseStudy } from "./components/work/IsroCaseStudy";
+import { ThankYou } from "./components/home/ThankYou";
+import { SectionTicker } from "./components/shared/SectionTicker";
 
 function MainHome() {
   return (
     <>
       <Hero />
+      
+      <SectionTicker 
+        items={["FEATURED CASE STUDIES", "PRODUCT DESIGN", "UI/UX ARCHITECTURE", "SELECTED WORKS"]} 
+      />
       <Work />
+      
+      <SectionTicker 
+        items={["VISUAL EXPLORATIONS", "GRAPHIC DESIGN", "BRANDING & POSTERS", "CREATIVE MARQUEE"]} 
+        reverse 
+      />
       <GraphicDesign />
+      
+      <SectionTicker 
+        items={["DESIGN PHILOSOPHY", "HUMAN-CENTERED INTENT", "INTERFACE TRANSLATION LAYER", "DESIGN MINDSET"]} 
+      />
       <WhyIDesign />
+      
+      <SectionTicker 
+        items={["TECHNICAL SKILLS", "DESIGN SYSTEMS", "PROTOTYPING & MOTION", "THE TOOLKIT"]} 
+        reverse 
+      />
       <Skills />
+      
+      <SectionTicker 
+        items={["ABOUT NAVNEET", "THE DESIGNER BEHIND THE WORK", "JOURNEY & EXPERIENCE", "CRAFT & VISION"]} 
+      />
       <AboutMe />
+      
+      <SectionTicker 
+        items={["CLIENT ENDORSEMENTS", "WORDS FROM COLLABORATORS", "TESTIMONIALS & REVIEWS", "FEEDBACK"]} 
+        reverse 
+      />
       <Testimonials />
+      
+      <ThankYou />
       <Contact />
     </>
   );

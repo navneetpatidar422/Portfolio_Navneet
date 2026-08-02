@@ -219,7 +219,7 @@ export const AboutMe = () => {
                                       <span className="text-[10px] font-mono text-neutral-400 mt-1 uppercase tracking-widest">{tab.period}</span>
                                     </div>
                                 </div>
-                                <ArrowRight className={`w-4 h-4 transition-all duration-300 ${activeTab === tab.id ? "text-purple-600 dark:text-purple-400 translate-x-0" : "text-neutral-400 -translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"}`} />
+                                <ArrowRight className={`w-4 h-4 transition-all duration-300 ${activeTab === tab.id ? "text-emerald-500 translate-x-0" : "text-neutral-400 -translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"}`} />
                             </div>
                             
                             {/* Mobile-Only Accordion Content */}
@@ -236,7 +236,7 @@ export const AboutMe = () => {
                                   <div className="grid grid-cols-1 gap-3 mb-6">
                                       {tab.details.map(d => (
                                           <div key={d} className="flex items-start gap-3 text-sm text-neutral-700 dark:text-neutral-300">
-                                              <CheckCircle2 className="w-4 h-4 text-purple-500/60 shrink-0 mt-0.5" />
+                                              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                                               <span>{d}</span>
                                           </div>
                                       ))}
@@ -264,7 +264,7 @@ export const AboutMe = () => {
                                     className="relative bg-white/80 dark:bg-neutral-900/80 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-[2rem] p-8 overflow-hidden shadow-xl text-foreground transition-colors duration-500"
                                 >
                                     {/* Abstract Decor */}
-                                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-br from-purple-500/5 to-transparent rounded-full blur-[80px] pointer-events-none -translate-y-1/2 translate-x-1/2" />
+                                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-br from-emerald-500/5 to-transparent rounded-full blur-[80px] pointer-events-none -translate-y-1/2 translate-x-1/2" />
                                     
                                     <div className="relative z-10 flex flex-col h-full">
                                       {tab.id === "experience" ? (
@@ -304,7 +304,7 @@ export const AboutMe = () => {
                                           <div className="grid grid-cols-1 gap-y-4 mb-4">
                                               {tab.details.map((item) => (
                                                   <div key={item} className="flex items-start gap-3 group">
-                                                      <CheckCircle2 className="w-4 h-4 text-purple-500/50 group-hover:text-purple-600 dark:group-hover:text-purple-450 transition-colors shrink-0 mt-1" />
+                                                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-1" />
                                                       <span className="text-neutral-700 dark:text-neutral-300 text-base font-light">{item}</span>
                                                   </div>
                                               ))}

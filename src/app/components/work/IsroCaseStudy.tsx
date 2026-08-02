@@ -168,10 +168,10 @@ export const IsroCaseStudy = () => {
 
       {/* Interactive Figma Embed */}
       <section className="max-w-5xl mx-auto px-6 mb-20">
-        <h2 className="text-3xl font-display uppercase text-purple-400 tracking-wide mb-6">
+        <h2 className="text-3xl font-anton uppercase text-emerald-500 tracking-wide mb-6">
           Interactive Prototype
         </h2>
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-900 pointer-events-auto z-10">
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800 pointer-events-auto z-10">
           <iframe 
             style={{ border: "none" }} 
             width="100%" 
@@ -186,10 +186,10 @@ export const IsroCaseStudy = () => {
 
       {/* Mockup Showcase */}
       <section className="max-w-5xl mx-auto px-6 mb-20">
-        <h2 className="text-3xl font-display uppercase text-purple-400 tracking-wide mb-8 border-b border-purple-900/50 pb-3">
+        <h2 className="text-3xl font-anton uppercase text-emerald-500 tracking-wide mb-8 border-b border-white/10 pb-3">
           Web Mockups
         </h2>
-        <div className="relative w-full overflow-hidden rounded-3xl bg-neutral-900/60 border border-purple-900/40 shadow-xl p-6 md:p-10 backdrop-blur-sm">
+        <div className="relative w-full overflow-hidden rounded-3xl bg-neutral-900/60 border border-white/10 shadow-xl p-6 md:p-10 backdrop-blur-sm">
           <img
             src="/mockups/isro.png"
             alt="ISRO 2.0 Web Mockups"
@@ -200,10 +200,12 @@ export const IsroCaseStudy = () => {
       </section>
 
       {/* Project Review */}
-      <ProjectReview projectId="isro" accentColor="#000000" />
+      <ProjectReview projectId="isro" accentColor="#10B981" />
 
       {/* Recommendations Section */}
-      <Recommendations currentId="isro" />
+      <div className="bg-[#050508] pb-16">
+        <Recommendations currentId="isro" />
+      </div>
     </div>
   );
 };

@@ -46,9 +46,45 @@ const socials = [
   { name: "Email", icon: Mail, href: "mailto:designer.navneet.patidar@gmail.com" },
 ];
 
+const FooterStarField = () => {
+  const stars = Array.from({ length: 40 }).map((_, i) => ({
+    id: i,
+    top: `${Math.random() * 75}%`,
+    left: `${Math.random() * 100}%`,
+    size: `${Math.random() * 2.5 + 1}px`,
+    duration: `${Math.random() * 3 + 2}s`,
+    delay: `${Math.random() * 3}s`,
+  }));
+
+  return (
+    <div className="absolute inset-0 pointer-events-none z-[0] overflow-hidden">
+      <style>{`
+        @keyframes star-twinkle {
+          0%, 100% { opacity: 0.15; transform: scale(0.8); }
+          50% { opacity: 0.9; transform: scale(1.2); }
+        }
+      `}</style>
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="absolute rounded-full bg-white"
+          style={{
+            top: star.top,
+            left: star.left,
+            width: star.size,
+            height: star.size,
+            animation: `star-twinkle ${star.duration} infinite ease-in-out ${star.delay}`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isIsro = location.pathname === "/work/isro";
 
   const handleLink = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
@@ -66,21 +102,30 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="text-white relative overflow-hidden bg-transparent">
+    <footer className={`text-white relative overflow-hidden ${isIsro ? "bg-[#050508]" : "bg-transparent"}`}>
       {/* Solid Footer Background: Only covers the lower section of the footer */}
-      <div className="absolute top-[200px] sm:top-[260px] md:top-[320px] lg:top-[360px] bottom-0 left-0 right-0 bg-[#0E0E0E] z-0" />
+      <div className={`absolute top-[200px] sm:top-[260px] md:top-[320px] lg:top-[360px] bottom-0 left-0 right-0 z-0 ${
+        isIsro ? "bg-[#050508]" : "bg-[#0E0E0E]"
+      }`} />
 
       {/* Mountain View Header Backdrop */}
       <div className="relative w-full h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] overflow-hidden select-none pointer-events-none z-[1]">
+        {/* Animated Twinkling StarField behind mountain image on ISRO page */}
+        {isIsro && <FooterStarField />}
+
         {/* Mountain Image */}
         <img
           src="/mountains.png"
           alt="Dark Mountain Landscape"
-          className="w-full h-full object-cover object-top block opacity-95"
+          className="w-full h-full object-cover object-top block opacity-95 relative z-[1]"
         />
 
-        {/* Bottom Black Gradient: Fades lower trees seamlessly into footer background #0E0E0E */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0E0E0E]/70 to-[#0E0E0E]" />
+        {/* Bottom Black Gradient: Fades lower trees seamlessly into footer background */}
+        <div className={`absolute inset-0 z-[2] bg-gradient-to-b ${
+          isIsro 
+            ? "from-[#050508] via-[#050508]/60 to-[#050508]" 
+            : "from-transparent via-[#0E0E0E]/70 to-[#0E0E0E]"
+        }`} />
       </div>
 
       {/* Main Footer Content: Positioned over the lower dark gradient (Starting from the Blue Line in Sketch) */}

@@ -205,17 +205,19 @@ export const Hero = () => {
                         const target = document.querySelector("#contact");
                         if (target) target.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="group relative px-8 py-4 bg-[#10B981] hover:bg-[#059669] text-white text-xs font-subheading font-bold uppercase tracking-widest rounded-full overflow-hidden shadow-lg hover:shadow-emerald-500/20 cursor-pointer transition-colors duration-300"
+                    className="relative px-8 py-4 bg-[#111111] dark:bg-white text-white dark:text-black text-xs font-subheading font-bold uppercase tracking-widest rounded-full overflow-hidden group cursor-pointer transition-colors duration-300 shadow-lg border border-black/10 dark:border-white/10"
                 >
-                    <span className="relative z-10 transition-colors">Start a Project</span>
+                    <span className="relative z-10 group-hover:text-white transition-colors duration-300">Start a Project</span>
+                    <div className="absolute inset-0 bg-[#10B981] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" />
                 </button>
                 <a 
                     href="https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center px-8 py-4 bg-neutral-900 dark:bg-white text-white dark:text-black text-xs font-subheading font-bold uppercase tracking-widest rounded-full hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-all shadow-sm cursor-pointer"
+                    className="relative flex items-center justify-center px-8 py-4 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white text-xs font-subheading font-bold uppercase tracking-widest rounded-full overflow-hidden group cursor-pointer transition-colors duration-300 shadow-sm"
                 >
-                    Download Resume
+                    <span className="relative z-10 group-hover:text-white transition-colors duration-300">Download Resume</span>
+                    <div className="absolute inset-0 bg-[#10B981] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" />
                 </a>
             </motion.div>
         </div>
