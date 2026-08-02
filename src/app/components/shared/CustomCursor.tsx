@@ -4,6 +4,11 @@ export const CustomCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
 
+  // Early return on mobile / touch devices to save 100% CPU/GPU resources
+  if (typeof window !== 'undefined' && (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768)) {
+    return null;
+  }
+
   useEffect(() => {
     const cursor = cursorRef.current;
     if (!cursor) return;

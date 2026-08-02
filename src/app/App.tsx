@@ -79,8 +79,8 @@ function GlobalBackground() {
           className="absolute top-[35%] left-[25%] w-[500px] h-[500px] bg-gradient-to-br from-white via-neutral-100/80 to-slate-200/40 dark:from-fuchsia-950/15 dark:via-violet-900/15 dark:to-purple-950/10 rounded-full blur-[70px] mix-blend-normal dark:mix-blend-screen"
       />
 
-      {/* SVG Animated High-Frequency Grain Filter */}
-      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+      {/* Desktop-Only SVG Animated High-Frequency Grain Filter */}
+      <svg className="hidden md:block absolute w-0 h-0 pointer-events-none" aria-hidden="true">
         <filter id="animated-grain-filter">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="5" stitchTiles="stitch">
             <animate attributeName="baseFrequency" values="0.80; 0.92; 0.78; 0.88; 0.80" dur="2.2s" repeatCount="indefinite" />
@@ -89,14 +89,14 @@ function GlobalBackground() {
         </filter>
       </svg>
 
-      {/* Primary High-Visibility Animated Grain Layer */}
+      {/* Primary High-Visibility Animated Grain Layer (Desktop Only for GPU smoothness) */}
       <div 
-        className="absolute -inset-[100%] w-[300%] h-[300%] opacity-[0.48] dark:opacity-[0.38] pointer-events-none animate-grain mix-blend-darken dark:mix-blend-overlay contrast-150 brightness-95"
+        className="hidden md:block absolute -inset-[100%] w-[300%] h-[300%] opacity-[0.48] dark:opacity-[0.38] pointer-events-none animate-grain mix-blend-darken dark:mix-blend-overlay contrast-150 brightness-95"
         style={{ filter: "url(#animated-grain-filter)" }}
       />
       
-      {/* Secondary Crisp Paper Grain Overlay */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.10] dark:opacity-[0.12] mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />
+      {/* High-Performance Mobile Paper Grain Layer (Ultra-smooth 120fps on Android & iOS) */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.16] dark:opacity-[0.18] mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />
 
       {/* Technical Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#0000000a_1px,transparent_1px),linear-gradient(to_bottom,#0000000a_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff06_1px,transparent_1px),linear-gradient(to_bottom,#ffffff06_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_100%)]" />

@@ -4,6 +4,7 @@ import { Menu, X, Mail, Phone } from "lucide-react";
 import { useNavigate, useLocation } from "react-router";
 
 const navLinks = [
+  { name: "Home", href: "#home" },
   { name: "Work", href: "#work" },
   { name: "About", href: "#about" },
 ];
@@ -73,6 +74,15 @@ export const Navbar = () => {
     e.preventDefault();
     setIsOpen(false);
     
+    if (href === "#home" || href === "/") {
+      if (location.pathname !== "/") {
+        navigate("/");
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
     if (location.pathname !== "/") {
       navigate("/", { state: { scrollTo: href } });
       return;
@@ -89,6 +99,15 @@ export const Navbar = () => {
     setIsOpen(false);
     
     setTimeout(() => {
+      if (href === "#home" || href === "/") {
+        if (location.pathname !== "/") {
+          navigate("/");
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        return;
+      }
+
       if (location.pathname !== "/") {
         navigate("/", { state: { scrollTo: href } });
         return;
@@ -98,7 +117,7 @@ export const Navbar = () => {
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
-    }, 400);
+    }, 300);
   };
 
   return (
@@ -261,7 +280,7 @@ export const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 bg-background/95 dark:bg-[#0A0A0A]/95 backdrop-blur-3xl pt-28 px-8 md:hidden flex flex-col justify-between pb-12"
+            className="fixed inset-0 z-40 bg-background/98 dark:bg-[#0A0A0A]/98 backdrop-blur-md pt-28 px-8 md:hidden flex flex-col justify-between pb-12"
           >
             <div className="flex flex-col gap-6">
               {[...navLinks, { name: "Contact", href: "#contact" }].map((link, i) => (
