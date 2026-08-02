@@ -130,15 +130,24 @@ export const Navbar = () => {
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
         <div 
-          className={`relative px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-2xl border border-black/8 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center justify-between transition-all duration-300 ${
+          className={`relative px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-2xl border border-black/8 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center justify-between transition-all duration-300 overflow-hidden ${
             isScrolled ? "shadow-xl border-black/15 dark:border-white/20" : ""
           }`}
         >
+          {/* Scroll Progress Fill Background Layer (Navbar cell fills with project custom brand color on scroll) */}
+          <div 
+            className="absolute inset-y-0 left-0 rounded-full pointer-events-none transition-all duration-300 ease-out z-0 opacity-85 dark:opacity-90"
+            style={{
+              width: `${scrollProgress}%`,
+              backgroundColor: getProgressBarColor(location.pathname),
+            }}
+          />
+
           {/* Left Side: Favicon Image with Thin Green Border */}
           <a
             href="/"
             onClick={handleLogoClick}
-            className="flex items-center group cursor-pointer select-none shrink-0"
+            className="flex items-center group cursor-pointer select-none shrink-0 relative z-10"
             title="Navneet Patidar"
           >
             <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full ring-2 ring-emerald-500 ring-offset-1 ring-offset-white dark:ring-offset-neutral-900 overflow-hidden shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105">
@@ -151,7 +160,7 @@ export const Navbar = () => {
           </a>
 
           {/* Center Nav Links directly inside outer pill */}
-          <div className="hidden md:flex items-center gap-2 lg:gap-4">
+          <div className="hidden md:flex items-center gap-2 lg:gap-4 relative z-10">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -180,7 +189,7 @@ export const Navbar = () => {
           </div>
 
           {/* Right Side: Expandable "LET'S TALK" Option with FIXED HEIGHT & NO VERTICAL MOVEMENT */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0 relative z-10">
             <div
               className="relative shrink-0"
               onMouseEnter={() => setIsTalkHovered(true)}
@@ -258,17 +267,6 @@ export const Navbar = () => {
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-        </div>
-
-        {/* Scroll Progress Indicator */}
-        <div className="absolute -bottom-1 left-6 right-6 h-[2px] rounded-full overflow-hidden opacity-80 pointer-events-none">
-          <div
-            className="h-full transition-all duration-150 ease-out"
-            style={{
-              width: `${scrollProgress}%`,
-              backgroundColor: getProgressBarColor(location.pathname),
-            }}
-          />
         </div>
       </motion.nav>
 

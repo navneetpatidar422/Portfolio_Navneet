@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
@@ -12,7 +12,8 @@ const projects = [
     year: "2026",
     image: "/projects/Retail_Management-thumb.jpg",
     tags: ["FIRST FREELANCE PAID PROJECT", "CONFIDENTIAL", "Jewellery Retail Management App"],
-    path: "/work/Retail_Management"
+    path: "/work/Retail_Management",
+    color: "#C5A059"
   },
   {
     id: "paygo",
@@ -21,7 +22,8 @@ const projects = [
     year: "2025",
     image: "/projects/paygo-thumb.jpg",
     tags: ["Case Study", "Accessibility & Inclusive Design", "Designathon Project"],
-    path: "/work/paygo"
+    path: "/work/paygo",
+    color: "#662AB2"
   },
   {
     id: "bharatvibe",
@@ -30,7 +32,8 @@ const projects = [
     year: "2025",
     image: "/projects/bharatvibe-thumb.jpg",
     tags: ["UI Concept", "Independence Day 2025 Special"],
-    path: "/work/bharatvibe"
+    path: "/work/bharatvibe",
+    color: "#FF6B35"
   },
   {
     id: "flashback",
@@ -39,7 +42,8 @@ const projects = [
     year: "2025",
     image: "/projects/flashback-thumb.jpg",
     tags: ["Designathon Entry", "Digital Time Capsule", "Adobe Designathon,IITD"],
-    path: "/work/flashback"
+    path: "/work/flashback",
+    color: "#900C3F"
   },
   {
     id: "amazon",
@@ -48,7 +52,8 @@ const projects = [
     year: "2026",
     image: "/projects/amazon-thumb.jpg",
     tags: ["UX Study", "Redesign Exercise", "Amazon"],
-    path: "/work/amazon"
+    path: "/work/amazon",
+    color: "#FF9900"
   },
   {
     id: "isro",
@@ -57,13 +62,15 @@ const projects = [
     year: "2024",
     image: "/projects/isro-thumb.jpg",
     tags: ["First UI/UX Project", "UI Concept", "Space Tech"],
-    path: "/work/isro"
+    path: "/work/isro",
+    color: "#2563EB"
   }
 ];
 
-// Project Card Component with Smooth 3D Deck Stacking on Scroll
+// Project Card Component with Smooth 3D Deck Stacking & Signature Brand Colors
 const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -86,8 +93,13 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
       }}
     >
       <motion.div
-        style={{ scale }}
-        className="group block w-full bg-white/95 dark:bg-[#121214]/95 border border-black/10 dark:border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] hover:border-emerald-500/50 transition-colors duration-500 backdrop-blur-2xl origin-top"
+        style={{ 
+          scale,
+          borderColor: isHovered ? `${project.color}60` : undefined
+        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="group block w-full bg-white/95 dark:bg-[#121214]/95 border border-black/10 dark:border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-colors duration-500 backdrop-blur-2xl origin-top"
       >
         <Link to={project.path} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-8 md:p-12 items-center cursor-pointer">
           
@@ -106,7 +118,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             
             {/* Tags & Timeline */}
             <div className="flex flex-wrap gap-2 items-center">
-              <Badge className="bg-emerald-500 text-white rounded-full px-4 py-1.5 text-xs font-subheading font-bold uppercase tracking-wider border-none">
+              <Badge 
+                style={{ backgroundColor: project.color }}
+                className="text-white rounded-full px-4 py-1.5 text-xs font-subheading font-bold uppercase tracking-wider border-none shadow-sm"
+              >
                 {project.year}
               </Badge>
               {project.tags.map((tag) => (
@@ -120,7 +135,10 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             </div>
 
             {/* Headline Title */}
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white leading-tight transition-colors duration-300 group-hover:text-emerald-500">
+            <h3 
+              style={{ color: isHovered ? project.color : undefined }}
+              className="text-2xl md:text-3xl lg:text-4xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white leading-tight transition-colors duration-300"
+            >
               {project.title}
             </h3>
 
@@ -129,14 +147,17 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
               {project.subtitle}
             </p>
 
-            {/* Prominent CTA Button */}
+            {/* Prominent CTA Button with Signature Brand Liquid Fill */}
             <div className="pt-4">
               <span className="relative inline-flex items-center gap-2 bg-[#111111] dark:bg-white text-white dark:text-black px-6 py-3 rounded-full text-xs font-subheading font-bold uppercase tracking-widest overflow-hidden group/btn cursor-pointer transition-colors duration-300 select-none shadow-md">
                 <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300 flex items-center gap-2">
                   <span>View Project</span>
                   <ArrowUpRight className="w-4 h-4 transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-300" />
                 </span>
-                <div className="absolute inset-0 bg-[#10B981] translate-y-[101%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" />
+                <div 
+                  style={{ backgroundColor: project.color }}
+                  className="absolute inset-0 translate-y-[101%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" 
+                />
               </span>
             </div>
 
@@ -156,24 +177,30 @@ export const Work = () => {
         {/* Section Header */}
         <div className="mb-16 lg:mb-24">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             <div className="flex items-center gap-3 mb-4">
               <span className="h-1.5 w-12 bg-emerald-500 transition-colors duration-500" />
-              <span className="text-emerald-500 font-subheading font-bold uppercase tracking-widest text-xs transition-colors duration-500">My Portfolio</span>
+              <span className="text-emerald-500 font-subheading font-bold uppercase tracking-widest text-xs transition-colors duration-500">
+                Selected Works
+              </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white mb-4 transition-colors duration-500">From Problems to Products</h2>
-            <p className="text-neutral-600 dark:text-neutral-300 max-w-lg text-lg leading-relaxed font-body font-light transition-colors duration-500">
-              A collection of products shaped by real challenges, thoughtful decisions, and a belief that great design begins long before the first screen is created.
+            
+            <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">
+              FEATURED CASE STUDIES
+            </h2>
+            
+            <p className="mt-4 text-base md:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl font-body font-light leading-relaxed transition-colors duration-500">
+              A curated collection of product design case studies, designathon entries, and concepts — built with deep research, systems thinking, and interactive motion.
             </p>
           </motion.div>
         </div>
 
-        {/* Sticky Stacking Projects List */}
-        <div className="relative pb-16">
+        {/* 3D Stacking Deck Cards Container */}
+        <div className="relative">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}

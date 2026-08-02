@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Linkedin, Mail, FileText, Instagram } from "lucide-react";
+import { ArrowUpRight, Linkedin, Mail, FileDown, Instagram } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router";
 
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
@@ -201,9 +201,9 @@ export const Footer = () => {
                   href={RESUME_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-300 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit"
+                  className="text-neutral-300 hover:text-white text-sm font-body font-light transition-colors flex items-center gap-1.5 group w-fit cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                  <FileDown className="w-3.5 h-3.5 text-emerald-500 group-hover:scale-110 transition-transform shrink-0" />
                   Resume
                 </a>
               </li>
@@ -212,15 +212,15 @@ export const Footer = () => {
 
           {/* Projects */}
           <div className="md:col-span-2">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 font-mono mb-6">Projects</h4>
+            <h4 className="text-xs font-subheading font-bold uppercase tracking-widest text-emerald-500 mb-6">Projects</h4>
             <ul className="space-y-3">
               {projectLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-neutral-300 hover:text-white text-sm transition-colors flex items-center gap-1.5 group w-fit"
+                    className="text-neutral-300 hover:text-white text-sm font-body font-light transition-colors flex items-center gap-1.5 group w-fit cursor-pointer"
                   >
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-amber-400 shrink-0" />
+                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-emerald-500 shrink-0" />
                     {link.name}
                   </Link>
                 </li>

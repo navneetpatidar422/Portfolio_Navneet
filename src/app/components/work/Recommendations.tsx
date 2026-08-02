@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
 
 // Uses actual local project thumbnails from /public/projects/
 const projects = [
@@ -10,7 +11,8 @@ const projects = [
     year: "2026",
     image: "/projects/Retail_Management-thumb.jpg",
     tags: ["Paid Project", "Confidential"],
-    path: "/work/Retail_Management"
+    path: "/work/Retail_Management",
+    color: "#C5A059"
   },
   {
     id: "paygo",
@@ -19,7 +21,8 @@ const projects = [
     year: "2025",
     image: "/projects/paygo-thumb.jpg",
     tags: ["Case Study", "Accessibility"],
-    path: "/work/paygo"
+    path: "/work/paygo",
+    color: "#662AB2"
   },
   {
     id: "bharatvibe",
@@ -28,7 +31,8 @@ const projects = [
     year: "2025",
     image: "/projects/bharatvibe-thumb.jpg",
     tags: ["UI Concept", "Independence Day"],
-    path: "/work/bharatvibe"
+    path: "/work/bharatvibe",
+    color: "#FF6B35"
   },
   {
     id: "flashback",
@@ -37,7 +41,8 @@ const projects = [
     year: "2025",
     image: "/projects/flashback-thumb.jpg",
     tags: ["Hackathon", "Adobe Designathon"],
-    path: "/work/flashback"
+    path: "/work/flashback",
+    color: "#900C3F"
   },
   {
     id: "amazon",
@@ -46,7 +51,8 @@ const projects = [
     year: "2026",
     image: "/projects/amazon-thumb.jpg",
     tags: ["UX Study", "Redesign Exercise"],
-    path: "/work/amazon"
+    path: "/work/amazon",
+    color: "#FF9900"
   },
   {
     id: "isro",
@@ -55,9 +61,77 @@ const projects = [
     year: "2024",
     image: "/projects/isro-thumb.jpg",
     tags: ["Personal", "Component Motion"],
-    path: "/work/isro"
+    path: "/work/isro",
+    color: "#2563EB"
   }
 ];
+
+const RecommendationCard = ({ project, isDarkPage }: { project: typeof projects[0]; isDarkPage: boolean }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Link
+      to={project.path}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        borderColor: isHovered ? `${project.color}60` : undefined
+      }}
+      className={`group block w-[280px] md:w-[320px] shrink-0 snap-start rounded-[1.5rem] p-5 flex flex-col justify-between hover:shadow-xl transition-all duration-300 border ${
+        isDarkPage 
+          ? "bg-neutral-900/60 border-white/10" 
+          : "bg-white dark:bg-neutral-900/60 border-black/10 dark:border-white/10"
+      }`}
+    >
+      <div>
+        {/* Thumbnail */}
+        <div className="overflow-hidden rounded-xl aspect-[4/3] bg-neutral-100 dark:bg-neutral-800 mb-4 border border-black/5 dark:border-white/5 relative">
+          <img
+            src={project.image}
+            alt={project.title}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        </div>
+
+        {/* Tags & Timeline */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-3">
+          <span 
+            style={{ backgroundColor: project.color }}
+            className="text-white text-[10px] font-subheading font-bold uppercase px-2.5 py-0.5 rounded-full shrink-0 shadow-sm"
+          >
+            {project.year}
+          </span>
+          <span className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-subheading font-bold uppercase px-2.5 py-0.5 rounded-full truncate">
+            {project.tags[0]}
+          </span>
+        </div>
+
+        <h4 
+          style={{ color: isHovered ? project.color : undefined }}
+          className={`text-base font-anton uppercase tracking-tight leading-snug line-clamp-2 min-h-[2.5rem] transition-colors duration-300 ${
+            isDarkPage ? "text-white" : "text-neutral-900 dark:text-white"
+          }`}
+        >
+          {project.title}
+        </h4>
+      </div>
+
+      <div className="pt-4 mt-auto">
+        <span className="relative inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[10px] font-subheading font-bold uppercase tracking-wider overflow-hidden group/btn cursor-pointer transition-colors duration-300 bg-[#111111] dark:bg-white text-white dark:text-black select-none shadow-sm">
+          <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300 flex items-center gap-1.5">
+            <span>View Project</span>
+            <ArrowUpRight className="w-3 h-3 transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+          </span>
+          <div 
+            style={{ backgroundColor: project.color }}
+            className="absolute inset-0 translate-y-[101%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" 
+          />
+        </span>
+      </div>
+    </Link>
+  );
+};
 
 export const Recommendations = ({ currentId }: { currentId: string }) => {
   const recommended = projects.filter(p => p.id !== currentId);
@@ -88,55 +162,7 @@ export const Recommendations = ({ currentId }: { currentId: string }) => {
 
       <div className="flex overflow-x-auto gap-6 pb-6 scrollbar-hide snap-x snap-mandatory -mx-6 px-6 md:mx-0 md:px-0">
         {recommended.map(project => (
-          <Link
-            key={project.id}
-            to={project.path}
-            className={`group block w-[280px] md:w-[320px] shrink-0 snap-start rounded-[1.5rem] p-5 flex flex-col justify-between hover:shadow-xl transition-all duration-300 border ${
-              isDarkPage 
-                ? "bg-neutral-900/60 border-white/10 hover:border-emerald-500/50" 
-                : "bg-white dark:bg-neutral-900/60 border-black/10 dark:border-white/10 hover:border-emerald-500/50"
-            }`}
-          >
-            <div>
-              {/* Thumbnail */}
-              <div className="overflow-hidden rounded-xl aspect-[4/3] bg-neutral-100 dark:bg-neutral-800 mb-4 border border-black/5 dark:border-white/5 relative">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                />
-              </div>
-
-              {/* Tags & Timeline */}
-              <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                <span className="bg-emerald-500 text-white text-[10px] font-subheading font-bold uppercase px-2.5 py-0.5 rounded-full shrink-0">
-                  {project.year}
-                </span>
-                <span className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-subheading font-bold uppercase px-2.5 py-0.5 rounded-full truncate">
-                  {project.tags[0]}
-                </span>
-              </div>
-
-              <h4 className={`text-base font-anton uppercase tracking-tight leading-snug line-clamp-2 min-h-[2.5rem] transition-colors duration-300 ${
-                isDarkPage 
-                  ? "text-white group-hover:text-emerald-400" 
-                  : "text-neutral-900 dark:text-white group-hover:text-emerald-500"
-              }`}>
-                {project.title}
-              </h4>
-            </div>
-
-            <div className="pt-4 mt-auto">
-              <span className="relative inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[10px] font-subheading font-bold uppercase tracking-wider overflow-hidden group/btn cursor-pointer transition-colors duration-300 bg-[#111111] dark:bg-white text-white dark:text-black select-none shadow-sm">
-                <span className="relative z-10 group-hover/btn:text-white transition-colors duration-300 flex items-center gap-1.5">
-                  <span>View Project</span>
-                  <ArrowUpRight className="w-3 h-3 transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-[#10B981] translate-y-[101%] group-hover/btn:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" />
-              </span>
-            </div>
-          </Link>
+          <RecommendationCard key={project.id} project={project} isDarkPage={isDarkPage} />
         ))}
       </div>
     </section>

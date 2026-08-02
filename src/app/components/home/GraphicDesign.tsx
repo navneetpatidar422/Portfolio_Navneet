@@ -50,7 +50,7 @@ export const GraphicDesign = () => {
         <motion.div 
           className="flex gap-6 w-max"
           animate={{
-            x: ["0%", "-33.333%"]
+            x: ["-33.333%", "0%"]
           }}
           transition={{
             x: {
