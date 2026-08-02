@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { 
-    User, 
+    Compass, 
     GraduationCap, 
     Trophy, 
     Briefcase,
@@ -34,15 +34,16 @@ const tabsData = [
   {
     id: "aboutme",
     step: "01",
-    title: "About me",
-    icon: User,
-    period: "Bio & Focus",
-    description: "An aspiring Product Designer with an engineering background and a passion for creating digital experiences that are simple, intuitive, and meaningful.",
+    title: "Currently Exploring",
+    icon: Compass,
+    period: "Focus & Growth",
+    description: "Constantly expanding my design horizon across emerging technologies, accessible interfaces, and systemic product strategy.",
     details: [
-      "Pursuing B.Tech in Industrial Internet of Things (IIoT).",
-      "Discovered design through a curiosity about user-technology interactions.",
-      "Worked on freelance, internships, hackathons, and personal concepts.",
-      "Designed across fintech, Retail, Social platforms and public-sector digital experiences."
+      "Accessibility",
+      "AI UX",
+      "User Research",
+      "Design Systems",
+      "Product Strategy"
     ]
   },
   {
@@ -53,7 +54,7 @@ const tabsData = [
     period: "2024 - 2028",
     description: "Pursuing engineering at University School of Automation and Robotics (USAR), GGSIPU, bridging technical and design disciplines.",
     details: [
-      "Current CGPA: 8.34 (Academic Excellence)",
+      "Current CGPA: 8.34",
       "National Science Fair: 1st Rank in Rajasthan, 4th in India",
       "YET 2022: 11th Rank in Rajasthan"
     ]
@@ -158,7 +159,7 @@ export const AboutMe = () => {
             </div>
             <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">Engineering Meets Design</h2>
             <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
-              An aspiring Product Designer with an engineering background and a passion for creating digital experiences that are simple, intuitive, and meaningful.
+
             </p>
             <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
   Hi! I'm Navneet Patidar, currently pursuing my B.Tech in Industrial Internet of Things (IIoT) at USAR, GGSIPU. I discovered design through a curiosity about how people interact with technology. Since then, I've worked on internship projects, hackathons, and self-initiated product concepts across fintech, retail, social platforms, and public-sector digital experiences—always striving to create intuitive, meaningful user experiences.

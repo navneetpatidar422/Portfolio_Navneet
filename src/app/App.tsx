@@ -16,7 +16,6 @@ import { Admin } from "./components/home/Admin";
 import { AdminReviews } from "./components/admin/AdminReviews";
 import { BackToTop } from "./components/shared/BackToTop";
 import { ScrollToTop } from "./components/shared/ScrollToTop";
-import { CustomCursor } from "./components/shared/CustomCursor";
 import { Toaster } from "./components/ui/sonner";
 
 // Import Case Study Pages
@@ -150,7 +149,6 @@ function App() {
 
         <ScrollToTop />
         <BackToTop />
-        <CustomCursor />
         <GlobalBackground />
         <Navbar />
         <div className="relative z-10">
