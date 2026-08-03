@@ -37,7 +37,7 @@ export const CreativeLoader = ({ onComplete }: { onComplete: () => void }) => {
 
   // Determine current creative status message based on progress
   const getStatusMessage = () => {
-    if (progress === 100) return "WELCOME TO NAVNEET'S PORTFOLIO ✨";
+    if (progress > 80) return "WELCOME TO MY PORTFOLIO ✨";
     if (progress > 68) return "SYSTEMIZING DESIGN & MOTION...";
     if (progress > 35) return "TRANSLATING INTENT INTO INTERFACES...";
     return "CURATING VISUAL EXPERIENCES...";
