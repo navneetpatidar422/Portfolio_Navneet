@@ -36,7 +36,7 @@ const WhatsAppIcon = ({ className = "w-3.5 h-3.5" }: { className?: string }) => 
   </svg>
 );
 
-export const Navbar = () => {
+export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -60,38 +60,50 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsOpen(false);
-    if (location.pathname === "/") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      navigate("/");
-    }
-  };
-
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
-    
-    if (href === "#home" || href === "/") {
-      if (location.pathname !== "/") {
-        navigate("/");
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      return;
-    }
 
     if (location.pathname !== "/") {
-      navigate("/", { state: { scrollTo: href } });
-      return;
+      navigate("/");
+      setTimeout(() => {
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    } else {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     }
+  };
 
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/");
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  };
+
+  const handleTalkClick = () => {
+    setIsOpen(false);
+    setTimeout(() => {
+      const target = document.querySelector("#contact");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/");
+        setTimeout(() => {
+          const contactTarget = document.querySelector("#contact");
+          if (contactTarget) contactTarget.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+      }
+    }, 300);
   };
 
   const handleNavClickMobile = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -122,18 +134,39 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* Floating Pill Navbar Container (Spacious Width as Previous, Sleek Locked Height) */}
+      {/* Floating Pill Navbar Container (Futuristic Capsule Unfolding Entrance) */}
       <motion.nav
-        className="fixed top-4 left-4 right-4 sm:left-6 sm:right-6 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-4xl z-50 transition-all duration-300"
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-4 left-4 right-4 sm:left-6 sm:right-6 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-4xl z-50"
+        initial={{ y: -80, scaleX: 0.3, scaleY: 0.6, opacity: 0, filter: "blur(10px)" }}
+        animate={{ 
+          y: isAppLoading ? -80 : 0, 
+          scaleX: isAppLoading ? 0.3 : 1,
+          scaleY: isAppLoading ? 0.6 : 1,
+          opacity: isAppLoading ? 0 : 1,
+          filter: isAppLoading ? "blur(10px)" : "blur(0px)"
+        }}
+        transition={{ 
+          type: "spring",
+          stiffness: 110,
+          damping: 16,
+          delay: isAppLoading ? 0 : 0.4
+        }}
       >
         <div 
           className={`relative px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white/95 dark:bg-neutral-900/95 backdrop-blur-2xl border border-black/8 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center justify-between transition-all duration-300 overflow-hidden ${
             isScrolled ? "shadow-xl border-black/15 dark:border-white/20" : ""
           }`}
         >
+          {/* Liquid Shimmer Sweeping Light Effect on Entrance */}
+          {!isAppLoading && (
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: "200%", opacity: [0, 0.8, 0] }}
+              transition={{ duration: 1.2, delay: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 dark:via-emerald-400/30 to-transparent pointer-events-none z-20 transform -skew-x-12"
+            />
+          )}
+
           {/* Scroll Progress Fill Background Layer (Navbar cell fills with project custom brand color on scroll) */}
           <div 
             className="absolute inset-y-0 left-0 rounded-full pointer-events-none transition-all duration-300 ease-out z-0 opacity-85 dark:opacity-90"

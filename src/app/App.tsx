@@ -150,7 +150,7 @@ function App() {
         <ScrollToTop />
         <BackToTop />
         <GlobalBackground />
-        <Navbar />
+        <Navbar isAppLoading={loading} />
         <div className="relative z-10">
           <main>
             <Routes>
