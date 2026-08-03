@@ -190,11 +190,11 @@ export const Work = () => {
             </div>
             
             <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">
-              FEATURED CASE STUDIES
+              SELECTED PROJECTS
             </h2>
             
             <p className="mt-4 text-base md:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl font-body font-light leading-relaxed transition-colors duration-500">
-              A curated collection of product design case studies, designathon entries, and concepts — built with deep research, systems thinking, and interactive motion.
+             A curated collection of product design projects, designathon entries, and concepts—crafted through thoughtful problem-solving, systems thinking, and interactive experiences
             </p>
           </motion.div>
         </div>
