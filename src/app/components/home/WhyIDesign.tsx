@@ -22,7 +22,7 @@ export const WhyIDesign = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-4xl md:text-6xl font-caveat font-medium text-neutral-900 dark:text-white leading-snug transition-colors duration-500"
+          className="text-4xl md:text-6xl font-sunrise font-normal text-neutral-900 dark:text-white leading-snug transition-colors duration-500"
         >
           "I design because interfaces are the translation layer between human intent and machine capability. If the translation fails, the product fails."
         </motion.h2>

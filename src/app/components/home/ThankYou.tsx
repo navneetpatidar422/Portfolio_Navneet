@@ -57,13 +57,13 @@ export const ThankYou = () => {
           THANK YOU FOR YOUR TIME.
         </motion.h2>
 
-        {/* Handwritten Caveat Note */}
+        {/* Handwritten Waiting for the Sunrise Note */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="font-caveat text-2xl md:text-4xl text-emerald-500 font-medium max-w-2xl mx-auto leading-relaxed"
+          className="font-sunrise text-3xl md:text-5xl text-emerald-500 font-normal max-w-2xl mx-auto leading-relaxed"
         >
           "Your attention is the most valuable gift. Thank you for exploring my work and journey!"
         </motion.p>

@@ -205,8 +205,10 @@ html {
 
 
 @layer utilities {
+  .font-sunrise,
+  .font-waiting,
   .font-caveat {
-    font-family: 'Caveat', cursive;
+    font-family: 'Waiting for the Sunrise', cursive;
   }
   .font-serif {
     font-family: 'Instrument Serif', serif;

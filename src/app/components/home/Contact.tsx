@@ -134,7 +134,7 @@ export const Contact = () => {
                     >
                         <h2 className="text-4xl md:text-7xl font-anton uppercase tracking-tight mb-8 leading-[1.1] text-foreground">
                             Let's create something <br/>
-                            <span className="text-[#10B981]">
+                            <span className="text-[#10B981] font-sunrise font-normal tracking-normal text-5xl md:text-8xl inline-block my-1 capitalize">
                                 AMAZING...
                             </span>
                             <br />
