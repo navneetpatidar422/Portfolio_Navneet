@@ -10,6 +10,9 @@ const galleryItems = [
   { id: 5, image: "/gallery/vedam-logo.jpg" },
   { id: 6, image: "/gallery/jadeja.png" },
   { id: 7, image: "/gallery/boom-boom.jpg" },
+  { id: 8, image: "/gallery/hitman.jpg" },
+  { id: 9, image: "/gallery/oumuamua.jpeg" },
+  { id: 10, image: "/gallery/Figmatrophy.jpeg" },
 ];
 
 export const GraphicDesign = () => {
@@ -45,38 +48,39 @@ export const GraphicDesign = () => {
 
       </div>
 
-      {/* Horizontally Infinite Unstoppable Marquee Container (Uniform Height, Natural Width) */}
-      <div className="w-full overflow-hidden py-4 select-none">
-        <motion.div 
-          className="flex gap-6 w-max"
-          animate={{
-            x: ["-33.333%", "0%"]
-          }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 55,
-              ease: "linear"
-            }
-          }}
-        >
+      {/* Horizontally Infinite Marquee Container (Pauses on Hover for detailed viewing) */}
+      <div className="w-full overflow-hidden py-4 select-none group/marquee">
+        <style>{`
+          @keyframes visualMarquee {
+            0% { transform: translate3d(-33.333%, 0, 0); }
+            100% { transform: translate3d(0%, 0, 0); }
+          }
+          .animate-visual-marquee {
+            animation: visualMarquee 55s linear infinite;
+            will-change: transform;
+          }
+          .group\\/marquee:hover .animate-visual-marquee {
+            animation-play-state: paused !important;
+          }
+        `}</style>
+
+        <div className="flex gap-6 w-max animate-visual-marquee">
           {marqueeItems.map((item, index) => (
             <motion.div
               key={`${item.id}-${index}`}
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.04, y: -6 }}
               onClick={() => setSelectedImage(item.image)}
-              className="relative shrink-0 rounded-2xl md:rounded-3xl overflow-hidden group cursor-pointer shadow-lg border border-black/10 dark:border-white/10 bg-neutral-100 dark:bg-neutral-900 h-[280px] sm:h-[340px] md:h-[420px] transition-transform duration-300"
+              className="relative shrink-0 rounded-2xl md:rounded-3xl overflow-hidden group/card cursor-pointer shadow-lg border border-black/10 dark:border-white/10 bg-neutral-100 dark:bg-neutral-900 h-[280px] sm:h-[340px] md:h-[420px] transition-all duration-300"
             >
               <img 
                 src={item.image} 
                 alt="Graphic design visual"
                 loading="lazy"
-                className="h-full w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-105"
+                className="h-full w-auto object-contain transition-transform duration-500 ease-out group-hover/card:scale-105"
               />
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* Lightbox Modal Preview */}
