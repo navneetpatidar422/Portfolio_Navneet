@@ -10,7 +10,7 @@ const galleryItems = [
   { id: 5, image: "/gallery/vedam-logo.jpg" },
   { id: 6, image: "/gallery/jadeja.png" },
   { id: 7, image: "/gallery/boom-boom.jpg" },
-  { id: 8, image: "/gallery/hitman.jpg" },
+  { id: 8, image: "/gallery/hitman.png" },
   { id: 9, image: "/gallery/oumuamua.jpeg" },
   { id: 10, image: "/gallery/Figmatrophy.jpeg" },
 ];
