@@ -95,11 +95,12 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
       <motion.div
         style={{ 
           scale,
+          willChange: "transform",
           borderColor: isHovered ? `${project.color}60` : undefined
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="group block w-full bg-white/95 dark:bg-[#121214]/95 border border-black/10 dark:border-white/10 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-colors duration-500 backdrop-blur-2xl origin-top"
+        className="group block w-full bg-white dark:bg-[#121214] border border-black/10 dark:border-white/10 rounded-[2.5rem] overflow-hidden shadow-xl dark:shadow-[0_16px_36px_rgba(0,0,0,0.4)] transition-colors duration-500 origin-top"
       >
         <Link to={project.path} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-8 md:p-12 items-center cursor-pointer">
           
@@ -109,7 +110,8 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
               src={project.image} 
               alt={project.title}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.04]"
+              decoding="async"
+              className="w-full h-full object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.04] will-change-transform"
             />
           </div>
 

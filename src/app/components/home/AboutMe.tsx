@@ -262,7 +262,7 @@ export const AboutMe = () => {
                                     animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                                     exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
                                     transition={{ duration: 0.4, ease: "circOut" }}
-                                    className="relative bg-white/80 dark:bg-neutral-900/80 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-[2rem] p-8 overflow-hidden shadow-xl text-foreground transition-colors duration-500"
+                                    className="relative bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/10 rounded-[2rem] p-8 overflow-hidden shadow-xl text-foreground transition-colors duration-500"
                                 >
                                     {/* Abstract Decor */}
                                     <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-br from-emerald-500/5 to-transparent rounded-full blur-[80px] pointer-events-none -translate-y-1/2 translate-x-1/2" />

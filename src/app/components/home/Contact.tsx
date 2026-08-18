@@ -211,7 +211,7 @@ export const Contact = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                     viewport={{ once: true }}
-                    className="p-8 md:p-12 rounded-[2.5rem] bg-white/95 dark:bg-neutral-900/95 border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl"
+                    className="p-8 md:p-12 rounded-[2.5rem] bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/10 shadow-xl dark:shadow-[0_16px_36px_rgba(0,0,0,0.4)]"
                 >
                     <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
                         <div className="space-y-6">
