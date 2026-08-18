@@ -76,6 +76,7 @@ export const GraphicDesign = () => {
                 src={item.image} 
                 alt="Graphic design visual"
                 loading="lazy"
+                decoding="async"
                 className="h-full w-auto object-contain transition-transform duration-500 ease-out group-hover/card:scale-105"
               />
             </motion.div>

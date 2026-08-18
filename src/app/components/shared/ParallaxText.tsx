@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   motion,
   useScroll,
@@ -16,6 +16,8 @@ interface ParallaxTextProps {
 
 export function ParallaxText({ children, baseVelocity = 100 }: ParallaxTextProps) {
   const baseX = useMotionValue(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef<boolean>(true);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, {
@@ -26,7 +28,21 @@ export function ParallaxText({ children, baseVelocity = 100 }: ParallaxTextProps
     clamp: false
   });
 
-  // Custom wrap utility since import might be unstable in new package versions
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Custom wrap utility
   const wrap = (min: number, max: number, v: number) => {
     const rangeSize = max - min;
     return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
@@ -36,6 +52,8 @@ export function ParallaxText({ children, baseVelocity = 100 }: ParallaxTextProps
 
   const directionFactor = useRef<number>(1);
   useAnimationFrame((t, delta) => {
+    if (!isVisibleRef.current) return;
+
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
     if (velocityFactor.get() < 0) {
@@ -50,8 +68,11 @@ export function ParallaxText({ children, baseVelocity = 100 }: ParallaxTextProps
   });
 
   return (
-    <div className="parallax overflow-hidden tracking-tighter leading-[0.85] m-0 whitespace-nowrap flex flex-nowrap">
-      <motion.div className="scroller font-medium uppercase text-8xl md:text-[11rem] tracking-[-0.02em] flex whitespace-nowrap flex-nowrap" style={{ x }}>
+    <div ref={containerRef} className="parallax overflow-hidden tracking-tighter leading-[0.85] m-0 whitespace-nowrap flex flex-nowrap">
+      <motion.div 
+        className="scroller font-medium uppercase text-8xl md:text-[11rem] tracking-[-0.02em] flex whitespace-nowrap flex-nowrap" 
+        style={{ x, willChange: "transform" }}
+      >
         <span className="block mr-12">{children} </span>
         <span className="block mr-12 font-[Slackey]">{children} </span>
         <span className="block mr-12 font-[Slackey]">{children} </span>
@@ -60,3 +81,4 @@ export function ParallaxText({ children, baseVelocity = 100 }: ParallaxTextProps
     </div>
   );
 }
+

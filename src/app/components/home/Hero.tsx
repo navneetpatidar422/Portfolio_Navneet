@@ -90,6 +90,8 @@ export const Hero = () => {
                  <img 
                      src={profileImg} 
                      alt="Profile" 
+                     fetchPriority="high"
+                     decoding="async"
                      className="w-full h-full object-contain object-top drop-shadow-2xl pointer-events-none select-none"
                  />
 
