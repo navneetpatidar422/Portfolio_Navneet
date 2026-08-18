@@ -197,9 +197,9 @@ export const Contact = () => {
                             <p className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-widest font-subheading font-bold">Connect Elsewhere</p>
                             <div className="flex gap-4">
                                 <SocialLink href="https://wa.link/vgmz7y" icon={WhatsAppIcon} />
-                                <SocialLink href="https://www.linkedin.com/in/navneet-patidar-8647b0321/" icon={Linkedin} />
-                                <SocialLink href="https://www.behance.net/navneetpatidar2" icon={BehanceIcon} />
-                                <SocialLink href="https://www.instagram.com/uidesigner_navneet/" icon={Instagram} />
+                                <SocialLink href="https://www.linkedin.com/in/navneet-patidar/" icon={Linkedin} />
+                                <SocialLink href="https://www.behance.net/navneetpatidar" icon={BehanceIcon} />
+                                <SocialLink href="https://www.instagram.com/_navneetpatidar/" icon={Instagram} />
                             </div>
                         </div>
                     </motion.div>
