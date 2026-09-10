@@ -3,7 +3,7 @@ import { ArrowUpRight, Linkedin, Mail, FileDown, Instagram } from "lucide-react"
 import { Link, useNavigate, useLocation } from "react-router";
 
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
-const RESUME_URL = "https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing";
+const RESUME_URL = "https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2CJwA1S/view?usp=sharing";
 
 // Custom Behance Icon using the user-provided SVG
 const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (

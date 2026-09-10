@@ -213,7 +213,7 @@ export const Hero = () => {
                     <div className="absolute inset-0 bg-[#10B981] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" />
                 </button>
                 <a 
-                    href="https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing"
+                    href="https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2CJwA1S/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative flex items-center justify-center px-8 py-4 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white text-xs font-subheading font-bold uppercase tracking-widest rounded-full overflow-hidden group cursor-pointer transition-colors duration-300 shadow-sm"

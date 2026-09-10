@@ -13,26 +13,28 @@ import {
 import { Button } from "../ui/button";
 
 const experiences = [
-  {
-    role: "Graphic Designer",
-    company: "InstantAI",
-    period: "Apr 2026 – Present"
-  },
-  {
-    role: "Graphic Design Intern",
-    company: "Vedam Advisors",
-    period: "Nov 2025 – Feb 2026"
-  },
+
+
   {
     role: "Gen AI & Cloud Computing Intern",
     company: "IBM",
     period: "June 2026 – July 2026"
   },
   {
-    role: "Design & Content Team",
-    company: "AWS Cloud Club GGSIPU",
+    role: "Graphic Design Intern",
+    company: "Vedam Advisors",
+    period: "Nov 2025 – Feb 2026"
+  },
+   {
+    role: "Graphic Designer",
+    company: "InstantAI",
+    period: "Apr 2026 – Present"
+  },
+  {
+    role: "Design Lead",
+    company: "AWS Student Builder Group, GGSIPU",
     period: "Aug 2025 – Present"
-  }
+  },
 ];
 
 const tabsData = [
@@ -96,7 +98,7 @@ const ExperienceTimeline = () => (
   <div className="relative pl-6 border-l border-neutral-250 dark:border-neutral-800 space-y-8 py-2 ml-2">
     {experiences.map((exp, i) => (
       <motion.div
-        key={exp.company}
+        key={`${exp.company}-${exp.role}`}
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: i * 0.1, duration: 0.4 }}

@@ -12,7 +12,7 @@ const navLinks = [
 const WHATSAPP_URL = "https://wa.link/vgmz7y";
 const EMAIL_URL = "mailto:designer.navneet.patidar@gmail.com";
 const PHONE_URL = "tel:+917878913449";
-const RESUME_URL = "https://drive.google.com/file/d/1QdAJZCM7EbsIQdZQW7AT6J8Gr7H3ErP1/view?usp=sharing";
+const RESUME_URL = "https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2CJwA1S/view?usp=sharing";
 
 const getProgressBarColor = (pathname: string): string => {
   if (pathname.includes("/work/paygo")) return "#662AB2";
