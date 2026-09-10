@@ -24,6 +24,11 @@ const experiences = [
     period: "Nov 2025 – Feb 2026"
   },
   {
+    role: "Gen AI & Cloud Computing Intern",
+    company: "IBM",
+    period: "June 2026 – July 2026"
+  },
+  {
     role: "Design & Content Team",
     company: "AWS Cloud Club GGSIPU",
     period: "Aug 2025 – Present"
