@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { StaggeredText } from "../shared/StaggeredText";
 
 const cardsData = [
   {
@@ -357,9 +358,11 @@ export const Skills = () => {
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-anton uppercase leading-[1.1] text-neutral-900 dark:text-white tracking-tight transition-colors duration-500">
-              Great products don't start with beautiful interfaces.
-            </h2>
+            <StaggeredText
+              text="Great products don't start with beautiful interfaces."
+              as="h2"
+              className="text-3xl md:text-4xl lg:text-5xl font-anton uppercase leading-[1.1] text-neutral-900 dark:text-white tracking-tight transition-colors duration-500"
+            />
             <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 font-body font-light leading-relaxed transition-colors duration-500">
               They start with <span className="text-emerald-500 font-subheading font-bold">understanding people</span>, questioning assumptions, and designing systems that scale.
             </p>

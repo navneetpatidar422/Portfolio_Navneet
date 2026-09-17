@@ -11,9 +11,15 @@ export const SectionTicker = ({ items, speed = 25, reverse = false }: SectionTic
   const marqueeList = [...items, ...items, ...items];
 
   return (
-    <div className="w-full overflow-hidden bg-[#111111] dark:bg-white text-white dark:text-black py-3.5 select-none my-12 border-y border-black/10 dark:border-white/10 shadow-md">
+    <div 
+      className="w-full overflow-hidden bg-[#111111] dark:bg-white text-white dark:text-black py-4 select-none my-10 relative z-10 shadow-sm"
+      style={{
+        clipPath: "polygon(0 0, 50% 12px, 100% 0, 100% 100%, 50% calc(100% - 12px), 0 100%)",
+        WebkitClipPath: "polygon(0 0, 50% 12px, 100% 0, 100% 100%, 50% calc(100% - 12px), 0 100%)"
+      }}
+    >
       <motion.div
-        className="flex gap-8 w-max whitespace-nowrap"
+        className="flex gap-8 w-max whitespace-nowrap py-0.5"
         animate={{ x: reverse ? ["-33.333%", "0%"] : ["0%", "-33.333%"] }}
         transition={{ repeat: Infinity, ease: "linear", duration: speed }}
         style={{ willChange: "transform" }}
@@ -28,4 +34,5 @@ export const SectionTicker = ({ items, speed = 25, reverse = false }: SectionTic
     </div>
   );
 };
+
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { StaggeredText } from "../shared/StaggeredText";
 import { Quote, Linkedin, PenSquare, Star, X, Send } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Input } from "../ui/input";
@@ -103,15 +104,11 @@ export const Testimonials = () => {
             </span>
           </motion.div>
           
-          <motion.h3 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            viewport={{ once: true }}
+          <StaggeredText
+            text="Words from People I've Worked With"
+            as="h3"
             className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500"
-          >
-            Words from People I've Worked With
-          </motion.h3>
+          />
           
           <motion.p
             initial={{ opacity: 0, y: 10 }}

@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Heart, Sparkles } from "lucide-react";
+import { StaggeredText } from "../shared/StaggeredText";
 
 export const ThankYou = () => {
   const tickerItems = [
@@ -16,9 +17,15 @@ export const ThankYou = () => {
     <section id="thank-you" className="py-20 md:py-28 bg-transparent text-foreground relative overflow-hidden transition-colors duration-500 border-t border-black/5 dark:border-white/5">
       
       {/* Top Marquee Ribbon Ticker */}
-      <div className="w-full overflow-hidden bg-neutral-900 dark:bg-white text-white dark:text-black py-3 select-none mb-16 rotate-[-1deg] shadow-lg">
+      <div 
+        className="w-full overflow-hidden bg-neutral-900 dark:bg-white text-white dark:text-black py-4 select-none mb-16 shadow-sm"
+        style={{
+          clipPath: "polygon(0 0, 50% 12px, 100% 0, 100% 100%, 50% calc(100% - 12px), 0 100%)",
+          WebkitClipPath: "polygon(0 0, 50% 12px, 100% 0, 100% 100%, 50% calc(100% - 12px), 0 100%)"
+        }}
+      >
         <motion.div
-          className="flex gap-8 w-max whitespace-nowrap"
+          className="flex gap-8 w-max whitespace-nowrap py-0.5"
           animate={{ x: ["0%", "-33.333%"] }}
           transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
         >
@@ -47,15 +54,11 @@ export const ThankYou = () => {
         </motion.div>
 
         {/* Headline Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          viewport={{ once: true }}
+        <StaggeredText
+          text="THANK YOU FOR YOUR TIME."
+          as="h2"
           className="text-5xl sm:text-6xl md:text-8xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white leading-none"
-        >
-          THANK YOU FOR YOUR TIME.
-        </motion.h2>
+        />
 
         {/* Handwritten Waiting for the Sunrise Note */}
         <motion.p

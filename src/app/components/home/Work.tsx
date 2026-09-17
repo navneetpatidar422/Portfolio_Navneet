@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
 import { Badge } from "../ui/badge";
+import { StaggeredText } from "../shared/StaggeredText";
 
 const projects = [
   {
@@ -191,9 +192,11 @@ export const Work = () => {
               </span>
             </div>
             
-            <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">
-              SELECTED PROJECTS
-            </h2>
+            <StaggeredText
+              text="SELECTED PROJECTS"
+              as="h2"
+              className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500"
+            />
             
             <p className="mt-4 text-base md:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl font-body font-light leading-relaxed transition-colors duration-500">
              A curated collection of product design projects, designathon entries, and concepts—crafted through thoughtful problem-solving, systems thinking, and interactive experiences

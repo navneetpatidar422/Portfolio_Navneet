@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { StaggeredText } from "../shared/StaggeredText";
 import { 
     Compass, 
     GraduationCap, 
@@ -164,7 +165,11 @@ export const AboutMe = () => {
               <span className="h-1.5 w-12 bg-emerald-500 transition-colors duration-500" />
               <span className="text-emerald-500 font-subheading font-bold uppercase tracking-widest text-xs transition-colors duration-500">About Me</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">Engineering Meets Design</h2>
+            <StaggeredText
+              text="Engineering Meets Design"
+              as="h2"
+              className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500"
+            />
             <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
 
             </p>

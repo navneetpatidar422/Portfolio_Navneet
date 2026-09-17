@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
+import { StaggeredText } from "../shared/StaggeredText";
 
 const galleryItems = [
   { id: 1, image: "/gallery/bumrah.jpg" },
@@ -38,9 +39,12 @@ export const GraphicDesign = () => {
               Graphic Design
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-anton uppercase leading-tight text-neutral-900 dark:text-white tracking-tight transition-colors duration-500">
-            Visual Explorations
-          </h2>
+          <StaggeredText
+            text="Visual Explorations"
+            as="h2"
+            delay={0.2}
+            className="text-4xl md:text-5xl lg:text-7xl font-anton uppercase leading-tight text-neutral-900 dark:text-white tracking-tight transition-colors duration-500"
+          />
           <p className="mt-4 text-base md:text-lg text-neutral-600 dark:text-neutral-300 font-body font-light max-w-xl transition-colors duration-500">
             A continuous gallery of posters, brand identities, and digital artwork.
           </p>
@@ -97,7 +101,7 @@ export const GraphicDesign = () => {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 1, opacity: 1 }}
               onClick={(e) => e.stopPropagation()}
               className="relative max-w-5xl max-h-[92vh] bg-neutral-950 rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col cursor-default"
             >

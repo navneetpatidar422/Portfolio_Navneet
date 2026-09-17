@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Sparkles } from "lucide-react";
+import { StaggeredText } from "../shared/StaggeredText";
 
 export const WhyIDesign = () => {
   return (
@@ -17,15 +18,14 @@ export const WhyIDesign = () => {
           </span>
         </motion.div>
         
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
+        <StaggeredText
+          text='"I design because interfaces are the translation layer between human intent and machine capability. If the translation fails, the product fails."'
+          as="h2"
+          type="words"
+          delay={0.25}
+          staggerDelay={0.05}
           className="text-4xl md:text-6xl font-sunrise font-normal text-neutral-900 dark:text-white leading-snug transition-colors duration-500"
-        >
-          "I design because interfaces are the translation layer between human intent and machine capability. If the translation fails, the product fails."
-        </motion.h2>
+        />
         
         <motion.p
           initial={{ opacity: 0, y: 15 }}
