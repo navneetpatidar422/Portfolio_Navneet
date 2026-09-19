@@ -277,7 +277,7 @@ export const Footer = () => {
         </div>
 
         {/* Scrolling marquee */}
-        <div className="mt-12 select-none pointer-events-none overflow-hidden relative w-screen -ml-[calc(50vw-50%)]">
+        <div className="mt-12 select-none pointer-events-none overflow-hidden relative w-full">
           <motion.div
             className="flex whitespace-nowrap"
             animate={{ x: ["0%", "-50%"] }}

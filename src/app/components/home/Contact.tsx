@@ -15,6 +15,8 @@ import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { toast } from "sonner";
 import { submitToBackend } from "../../utils/formSubmit";
+import { SquigglyText } from "../ui/squiggly-text";
+import { WorldMapLocation } from "../ui/world-map-location";
 
 // Custom Behance Icon using the user-provided SVG
 const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -61,14 +63,13 @@ const SocialLink = ({ href, icon: Icon }: { href: string; icon: any }) => {
 };
 
 export const Contact = () => {
+    const [copiedEmail, setCopiedEmail] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formState, setFormState] = useState({
         name: "",
         email: "",
         description: ""
     });
-
-    const [copiedEmail, setCopiedEmail] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText("designer.navneet.patidar@gmail.com");
@@ -134,9 +135,9 @@ export const Contact = () => {
                     >
                         <h2 className="text-4xl md:text-7xl font-anton uppercase tracking-tight mb-8 leading-[1.1] text-foreground">
                             Let's create something <br/>
-                            <span className="text-[#10B981] font-sunrise font-normal tracking-normal text-5xl md:text-8xl inline-block my-1 capitalize">
+                            <SquigglyText scale={[5, 8]} className="text-[#10B981] font-sunrise font-normal tracking-normal text-5xl md:text-8xl inline-block my-1 capitalize">
                                 AMAZING...
-                            </span>
+                            </SquigglyText>
                             <br />
                             together.
                         </h2>
@@ -205,77 +206,90 @@ export const Contact = () => {
                     </motion.div>
                 </div>
 
-                {/* Right Side: Contact Form */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    viewport={{ once: true }}
-                    className="p-8 md:p-12 rounded-[2.5rem] bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/10 shadow-xl dark:shadow-[0_16px_36px_rgba(0,0,0,0.4)]"
-                >
-                    <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
-                        <div className="space-y-6">
-                            <div className="relative group">
-                                <Input 
-                                    id="name" 
-                                    placeholder=" " 
-                                    className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-emerald-500 transition-colors text-foreground"
-                                    value={formState.name}
-                                    onChange={(e) => setFormState({...formState, name: e.target.value})}
-                                />
-                                <Label 
-                                    htmlFor="name" 
-                                    className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-emerald-500 peer-focus:text-xs pointer-events-none"
-                                >
-                                    What's your name?
-                                </Label>
+                {/* Right Side: Contact Form & Location Map */}
+                <div className="flex flex-col gap-6 w-full">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                        viewport={{ once: true }}
+                        className="p-8 md:p-12 rounded-[2.5rem] bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/10 shadow-xl dark:shadow-[0_16px_36px_rgba(0,0,0,0.4)]"
+                    >
+                        <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+                            <div className="space-y-6">
+                                <div className="relative group">
+                                    <Input 
+                                        id="name" 
+                                        placeholder=" " 
+                                        className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-emerald-500 transition-colors text-foreground"
+                                        value={formState.name}
+                                        onChange={(e) => setFormState({...formState, name: e.target.value})}
+                                    />
+                                    <Label 
+                                        htmlFor="name" 
+                                        className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-emerald-500 peer-focus:text-xs pointer-events-none"
+                                    >
+                                        What's your name?
+                                    </Label>
+                                </div>
+
+                                <div className="relative group">
+                                    <Input 
+                                        id="email" 
+                                        type="email" 
+                                        placeholder=" " 
+                                        className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-emerald-500 transition-colors text-foreground"
+                                        value={formState.email}
+                                        onChange={(e) => setFormState({...formState, email: e.target.value})}
+                                    />
+                                    <Label 
+                                        htmlFor="email" 
+                                        className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-emerald-500 peer-focus:text-xs pointer-events-none"
+                                    >
+                                        What's your email?
+                                    </Label>
+                                </div>
                             </div>
 
-                            <div className="relative group">
-                                <Input 
-                                    id="email" 
-                                    type="email" 
-                                    placeholder=" " 
-                                    className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-emerald-500 transition-colors text-foreground"
-                                    value={formState.email}
-                                    onChange={(e) => setFormState({...formState, email: e.target.value})}
+                            <div className="space-y-4 pt-4">
+                                <Label htmlFor="description" className="text-neutral-400 dark:text-neutral-500 text-xs uppercase font-subheading font-bold tracking-widest">Description / Message</Label>
+                                <Textarea 
+                                    id="description" 
+                                    placeholder="Tell me about your goals, timeline, and any specific requirements..." 
+                                    className="bg-neutral-50 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 focus:border-emerald-500 dark:focus:border-emerald-500 min-h-[150px] resize-none text-base p-4 rounded-xl text-foreground"
+                                    value={formState.description}
+                                    onChange={(e) => setFormState({...formState, description: e.target.value})}
                                 />
-                                <Label 
-                                    htmlFor="email" 
-                                    className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-emerald-500 peer-focus:text-xs pointer-events-none"
-                                >
-                                    What's your email?
-                                </Label>
                             </div>
-                        </div>
 
-                        <div className="space-y-4 pt-4">
-                            <Label htmlFor="description" className="text-neutral-400 dark:text-neutral-500 text-xs uppercase font-subheading font-bold tracking-widest">Description / Message</Label>
-                            <Textarea 
-                                id="description" 
-                                placeholder="Tell me about your goals, timeline, and any specific requirements..." 
-                                className="bg-neutral-50 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 focus:border-emerald-500 dark:focus:border-emerald-500 min-h-[150px] resize-none text-base p-4 rounded-xl text-foreground"
-                                value={formState.description}
-                                onChange={(e) => setFormState({...formState, description: e.target.value})}
-                            />
-                        </div>
+                            {/* Submit Button - Stationary (No movement) with Slide-Up Green Liquid Fill */}
+                            <div className="pt-4">
+                                <button 
+                                    type="submit" 
+                                    disabled={isSubmitting}
+                                    className="relative w-full h-16 bg-[#111111] dark:bg-white text-white dark:text-black font-subheading font-bold text-base md:text-lg uppercase tracking-widest rounded-2xl overflow-hidden group cursor-pointer transition-colors duration-300 border border-black/10 dark:border-white/10"
+                                >
+                                    <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-white transition-colors duration-300">
+                                        {isSubmitting ? "Sending..." : "Send Message"}
+                                        {!isSubmitting && <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />}
+                                    </span>
+                                    <div className="absolute inset-0 bg-[#10B981] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" />
+                                </button>
+                            </div>
+                        </form>
+                    </motion.div>
 
-                        {/* Submit Button - Stationary (No movement) with Slide-Up Green Liquid Fill */}
-                        <div className="pt-4">
-                            <button 
-                                type="submit" 
-                                disabled={isSubmitting}
-                                className="relative w-full h-16 bg-[#111111] dark:bg-white text-white dark:text-black font-subheading font-bold text-base md:text-lg uppercase tracking-widest rounded-2xl overflow-hidden group cursor-pointer transition-colors duration-300 border border-black/10 dark:border-white/10"
-                            >
-                                <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-white transition-colors duration-300">
-                                    {isSubmitting ? "Sending..." : "Send Message"}
-                                    {!isSubmitting && <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />}
-                                </span>
-                                <div className="absolute inset-0 bg-[#10B981] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-0" />
-                            </button>
-                        </div>
-                    </form>
-                </motion.div>
+                    {/* Interactive 3D World Map with Animated Location Pointer */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        viewport={{ once: true }}
+                        className="w-full flex justify-center -mt-2"
+                    >
+                        <WorldMapLocation badgeText="I am here" className="max-w-full" />
+                    </motion.div>
+                </div>
             </div>
         </section>
     );

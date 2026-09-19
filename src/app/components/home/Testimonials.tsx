@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { StaggeredText } from "../shared/StaggeredText";
+import { SquigglyText } from "../ui/squiggly-text";
 import { Quote, Linkedin, PenSquare, Star, X, Send } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Input } from "../ui/input";
@@ -104,11 +105,12 @@ export const Testimonials = () => {
             </span>
           </motion.div>
           
-          <StaggeredText
-            text="Words from People I've Worked With"
-            as="h3"
-            className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500"
-          />
+          <h3 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">
+            Words from People I've{" "}
+            <SquigglyText scale={[5, 8]} className="bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white px-3 sm:px-4 py-0.5 md:py-1 rounded-md shadow-md inline-block my-1">
+              Worked With
+            </SquigglyText>
+          </h3>
           
           <motion.p
             initial={{ opacity: 0, y: 10 }}

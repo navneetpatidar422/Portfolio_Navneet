@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Sparkles } from "lucide-react";
 import { StaggeredText } from "../shared/StaggeredText";
+import { SquigglyText } from "../ui/squiggly-text";
 
 export const WhyIDesign = () => {
   return (
@@ -18,14 +19,13 @@ export const WhyIDesign = () => {
           </span>
         </motion.div>
         
-        <StaggeredText
-          text='"I design because interfaces are the translation layer between human intent and machine capability. If the translation fails, the product fails."'
-          as="h2"
-          type="words"
-          delay={0.25}
-          staggerDelay={0.05}
-          className="text-4xl md:text-6xl font-sunrise font-normal text-neutral-900 dark:text-white leading-snug transition-colors duration-500"
-        />
+        <h2 className="text-4xl md:text-6xl font-sunrise font-normal text-neutral-900 dark:text-white leading-snug transition-colors duration-500">
+          "I design because interfaces are the{" "}
+          <SquigglyText scale={[5, 8]} className="bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white px-3 sm:px-4 py-0.5 md:py-1 rounded-md shadow-md inline-block my-1">
+            translation layer
+          </SquigglyText>
+          {" "}between human intent and machine capability. If the translation fails, the product fails."
+        </h2>
         
         <motion.p
           initial={{ opacity: 0, y: 15 }}

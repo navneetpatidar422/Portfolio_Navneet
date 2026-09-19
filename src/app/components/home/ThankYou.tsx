@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Heart, Sparkles } from "lucide-react";
 import { StaggeredText } from "../shared/StaggeredText";
+import { SquigglyText } from "../ui/squiggly-text";
 
 export const ThankYou = () => {
   const tickerItems = [
@@ -68,7 +69,11 @@ export const ThankYou = () => {
           viewport={{ once: true }}
           className="font-sunrise text-3xl md:text-5xl text-emerald-500 font-normal max-w-2xl mx-auto leading-relaxed"
         >
-          "Your attention is the most valuable gift. Thank you for exploring my work and journey!"
+          "Your attention is the most{" "}
+          <SquigglyText scale={[5, 8]} className="bg-neutral-900 text-white dark:bg-neutral-900 dark:text-white px-3 py-1 rounded-sm shadow-md inline-block my-1 font-body font-bold text-2xl md:text-4xl">
+            valuable gift.
+          </SquigglyText>
+          {" "}Thank you for exploring my work and journey!"
         </motion.p>
       </div>
 

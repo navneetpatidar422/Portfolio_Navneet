@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
 import { StaggeredText } from "../shared/StaggeredText";
+import { SquigglyText } from "../ui/squiggly-text";
 
 const galleryItems = [
   { id: 1, image: "/gallery/bumrah.jpg" },
@@ -39,12 +40,12 @@ export const GraphicDesign = () => {
               Graphic Design
             </span>
           </div>
-          <StaggeredText
-            text="Visual Explorations"
-            as="h2"
-            delay={0.2}
-            className="text-4xl md:text-5xl lg:text-7xl font-anton uppercase leading-tight text-neutral-900 dark:text-white tracking-tight transition-colors duration-500"
-          />
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-anton uppercase leading-tight text-neutral-900 dark:text-white tracking-tight transition-colors duration-500">
+            <SquigglyText scale={[5, 8]} className="bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white px-3 sm:px-4 py-0.5 md:py-1 rounded-md shadow-md inline-block mr-2 my-1">
+              Visual
+            </SquigglyText>
+            Explorations
+          </h2>
           <p className="mt-4 text-base md:text-lg text-neutral-600 dark:text-neutral-300 font-body font-light max-w-xl transition-colors duration-500">
             A continuous gallery of posters, brand identities, and digital artwork.
           </p>

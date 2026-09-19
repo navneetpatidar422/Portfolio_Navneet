@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { StaggeredText } from "../shared/StaggeredText";
+import { SquigglyText } from "../ui/squiggly-text";
+import { Lanyard } from "../ui/lanyard";
 import { 
     Compass, 
     GraduationCap, 
@@ -139,21 +141,23 @@ export const AboutMe = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   return (
-    <section ref={containerRef} id="about" className="py-24 lg:py-32 px-6 bg-transparent text-foreground relative overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-500">
-      {/* Ambient Background Glows */}
-      <motion.div 
-        style={{ y: y1 }}
-        className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" 
-      />
-      <motion.div 
-        style={{ y: y2 }}
-        className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" 
-      />
+    <section ref={containerRef} id="about" className="py-24 lg:py-32 px-6 bg-transparent text-foreground relative overflow-x-clip border-t border-black/5 dark:border-white/5 transition-colors duration-500">
+      {/* Ambient Background Glows strictly contained to prevent horizontal scroll */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          style={{ y: y1 }}
+          className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px]" 
+        />
+        <motion.div 
+          style={{ y: y2 }}
+          className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px]" 
+        />
+      </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10 overflow-visible">
         
-        {/* Section Header */}
-        <div className="mb-16 md:mb-24 flex flex-col lg:flex-row lg:items-center justify-between gap-12 lg:gap-16">
+        {/* Section Header: On mobile (flex-col-reverse), ID card appears first, then heading and text below */}
+        <div className="mb-16 md:mb-24 flex flex-col-reverse lg:flex-row lg:items-center justify-between gap-10 lg:gap-16 overflow-visible">
           <motion.div 
             className="space-y-4 max-w-xl text-left"
             initial={{ opacity: 0, y: 30 }}
@@ -165,36 +169,39 @@ export const AboutMe = () => {
               <span className="h-1.5 w-12 bg-emerald-500 transition-colors duration-500" />
               <span className="text-emerald-500 font-subheading font-bold uppercase tracking-widest text-xs transition-colors duration-500">About Me</span>
             </div>
-            <StaggeredText
-              text="Engineering Meets Design"
-              as="h2"
-              className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500"
-            />
+            <h2 className="text-4xl md:text-6xl font-anton uppercase tracking-tight text-neutral-900 dark:text-white transition-colors duration-500">
+              Engineering Meets{" "}
+              <SquigglyText scale={[5, 8]} className="bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white px-3 sm:px-4 py-0.5 md:py-1 rounded-md shadow-md inline-block my-1">
+                Design
+              </SquigglyText>
+            </h2>
             <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
-
+              Hi! I'm Navneet Patidar, currently pursuing my B.Tech in Industrial Internet of Things (IIoT) at USAR, GGSIPU. I discovered design through a curiosity about how people interact with technology. Since then, I've worked on internship projects, hackathons, and self-initiated product concepts across fintech, retail, social platforms, and public-sector digital experiences—always striving to create intuitive, meaningful user experiences.
             </p>
+
             <p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
-  Hi! I'm Navneet Patidar, currently pursuing my B.Tech in Industrial Internet of Things (IIoT) at USAR, GGSIPU. I discovered design through a curiosity about how people interact with technology. Since then, I've worked on internship projects, hackathons, and self-initiated product concepts across fintech, retail, social platforms, and public-sector digital experiences—always striving to create intuitive, meaningful user experiences.
-</p>
-
-<p className="text-neutral-600 dark:text-neutral-300 text-lg leading-relaxed font-body font-light transition-colors duration-500">
-  I enjoy simplifying complex problems, designing user-centered products, and continuously learning. My goal is to build products that create real value while growing as a designer alongside talented teams.
-</p>
-
+              I enjoy simplifying complex problems, designing user-centered products, and continuously learning. My goal is to build products that create real value while growing as a designer alongside talented teams.
+            </p>
           </motion.div>
 
-          {/* Right Side Image */}
+          {/* Interactive 3D Physics Lanyard ID Card */}
           <motion.div
-            className="flex justify-center lg:justify-end w-full lg:w-auto shrink-0"
-            initial={{ opacity: 0, scale: 0.95, x: 30 }}
-            whileInView={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex flex-col items-center justify-center w-full lg:w-[520px] xl:w-[600px] h-[540px] sm:h-[620px] lg:h-[720px] -mt-6 sm:-mt-10 lg:-mt-28 shrink-0 relative overflow-visible"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <img 
-              src="/about-photo.png" 
-              alt="Navneet Patidar"
-              className="w-64 h-auto md:w-72 lg:w-80 object-contain transform hover:scale-[1.03] transition-transform duration-500 ease-out"
+            <Lanyard
+              position={[0, 0, 18]}
+              gravity={[0, -38, 0]}
+              fov={20}
+              cardScale={2.45}
+              lanyardWidth={1.3}
+              frontImage="/lanyard/id-front.png"
+              backImage="/lanyard/id-back.png"
+              lanyardImage="/lanyard/lanyard-custom.png"
+              className="w-full h-full"
             />
           </motion.div>
         </div>

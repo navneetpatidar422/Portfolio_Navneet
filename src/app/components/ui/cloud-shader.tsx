@@ -299,7 +299,8 @@ export const CloudShader = ({
     ).matches;
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const isMobile = window.innerWidth < 768;
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.25);
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
       const w = Math.max(1, Math.floor(width * dpr));
@@ -319,6 +320,10 @@ export const CloudShader = ({
     const start = performance.now();
     const draw = (now: number) => {
       if (!running) return;
+      if (document.hidden) {
+        frame = requestAnimationFrame(draw);
+        return;
+      }
       const p = paramsRef.current;
       const elapsed = reduceMotion ? 0 : ((now - start) / 1000) * p.speed;
       const cloud = parseHex(p.cloudColor);

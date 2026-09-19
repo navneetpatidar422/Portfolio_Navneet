@@ -17,6 +17,7 @@ function figmaAssetResolver() {
 
 export default defineConfig({
   // base: '/Portfolio_Navneet/',
+  assetsInclude: ['**/*.glb'],
 
   plugins: [
     figmaAssetResolver(),

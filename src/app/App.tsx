@@ -116,7 +116,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="bg-background min-h-screen text-foreground font-body relative transition-colors duration-500">
+      <div className="bg-background min-h-screen text-foreground font-body relative transition-colors duration-500 overflow-x-hidden w-full max-w-full">
         <AnimatePresence mode="wait">
           {loading && (
             <CreativeLoader onComplete={() => setLoading(false)} />

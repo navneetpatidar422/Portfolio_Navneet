@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { StaggeredText } from "../shared/StaggeredText";
+import { SquigglyText } from "../ui/squiggly-text";
+import { CometCard } from "../ui/comet-card";
 
 const cardsData = [
   {
@@ -364,7 +366,7 @@ export const Skills = () => {
               className="text-3xl md:text-4xl lg:text-5xl font-anton uppercase leading-[1.1] text-neutral-900 dark:text-white tracking-tight transition-colors duration-500"
             />
             <p className="text-base md:text-lg text-neutral-500 dark:text-neutral-400 font-body font-light leading-relaxed transition-colors duration-500">
-              They start with <span className="text-emerald-500 font-subheading font-bold">understanding people</span>, questioning assumptions, and designing systems that scale.
+              They start with <SquigglyText scale={[5, 8]} className="bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white px-3 sm:px-3.5 py-0.5 md:py-1 rounded-md shadow-md inline-block my-1 font-subheading font-bold">understanding people</SquigglyText>, questioning assumptions, and designing systems that scale.
             </p>
           </motion.div>
 
@@ -374,32 +376,32 @@ export const Skills = () => {
               Tools &amp; Ecosystem I Use
             </h3>
 
-            {/* Compact Logo + Name Grid with Custom Brand Hover Animations */}
+            {/* Compact Logo + Name Grid with 3D Comet Card Tilt & Glare Animations */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {toolsData.map((tool, i) => (
-                <motion.div
-                  key={tool.name}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  transition={{ 
-                    duration: 0.3, 
-                    delay: i * 0.04,
-                    layout: { type: "spring", stiffness: 300, damping: 25 }
-                  }}
-                  viewport={{ once: true }}
-                  className={`group relative p-3 bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-900 rounded-2xl flex items-center gap-3.5 transition-all duration-300 shadow-sm ${tool.brandColorClass} ${tool.bgColorClass}`}
-                >
-                  {/* Logo Container */}
-                  <div className={`w-11 h-11 flex items-center justify-center p-1.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-xl shrink-0 group-hover:scale-108 group-hover:rotate-3 transition-all duration-300 ${tool.logoBgClass}`}>
-                    {tool.logo}
-                  </div>
+                <CometCard key={tool.name} rotateDepth={12} translateDepth={12}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ 
+                      duration: 0.3, 
+                      delay: i * 0.04,
+                      layout: { type: "spring", stiffness: 300, damping: 25 }
+                    }}
+                    viewport={{ once: true }}
+                    className={`group relative p-3 bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-900 rounded-2xl flex items-center gap-3.5 transition-all duration-300 shadow-sm ${tool.brandColorClass} ${tool.bgColorClass}`}
+                  >
+                    {/* Logo Container */}
+                    <div className={`w-11 h-11 flex items-center justify-center p-1.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-xl shrink-0 group-hover:scale-108 group-hover:rotate-3 transition-all duration-300 ${tool.logoBgClass}`}>
+                      {tool.logo}
+                    </div>
 
-                  {/* Info (Only Name, no description) */}
-                  <span className="font-bold text-neutral-800 dark:text-neutral-100 text-sm tracking-wide transition-colors duration-300 truncate">
-                    {tool.name}
-                  </span>
-                </motion.div>
+                    {/* Info (Only Name, no description) */}
+                    <span className="font-bold text-neutral-800 dark:text-neutral-100 text-sm tracking-wide transition-colors duration-300 truncate">
+                      {tool.name}
+                    </span>
+                  </motion.div>
+                </CometCard>
               ))}
             </div>
           </div>
