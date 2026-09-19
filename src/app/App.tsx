@@ -76,10 +76,10 @@ function MainHome() {
 function GlobalBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none select-none z-[0] overflow-hidden">
-      {/* Dynamic Cloud Shader Background (Faded to ~70% intensity) */}
+      {/* Dynamic Cloud Shader Background (Faded to 50% intensity) */}
       <CloudShader 
-        className="absolute inset-0 h-full w-full opacity-65 dark:opacity-30 transition-opacity duration-500" 
-        speed={0.65}
+        className="absolute inset-0 h-full w-full opacity-45 dark:opacity-20 transition-opacity duration-500" 
+        speed={0.5}
         count={5}
         cloudColor="#fbf8f2"
         skyTopColor="#3876ba"
@@ -87,7 +87,7 @@ function GlobalBackground() {
       />
 
       {/* Atmospheric overlay for theme adaptability and text contrast */}
-      <div className="absolute inset-0 bg-white/45 dark:bg-[#08090C]/85 transition-colors duration-500" />
+      <div className="absolute inset-0 bg-white/60 dark:bg-[#08090C]/90 transition-colors duration-500" />
       
       {/* Luminous Hardware-Accelerated Fluid Gradients */}
       <motion.div 

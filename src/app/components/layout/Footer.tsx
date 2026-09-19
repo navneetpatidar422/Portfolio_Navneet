@@ -104,7 +104,7 @@ export const Footer = () => {
   return (
     <footer className={`text-white relative overflow-hidden ${isIsro ? "bg-[#050508]" : "bg-transparent"}`}>
       {/* Solid Footer Background: Only covers the lower section of the footer */}
-      <div className={`absolute top-[200px] sm:top-[260px] md:top-[320px] lg:top-[360px] bottom-0 left-0 right-0 z-0 ${
+      <div className={`absolute top-[240px] sm:top-[300px] md:top-[360px] lg:top-[400px] bottom-0 left-0 right-0 z-0 ${
         isIsro ? "bg-[#050508]" : "bg-[#0E0E0E]"
       }`} />
 
@@ -128,8 +128,8 @@ export const Footer = () => {
         }`} />
       </div>
 
-      {/* Main Footer Content: Positioned over the lower dark gradient (Starting from the Blue Line in Sketch) */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 -mt-36 sm:-mt-48 md:-mt-60 lg:-mt-72 pb-8">
+      {/* Main Footer Content: Positioned comfortably lower over the mountain base */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 -mt-16 sm:-mt-24 md:-mt-32 lg:-mt-40 pb-8">
         
 
 
