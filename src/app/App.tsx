@@ -17,6 +17,7 @@ import { ScrollToTop } from "./components/shared/ScrollToTop";
 import { Toaster } from "./components/ui/sonner";
 import { ThankYou } from "./components/home/ThankYou";
 import { SectionTicker } from "./components/shared/SectionTicker";
+import { CloudShader } from "./components/ui/cloud-shader";
 
 // Code Split Heavy Routes using Lazy Loading & Suspense
 const Retail_ManagementCaseStudy = lazy(() => import("./components/work/Retail_ManagementCaseStudy").then(m => ({ default: m.Retail_ManagementCaseStudy })));
@@ -74,48 +75,37 @@ function MainHome() {
 
 function GlobalBackground() {
   return (
-    <div className="fixed inset-0 pointer-events-none select-none z-[1] overflow-hidden">
-      {/* Base Background */}
-      <div className="absolute inset-0 bg-[#FAFAFC] dark:bg-[#08090C] transition-colors duration-500" />
+    <div className="fixed inset-0 pointer-events-none select-none z-[0] overflow-hidden">
+      {/* Dynamic Cloud Shader Background (Faded to ~70% intensity) */}
+      <CloudShader 
+        className="absolute inset-0 h-full w-full opacity-65 dark:opacity-30 transition-opacity duration-500" 
+        speed={0.65}
+        count={5}
+        cloudColor="#fbf8f2"
+        skyTopColor="#3876ba"
+        skyBottomColor="#8cbfe8"
+      />
+
+      {/* Atmospheric overlay for theme adaptability and text contrast */}
+      <div className="absolute inset-0 bg-white/45 dark:bg-[#08090C]/85 transition-colors duration-500" />
       
-      {/* Luminous Hardware-Accelerated Smooth Fluid Gradients */}
+      {/* Luminous Hardware-Accelerated Fluid Gradients */}
       <motion.div 
           animate={{ 
               x: [0, 60, -30, 0],
               y: [0, -60, 30, 0],
               scale: [1, 1.15, 0.9, 1],
-              opacity: [0.5, 0.7, 0.5, 0.5]
+              opacity: [0.3, 0.5, 0.3, 0.3]
           }}
           transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
           style={{ willChange: "transform, opacity" }}
           className="absolute top-[-20%] left-[-10%] w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-gradient-to-br from-white via-slate-100/90 to-neutral-200/50 dark:from-purple-950/20 dark:via-indigo-900/15 dark:to-slate-900/15 rounded-full blur-[45px] mix-blend-normal dark:mix-blend-screen pointer-events-none"
       />
-      <motion.div 
-          animate={{ 
-              x: [0, -50, 40, 0],
-              y: [0, 60, -20, 0],
-              scale: [1, 1.1, 0.95, 1],
-              opacity: [0.4, 0.65, 0.4, 0.4]
-          }}
-          transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
-          style={{ willChange: "transform, opacity" }}
-          className="absolute bottom-[-10%] right-[-20%] w-[500px] md:w-[700px] h-[500px] md:h-[700px] bg-gradient-to-tr from-sky-50/70 via-white to-slate-100/60 dark:from-blue-950/20 dark:via-purple-900/15 dark:to-indigo-950/15 rounded-full blur-[40px] mix-blend-normal dark:mix-blend-screen pointer-events-none"
-      />
-      <motion.div 
-          animate={{ 
-              x: [0, 30, -30, 0],
-              y: [0, 20, -20, 0],
-              scale: [1, 1.1, 0.9, 1],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          style={{ willChange: "transform" }}
-          className="hidden md:block absolute top-[35%] left-[25%] w-[400px] h-[400px] bg-gradient-to-br from-white via-neutral-100/80 to-slate-200/40 dark:from-fuchsia-950/10 dark:via-violet-900/10 dark:to-purple-950/10 rounded-full blur-[30px] mix-blend-normal dark:mix-blend-screen pointer-events-none"
-      />
       
       {/* Ultra High-Performance GPU Noise Texture */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.12] dark:opacity-[0.14] mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.10] dark:opacity-[0.14] mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />
 
-      {/* Technical Grid */}
+      {/* Technical Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)] opacity-70" />
     </div>
   );
