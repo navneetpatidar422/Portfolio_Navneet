@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { StaggeredText } from "../shared/StaggeredText";
 import { SquigglyText } from "../ui/squiggly-text";
 import { Lanyard } from "../ui/lanyard";
@@ -131,25 +131,15 @@ const ExperienceTimeline = () => (
 
 export const AboutMe = () => {
   const [activeTab, setActiveTab] = useState<string>("aboutme");
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-      target: containerRef,
-      offset: ["start end", "end start"]
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   return (
-    <section ref={containerRef} id="about" className="py-24 lg:py-32 px-6 bg-transparent text-foreground relative overflow-x-clip border-t border-black/5 dark:border-white/5 transition-colors duration-500">
-      {/* Ambient Background Glows strictly contained to prevent horizontal scroll */}
+    <section id="about" className="py-24 lg:py-32 px-6 bg-transparent text-foreground relative overflow-x-clip border-t border-black/5 dark:border-white/5 transition-colors duration-500">
+      {/* Ambient Background Glows — static, no scroll-driven motion for perf */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          style={{ y: y1 }}
+        <div 
           className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px]" 
         />
-        <motion.div 
-          style={{ y: y2 }}
+        <div 
           className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px]" 
         />
       </div>
@@ -186,7 +176,7 @@ export const AboutMe = () => {
 
           {/* Interactive 3D Physics Lanyard ID Card */}
           <motion.div
-            className="flex flex-col items-center justify-center w-full lg:w-[520px] xl:w-[600px] h-[540px] sm:h-[620px] lg:h-[720px] -mt-6 sm:-mt-10 lg:-mt-28 shrink-0 relative overflow-visible"
+            className="flex flex-col items-center justify-center w-full lg:w-[520px] xl:w-[600px] h-[460px] sm:h-[540px] lg:h-[720px] -mt-6 sm:-mt-10 lg:-mt-28 shrink-0 relative overflow-visible"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}

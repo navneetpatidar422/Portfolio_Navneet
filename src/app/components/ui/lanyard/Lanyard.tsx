@@ -49,7 +49,7 @@ export default function Lanyard({
   className = ''
 }: LanyardProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1024);
   const [isInView, setIsInView] = useState(true);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function Lanyard({
       ([entry]) => {
         setIsInView(entry.isIntersecting);
       },
-      { rootMargin: '250px' }
+      { rootMargin: '50px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -86,15 +86,15 @@ export default function Lanyard({
       }>
         <Canvas
           camera={{ position: position, fov: fov }}
-          dpr={[1, isMobile ? 1.25 : 1.75]}
+          dpr={[1, isMobile ? 1.0 : 1.5]}
           frameloop={isInView ? 'always' : 'never'}
-          gl={{ alpha: transparent, antialias: true, powerPreference: 'high-performance' }}
+          gl={{ alpha: transparent, antialias: !isMobile, powerPreference: 'high-performance' }}
           onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
         >
           <ambientLight intensity={Math.PI * 0.9} />
           <directionalLight position={[6, 12, 6]} intensity={2.0} />
           <directionalLight position={[-6, -6, -4]} intensity={0.6} color="#38bdf8" />
-          <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+          <Physics gravity={gravity} timeStep={isMobile ? 1 / 24 : 1 / 60}>
             <Band
               isMobile={isMobile}
               frontImage={frontImage}
@@ -286,11 +286,7 @@ function Band({
         rot.copy(card.current.rotation());
         card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
 
-        // Subtle ambient natural sway when idle
-        if (!dragged) {
-          const t = state.clock.getElapsedTime();
-          card.current.applyImpulse({ x: Math.sin(t * 1.5) * 0.0003, y: 0, z: Math.cos(t * 1.2) * 0.00015 }, false);
-        }
+        // No ambient impulse — let physics settle naturally for better perf
       }
     }
   });
