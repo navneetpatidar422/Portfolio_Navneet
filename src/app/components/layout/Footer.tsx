@@ -103,8 +103,8 @@ export const Footer = () => {
 
   return (
     <footer className={`text-white relative overflow-hidden ${isIsro ? "bg-[#050508]" : "bg-transparent"}`}>
-      {/* Solid Footer Background: Only covers the lower section of the footer */}
-      <div className={`absolute top-[240px] sm:top-[300px] md:top-[360px] lg:top-[400px] bottom-0 left-0 right-0 z-0 ${
+      {/* Solid Footer Background: Covers only the bottom section below mountain peaks */}
+      <div className={`absolute top-[280px] sm:top-[340px] md:top-[400px] lg:top-[440px] bottom-0 left-0 right-0 z-0 ${
         isIsro ? "bg-[#050508]" : "bg-[#0E0E0E]"
       }`} />
 
@@ -113,18 +113,18 @@ export const Footer = () => {
         {/* Animated Twinkling StarField behind mountain image on ISRO page */}
         {isIsro && <FooterStarField />}
 
-        {/* Mountain Image */}
+        {/* Mountain Image (Transparent Sky PNG) */}
         <img
           src="/mountains.png"
           alt="Dark Mountain Landscape"
-          className="w-full h-full object-cover object-top block opacity-95 relative z-[1]"
+          className="w-full h-full object-cover object-top block opacity-100 relative z-[1]"
         />
 
-        {/* Bottom Black Gradient: Fades lower trees seamlessly into footer background */}
-        <div className={`absolute inset-0 z-[2] bg-gradient-to-b ${
+        {/* Bottom Fade Gradient: Starts below mountain peaks to keep sky 100% clear */}
+        <div className={`absolute top-[45%] bottom-0 left-0 right-0 z-[2] bg-gradient-to-b ${
           isIsro 
-            ? "from-[#050508] via-[#050508]/60 to-[#050508]" 
-            : "from-transparent via-[#0E0E0E]/70 to-[#0E0E0E]"
+            ? "from-transparent via-[#050508]/80 to-[#050508]" 
+            : "from-transparent via-[#0E0E0E]/80 to-[#0E0E0E]"
         }`} />
       </div>
 
