@@ -1,20 +1,25 @@
-/* ── ScrollStack: Scroll-linked stacking cards ──────────────────────────── */
+/* ── ScrollStack: native sticky stacked deck cards ──────────────────────
+   Hardware accelerated transforms linked to scroll progress.
+   No ancestors of .ss-container should have overflow: hidden (use overflow-x: clip).
+   ─────────────────────────────────────────────────────────────────────── */
 
 .ss-container {
-  position: relative; /* Makes this the offsetParent for .ss-card children */
+  position: relative;
+  width: 100%;
 }
 
-.ss-card {
-  /* GPU-composited layer for smooth transforms */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  /* Initial identity transform — establishes GPU layer immediately */
-  transform: translateZ(0);
-  /* Cards in normal document flow — position is NOT set here,
-     so offsetTop readings are pure layout values, unaffected by transforms */
+.ss-card-wrapper {
+  position: relative;
+  width: 100%;
 }
 
-/* Gap between cards (not on the last one) */
-.ss-card:not(:last-child) {
-  margin-bottom: var(--ss-gap, 120px);
+.ss-card-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100%;
+  will-change: transform;
+}
+
+.ss-card-inner {
+  width: 100%;
 }

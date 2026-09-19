@@ -81,6 +81,12 @@ const ProjectCardInner = ({ project }: { project: typeof projects[0] }) => {
       }}
       className="group block w-full max-w-5xl mx-auto bg-white dark:bg-[#121214] border border-black/10 dark:border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl dark:shadow-[0_25px_50px_rgba(0,0,0,0.6)] transition-colors duration-500"
     >
+      {/* Top accent tab bar matching project brand color */}
+      <div 
+        style={{ backgroundColor: project.color }} 
+        className="h-2 w-full transition-opacity duration-300" 
+      />
+
       <Link to={project.path} className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 p-6 sm:p-8 lg:p-12 items-center cursor-pointer">
         
         {/* Left Side: Thumbnail container */}
@@ -184,8 +190,10 @@ export const Work = () => {
 
         {/* Scroll-linked stacking project cards */}
         <ScrollStack
-          stickyTop={88}
-          cardGap={160}
+          stickyTop={96}
+          cardGap={200}
+          scaleStep={0.035}
+          offsetY={16}
           className="w-full"
         >
           {projects.map((project) => (

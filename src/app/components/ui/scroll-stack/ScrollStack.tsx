@@ -1,226 +1,182 @@
 /**
- * ScrollStack — Scroll-linked stacking cards.
+ * ScrollStack — stacked deck card animation driven by motion scroll progress.
  *
- * Performance design:
- * ─────────────────
- * • Static offsetTop measurements (never affected by transforms) — no feedback loop.
- * • ResizeObserver is DEBOUNCED so it can't fire mid-scroll.
- * • Only ONE window.resize listener (properly cleaned up).
- * • Skip writes when value is unchanged.
- * • No layout reads inside the per-card RAF loop.
+ * Cards pin at `stickyTop`. As subsequent cards scroll into view,
+ * previous cards scale down slightly and shift upwards, forming a stacked
+ * card deck with visible tabs at the top (matching index card stack aesthetics).
  */
 
-import React, {
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, MotionValue } from 'motion/react';
 import './ScrollStack.css';
-
-// ─── ScrollStackItem ──────────────────────────────────────────────────────────
 
 export interface ScrollStackItemProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  // Legacy compat props (silently ignored)
-  itemClassName?: string;
-  _index?: number;
-  _total?: number;
-  _stickyTop?: number;
-  _laneHeight?: number;
-  _onMeasure?: (index: number, height: number) => void;
 }
 
 export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({
   children,
   className = '',
   style,
-}) => (
-  <div className={`ss-card ${className}`.trim()} style={style}>
-    {children}
-  </div>
-);
-
-// ─── ScrollStack ──────────────────────────────────────────────────────────────
+}) => {
+  return (
+    <div className={`ss-card-inner ${className}`.trim()} style={style}>
+      {children}
+    </div>
+  );
+};
 
 export interface ScrollStackProps {
   children: React.ReactNode;
   className?: string;
-  /** Distance from viewport top where cards pin (px). Should clear your navbar. Default: 88 */
+  /** Distance from viewport top where cards pin (px). Default: 100 */
   stickyTop?: number;
-  /** Vertical gap between cards (px). Controls overlap transition distance. Default: 160 */
+  /** Scroll distance per card transition (px). Default: 200 */
   cardGap?: number;
-  // Legacy compat props (silently ignored)
-  itemDistance?: number;
-  itemScale?: number;
-  itemStackDistance?: number;
-  stackPosition?: string;
-  scaleEndPosition?: string;
-  baseScale?: number;
-  scaleDuration?: number;
-  rotationAmount?: number;
-  blurAmount?: number;
-  useWindowScroll?: boolean;
-  scrollDistancePerCard?: number;
-  onStackComplete?: () => void;
+  /** Scale reduction per stacked card layer. Default: 0.035 */
+  scaleStep?: number;
+  /** Vertical top offset per stacked card layer (px). Default: 16 */
+  offsetY?: number;
 }
+
+interface ScrollStackCardProps {
+  index: number;
+  total: number;
+  stickyTop: number;
+  cardGap: number;
+  scaleStep: number;
+  offsetY: number;
+  scrollYProgress: MotionValue<number>;
+  children: React.ReactNode;
+}
+
+const ScrollStackCard: React.FC<ScrollStackCardProps> = ({
+  index,
+  total,
+  stickyTop,
+  cardGap,
+  scaleStep,
+  offsetY,
+  scrollYProgress,
+  children,
+}) => {
+  const isLast = index === total - 1;
+
+  // Calculate transform keyframes for scale and translateY (y)
+  const inputPoints: number[] = [0];
+  const scaleOutput: number[] = [1];
+  const yOutput: number[] = [0];
+
+  if (total > 1) {
+    const numSegments = total - 1;
+    const segStep = 1 / numSegments;
+
+    const cardStart = index * segStep;
+    if (cardStart > 0) {
+      inputPoints.push(cardStart);
+      scaleOutput.push(1);
+      yOutput.push(0);
+    }
+
+    for (let j = index + 1; j < total; j++) {
+      const p = Math.min(1, j * segStep);
+      const coveredCount = j - index;
+      inputPoints.push(p);
+      scaleOutput.push(Math.max(0.65, 1 - coveredCount * scaleStep));
+      yOutput.push(-coveredCount * offsetY);
+    }
+
+    if (inputPoints[inputPoints.length - 1] < 1) {
+      inputPoints.push(1);
+      scaleOutput.push(scaleOutput[scaleOutput.length - 1]);
+      yOutput.push(yOutput[yOutput.length - 1]);
+    }
+  }
+
+  const scale = useTransform(scrollYProgress, inputPoints, scaleOutput);
+  const y = useTransform(scrollYProgress, inputPoints, yOutput);
+
+  return (
+    <div
+      className="ss-card-wrapper"
+      style={{
+        height: isLast ? 'auto' : `calc(100vh - ${stickyTop}px + ${cardGap}px)`,
+        position: 'relative',
+      }}
+    >
+      <motion.div
+        className="ss-card-sticky"
+        style={{
+          position: 'sticky',
+          top: `${stickyTop}px`,
+          zIndex: index + 1,
+          scale,
+          y,
+          transformOrigin: 'top center',
+          willChange: 'transform',
+        }}
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+};
 
 export const ScrollStack: React.FC<ScrollStackProps> = ({
   children,
   className = '',
-  stickyTop = 88,
-  cardGap = 160,
+  stickyTop = 100,
+  cardGap = 200,
+  scaleStep = 0.035,
+  offsetY = 16,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLElement[]>([]);
-  const cardOffsetsRef = useRef<number[]>([]);
-  const containerDocTopRef = useRef<number>(0);
-  const rafRef = useRef<number | null>(null);
-  const prevTransformsRef = useRef<number[]>([]);
-  // Debounce timer for resize re-measurement
-  const resizeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // Guard: don't let ResizeObserver fire while scroll RAF is running
-  const isMeasuringRef = useRef(false);
+  const childrenArray = React.Children.toArray(children);
+  const total = childrenArray.length;
 
-  // ── measure() ─────────────────────────────────────────────────────────────
-  // Resets transforms, reads static positions, caches them.
-  // Must ONLY be called when scroll is NOT happening (debounced on resize).
-  const measure = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    isMeasuringRef.current = true;
+  const [isMobile, setIsMobile] = useState(false);
 
-    const cards = Array.from(
-      container.querySelectorAll<HTMLElement>('.ss-card')
-    );
-    cardsRef.current = cards;
-    prevTransformsRef.current = new Array(cards.length).fill(NaN); // force first write
-
-    // 1. Reset all card transforms
-    cards.forEach(c => { c.style.transform = ''; });
-
-    // 2. One synchronous reflow to settle layout (read offsetHeight = batch)
-    const _ = container.offsetHeight; void _;
-
-    // 3. Snapshot container's absolute document position
-    const rect = container.getBoundingClientRect();
-    containerDocTopRef.current = rect.top + window.scrollY;
-
-    // 4. Snapshot each card's static offsetTop (layout value, NEVER affected by transforms)
-    cardOffsetsRef.current = cards.map(c => c.offsetTop);
-
-    // 5. Set stacking styles (paint only, not layout)
-    cards.forEach((c, i) => {
-      c.style.zIndex = String(i + 1);
-      c.style.willChange = 'transform';
-    });
-
-    isMeasuringRef.current = false;
-
-    // Re-apply correct transforms for current scroll position
-    updateTransforms();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  // NOTE: updateTransforms is defined below and referenced via closure.
-  // Using a ref to break the circular dependency.
-  const updateTransformsRef = useRef<() => void>(() => {});
-
-  // ── updateTransforms() ────────────────────────────────────────────────────
-  // Pure math: scrollY + static offsets → translateY per card.
-  // Zero layout reads. Zero React state. Runs in RAF.
-  const updateTransforms = useCallback(() => {
-    if (isMeasuringRef.current) return;
-    const cards = cardsRef.current;
-    const offsets = cardOffsetsRef.current;
-    if (!cards.length || !offsets.length) return;
-
-    const scrollY = window.scrollY;
-    const containerDocTop = containerDocTopRef.current;
-    const lastOffset = offsets[offsets.length - 1] ?? 0;
-
-    // scrollY at which the last card has fully pinned (freeze point)
-    const pinEnd = containerDocTop + lastOffset - stickyTop;
-    const clampedScroll = Math.min(scrollY, pinEnd);
-
-    cards.forEach((card, i) => {
-      const cardDocTop = containerDocTop + offsets[i];
-      const pinStart = cardDocTop - stickyTop;
-
-      let ty = 0;
-      if (scrollY >= pinStart) {
-        ty = clampedScroll - cardDocTop + stickyTop;
-      }
-
-      // Round to 1 decimal to reduce redundant style writes
-      const tyr = Math.round(ty * 10) / 10;
-      if (prevTransformsRef.current[i] === tyr) return;
-      prevTransformsRef.current[i] = tyr;
-      card.style.transform = `translate3d(0,${tyr}px,0)`;
-    });
-  }, [stickyTop]);
-
-  // Keep the ref in sync so measure() can call updateTransforms
   useEffect(() => {
-    updateTransformsRef.current = updateTransforms;
-  }, [updateTransforms]);
-
-  // ── handleScroll() ────────────────────────────────────────────────────────
-  const handleScroll = useCallback(() => {
-    if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(updateTransforms);
-  }, [updateTransforms]);
-
-  // ── Mount: measure then set up listeners ──────────────────────────────────
-  useLayoutEffect(() => {
-    measure();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+  const activeScaleStep = isMobile ? 0.025 : scaleStep;
+  const activeOffsetY = isMobile ? 12 : offsetY;
 
-    // Debounced resize: wait 150ms after resize stops before re-measuring.
-    // This prevents ResizeObserver from firing mid-scroll on mobile (rubber-band,
-    // browser chrome show/hide) which would cause visible jitter.
-    const handleResize = () => {
-      if (resizeTimerRef.current !== null) clearTimeout(resizeTimerRef.current);
-      resizeTimerRef.current = setTimeout(() => {
-        measure();
-      }, 150);
-    };
-
-    // ResizeObserver: only for genuine DOM content changes (font load, image load).
-    // Also debounced so it can't fire during scroll.
-    const ro = new ResizeObserver(() => {
-      if (resizeTimerRef.current !== null) clearTimeout(resizeTimerRef.current);
-      resizeTimerRef.current = setTimeout(() => {
-        measure();
-      }, 150);
-    });
-    if (containerRef.current) ro.observe(containerRef.current);
-
-    window.addEventListener('resize', handleResize, { passive: true });
-
-    // Initial scroll position sync
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      ro.disconnect();
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      if (resizeTimerRef.current !== null) clearTimeout(resizeTimerRef.current);
-    };
-  }, [handleScroll, measure]);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: [`start ${stickyTop}px`, 'end end'],
+  });
 
   return (
     <div
       ref={containerRef}
       className={`ss-container ${className}`.trim()}
-      style={{ '--ss-gap': `${cardGap}px` } as React.CSSProperties}
+      style={{
+        paddingTop: `${(total - 1) * activeOffsetY}px`,
+      }}
     >
-      {children}
+      {childrenArray.map((child, index) => (
+        <ScrollStackCard
+          key={index}
+          index={index}
+          total={total}
+          stickyTop={stickyTop}
+          cardGap={cardGap}
+          scaleStep={activeScaleStep}
+          offsetY={activeOffsetY}
+          scrollYProgress={scrollYProgress}
+        >
+          {child}
+        </ScrollStackCard>
+      ))}
     </div>
   );
 };
