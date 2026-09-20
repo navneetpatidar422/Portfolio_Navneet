@@ -10,7 +10,7 @@ export const BharatVibeCaseStudy = () => {
       {/* Top Navigation */}
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <Link 
-          to="/work" 
+          to="/#work" 
           className="inline-flex items-center gap-2 text-sm uppercase tracking-widest text-[#5C4533] hover:text-[#1D0C00] font-bold transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Work

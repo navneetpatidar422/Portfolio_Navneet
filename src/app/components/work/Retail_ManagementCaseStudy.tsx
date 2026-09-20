@@ -9,7 +9,7 @@ export const Retail_ManagementCaseStudy = () => {
       {/* Top Banner */}
       <div className="max-w-5xl mx-auto px-6 mb-8">
         <Link 
-          to="/work" 
+          to="/#work" 
           className="inline-flex items-center gap-2 text-sm uppercase tracking-widest text-[#6A6A66] hover:text-[#1E352F] font-bold transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Work

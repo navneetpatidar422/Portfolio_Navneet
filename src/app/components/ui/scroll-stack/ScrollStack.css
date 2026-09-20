@@ -1,11 +1,13 @@
-/* ── ScrollStack: native sticky stacked deck cards ──────────────────────
-   Hardware accelerated transforms linked to scroll progress.
-   No ancestors of .ss-container should have overflow: hidden (use overflow-x: clip).
-   ─────────────────────────────────────────────────────────────────────── */
+/* ScrollStack — native sticky stacked deck
+ *
+ * Keep the native sticky wrappers. Do not put overflow:hidden on ancestors
+ * of .ss-container; use overflow-x: clip at the page/root level.
+ */
 
 .ss-container {
   position: relative;
   width: 100%;
+  isolation: isolate;
 }
 
 .ss-card-wrapper {
@@ -16,10 +18,28 @@
 .ss-card-sticky {
   position: -webkit-sticky;
   position: sticky;
+  top: 0;
   width: 100%;
+  min-width: 0;
+
+  transform-origin: top center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  /*
+   * Only the transform is being updated during scroll.
+   * Avoid transition: all here — it introduces lag and fights the
+   * scroll-linked MotionValue.
+   */
   will-change: transform;
 }
 
 .ss-card-inner {
   width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-card-sticky {
+    will-change: auto;
+  }
 }
