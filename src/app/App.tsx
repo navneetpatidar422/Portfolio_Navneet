@@ -78,7 +78,7 @@ function GlobalBackground() {
     <div className="fixed inset-0 pointer-events-none select-none z-[0] overflow-hidden">
       {/* Dynamic Cloud Shader Background (Faded to 50% intensity) */}
       <CloudShader 
-        className="absolute inset-0 h-full w-full opacity-45 dark:opacity-20 transition-opacity duration-500" 
+        className="absolute inset-0 h-full w-full opacity-55 dark:opacity-55 transition-opacity duration-500" 
         speed={0.5}
         count={5}
         cloudColor="#fbf8f2"
@@ -105,8 +105,7 @@ function GlobalBackground() {
       {/* Ultra High-Performance GPU Noise Texture */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.10] dark:opacity-[0.14] mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />
 
-      {/* Technical Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)] opacity-70" />
+
     </div>
   );
 }
