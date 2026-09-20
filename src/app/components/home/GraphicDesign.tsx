@@ -20,48 +20,38 @@ const ANIM_DURATION_MS = 55000;
 
 export const GraphicDesign = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  // Controls the ✋ cursor: "grab" at rest, "grabbing" while dragging
   const [isGrabbing, setIsGrabbing] = useState(false);
 
   const marqueeItems = [...galleryItems, ...galleryItems, ...galleryItems];
 
   /* ── Refs ────────────────────────────────────────────────────────────── */
+  const wrapRef       = useRef<HTMLDivElement>(null);
   const trackRef      = useRef<HTMLDivElement>(null);
   const dragging      = useRef(false);
   const didDrag       = useRef(false);
-  const pointerStartX = useRef(0);
-  const dragStartTX   = useRef(0);
+  const startX        = useRef(0);
+  const startTX       = useRef(0);
   const currentTX     = useRef(0);
   const autoPlaying   = useRef(true);
   const rafId         = useRef<number | null>(null);
   const velocity      = useRef(0);
   const lastX         = useRef(0);
   const lastT         = useRef(0);
-  const touchStartX   = useRef(0);
-  const touchStartTX  = useRef(0);
 
-  /* ── Helpers ─────────────────────────────────────────────────────────── */
+  /* ── Core helpers ────────────────────────────────────────────────────── */
 
-  /** Capture the live CSS translateX (works whether animation is running or manual) */
   const getLiveTranslateX = useCallback((): number => {
     const el = trackRef.current;
     if (!el) return 0;
-    const mat = new DOMMatrix(getComputedStyle(el).transform);
-    return mat.m41;
+    return new DOMMatrix(getComputedStyle(el).transform).m41;
   }, []);
 
-  /** Push a raw pixel offset onto the track element */
   const applyTX = useCallback((px: number) => {
     const el = trackRef.current;
     if (!el) return;
     el.style.transform = `translate3d(${px}px, 0, 0)`;
   }, []);
 
-  /**
-   * Clamp px into [−tileWidth, 0] for seamless looping.
-   * tileWidth = trackRef.scrollWidth / 3  (we tripled the items)
-   * NOTE: we use trackRef (not the clipped wrapper) so scrollWidth is the full track.
-   */
   const wrapTX = useCallback((px: number): number => {
     const track = trackRef.current;
     if (!track) return px;
@@ -70,37 +60,61 @@ export const GraphicDesign = () => {
     return ((px % tile) - tile) % tile;
   }, []);
 
-  /** Freeze the CSS animation at its current painted position */
   const pauseAuto = useCallback(() => {
     const el = trackRef.current;
     if (!el || !autoPlaying.current) return;
     const tx = getLiveTranslateX();
     el.style.animation = "none";
-    currentTX.current  = tx;
+    currentTX.current = tx;
     applyTX(tx);
     autoPlaying.current = false;
   }, [getLiveTranslateX, applyTX]);
 
-  /** Resume the CSS animation, starting from the current pixel offset */
   const resumeAuto = useCallback(() => {
-    const el    = trackRef.current;
+    const el = trackRef.current;
     if (!el || autoPlaying.current) return;
-
     const tile = el.scrollWidth / 3;
     if (tile === 0) return;
-
-    // Map current offset → 0..tile, then derive how far into the animation we are
     const rawTX       = wrapTX(currentTX.current);
-    const frac        = Math.abs(rawTX) / tile;          // 0 = start, 1 = end
+    const frac        = Math.abs(rawTX) / tile;
     const remainingMs = frac * ANIM_DURATION_MS;
     const delayS      = -(ANIM_DURATION_MS - remainingMs) / 1000;
-
     el.style.transform = "";
     el.style.animation = `visualMarquee ${ANIM_DURATION_MS / 1000}s ${delayS}s linear infinite`;
     autoPlaying.current = true;
   }, [wrapTX]);
 
-  /* ── Shared release logic ────────────────────────────────────────────── */
+  /* ── Shared drag-move logic (used by both pointer & touch) ───────────── */
+  const handleMove = useCallback((clientX: number) => {
+    if (!dragging.current) return;
+    const dx = clientX - startX.current;
+    if (Math.abs(dx) > 4) didDrag.current = true;
+    const now = performance.now();
+    const dt  = now - lastT.current;
+    if (dt > 0) velocity.current = (clientX - lastX.current) / dt;
+    lastX.current = clientX;
+    lastT.current = now;
+    currentTX.current = wrapTX(startTX.current + dx);
+    applyTX(currentTX.current);
+  }, [applyTX, wrapTX]);
+
+  /* ── Shared start ────────────────────────────────────────────────────── */
+  const handleStart = useCallback((clientX: number) => {
+    if (rafId.current !== null) {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+    }
+    pauseAuto();
+    dragging.current = true;
+    didDrag.current  = false;
+    startX.current   = clientX;
+    startTX.current  = currentTX.current;
+    lastX.current    = clientX;
+    lastT.current    = performance.now();
+    velocity.current = 0;
+  }, [pauseAuto]);
+
+  /* ── Shared release with momentum ────────────────────────────────────── */
   const handleRelease = useCallback(() => {
     if (!dragging.current) return;
     dragging.current = false;
@@ -108,15 +122,15 @@ export const GraphicDesign = () => {
 
     const v = velocity.current;
     if (Math.abs(v) > 0.05) {
-      const startTX  = currentTX.current;
-      const startT   = performance.now();
-      const strength = 350;
-      const totalPx  = v * strength * 0.5;
+      const snapTX  = currentTX.current;
+      const snapT   = performance.now();
+      const decay   = 420; // ms — longer = more satisfying glide
+      const totalPx = v * decay * 0.5;
 
       const glide = (now: number) => {
-        const t     = Math.min((now - startT) / strength, 1);
-        const eased = 1 - (1 - t) * (1 - t); // ease-out quad
-        const px    = wrapTX(startTX + totalPx * eased);
+        const t     = Math.min((now - snapT) / decay, 1);
+        const eased = 1 - (1 - t) * (1 - t) * (1 - t); // ease-out cubic
+        const px    = wrapTX(snapTX + totalPx * eased);
         currentTX.current = px;
         applyTX(px);
         if (t < 1) {
@@ -132,69 +146,59 @@ export const GraphicDesign = () => {
     }
   }, [applyTX, wrapTX, resumeAuto]);
 
-  /* ── Pointer events (mouse / stylus / pen) ───────────────────────────── */
+  /* ── Pointer events (desktop mouse / stylus) ─────────────────────────── */
   const onPointerDown = useCallback((e: React.PointerEvent) => {
-    if (rafId.current !== null) {
-      cancelAnimationFrame(rafId.current);
-      rafId.current = null;
-    }
-    pauseAuto();
-    dragging.current      = true;
-    didDrag.current       = false;
-    pointerStartX.current = e.clientX;
-    dragStartTX.current   = currentTX.current;
-    lastX.current         = e.clientX;
-    lastT.current         = performance.now();
-    velocity.current      = 0;
+    handleStart(e.clientX);
     setIsGrabbing(true);
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-  }, [pauseAuto]);
+  }, [handleStart]);
 
   const onPointerMove = useCallback((e: React.PointerEvent) => {
-    if (!dragging.current) return;
-    const dx = e.clientX - pointerStartX.current;
-    if (Math.abs(dx) > 4) didDrag.current = true;
+    handleMove(e.clientX);
+  }, [handleMove]);
 
-    const now = performance.now();
-    const dt  = now - lastT.current;
-    if (dt > 0) velocity.current = (e.clientX - lastX.current) / dt;
-    lastX.current = e.clientX;
-    lastT.current = now;
+  /* ── Touch events — registered as NON-PASSIVE via useEffect ─────────── */
+  /*
+   * React synthetic touch events are always passive on modern browsers,
+   * which prevents us from calling e.preventDefault() to stop the page
+   * from vertically scrolling while the user swipes horizontally.
+   * We register the native listeners ourselves with { passive: false }.
+   */
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
 
-    currentTX.current = wrapTX(dragStartTX.current + dx);
-    applyTX(currentTX.current);
-  }, [applyTX, wrapTX]);
+    const onTouchStart = (e: TouchEvent) => {
+      handleStart(e.touches[0].clientX);
+    };
 
-  /* ── Touch events ────────────────────────────────────────────────────── */
-  const onTouchStart = useCallback((e: React.TouchEvent) => {
-    if (rafId.current !== null) {
-      cancelAnimationFrame(rafId.current);
-      rafId.current = null;
-    }
-    pauseAuto();
-    dragging.current     = true;
-    didDrag.current      = false;
-    touchStartX.current  = e.touches[0].clientX;
-    touchStartTX.current = currentTX.current;
-    lastX.current        = e.touches[0].clientX;
-    lastT.current        = performance.now();
-    velocity.current     = 0;
-  }, [pauseAuto]);
+    const onTouchMove = (e: TouchEvent) => {
+      if (!dragging.current) return;
+      // Determine if the gesture is primarily horizontal; if so, own it.
+      const dx = Math.abs(e.touches[0].clientX - startX.current);
+      const dy = Math.abs(e.touches[0].clientY - (e.touches[0].clientY)); // same point, so always 0 on first move
+      // After the first significant horizontal move, prevent vertical scroll
+      if (didDrag.current || dx > 6) {
+        e.preventDefault();
+      }
+      handleMove(e.touches[0].clientX);
+    };
 
-  const onTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!dragging.current) return;
-    const dx = e.touches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 4) didDrag.current = true;
+    const onTouchEnd = () => handleRelease();
+    const onTouchCancel = () => handleRelease();
 
-    const now = performance.now();
-    const dt  = now - lastT.current;
-    if (dt > 0) velocity.current = (e.touches[0].clientX - lastX.current) / dt;
-    lastX.current = e.touches[0].clientX;
-    lastT.current = now;
+    wrap.addEventListener("touchstart",  onTouchStart,  { passive: true  });
+    wrap.addEventListener("touchmove",   onTouchMove,   { passive: false }); // ← key: non-passive
+    wrap.addEventListener("touchend",    onTouchEnd,    { passive: true  });
+    wrap.addEventListener("touchcancel", onTouchCancel, { passive: true  });
 
-    currentTX.current = wrapTX(touchStartTX.current + dx);
-    applyTX(currentTX.current);
-  }, [applyTX, wrapTX]);
+    return () => {
+      wrap.removeEventListener("touchstart",  onTouchStart);
+      wrap.removeEventListener("touchmove",   onTouchMove);
+      wrap.removeEventListener("touchend",    onTouchEnd);
+      wrap.removeEventListener("touchcancel", onTouchCancel);
+    };
+  }, [handleStart, handleMove, handleRelease]);
 
   /* ── Cleanup ─────────────────────────────────────────────────────────── */
   useEffect(() => () => {
@@ -233,16 +237,13 @@ export const GraphicDesign = () => {
 
       {/* ── Marquee strip ──────────────────────────────────────────────── */}
       <div
+        ref={wrapRef}
         className="w-full overflow-hidden py-4 select-none"
-        style={{ cursor: isGrabbing ? "grabbing" : "grab" }}
+        style={{ cursor: isGrabbing ? "grabbing" : "grab", touchAction: "pan-y" }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={handleRelease}
         onPointerLeave={handleRelease}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={handleRelease}
-        onTouchCancel={handleRelease}
       >
         <style>{`
           @keyframes visualMarquee {
