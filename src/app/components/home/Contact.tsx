@@ -200,7 +200,7 @@ export const Contact = () => {
                                 <SocialLink href="https://wa.link/vgmz7y" icon={WhatsAppIcon} />
                                 <SocialLink href="https://www.linkedin.com/in/navneet-patidar/" icon={Linkedin} />
                                 <SocialLink href="https://www.behance.net/navneetpatidar" icon={BehanceIcon} />
-                                <SocialLink href="https://www.instagram.com/_navneetpatidar/" icon={Instagram} />
+                                <SocialLink href="https://www.instagram.com/navneet.svg/" icon={Instagram} />
                             </div>
                         </div>
                     </motion.div>
