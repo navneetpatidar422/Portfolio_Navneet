@@ -2,13 +2,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { StaggeredText } from "../shared/StaggeredText";
 import { SquigglyText } from "../ui/squiggly-text";
-import { Quote, Linkedin, PenSquare, Star, X, Send } from "lucide-react";
+import { Quote, Linkedin, PenSquare, X, Send } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 import { toast } from "sonner";
 import { submitToBackend } from "../../utils/formSubmit";
+import PeekRating from "../ui/PeekRating";
 
 const testimonials = [
   {
@@ -281,28 +282,30 @@ export const Testimonials = () => {
                   />
                 </div>
 
-                {/* Rating Stars */}
+                {/* Rating — PeekRating */}
                 <div>
                   <Label className="text-xs font-subheading font-bold uppercase text-neutral-500 dark:text-neutral-400">
                     Rating
                   </Label>
-                  <div className="flex items-center gap-2 mt-1.5">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button
-                        key={star}
-                        type="button"
-                        onClick={() => setReviewForm({ ...reviewForm, rating: star })}
-                        className="p-1 cursor-pointer transition-transform hover:scale-125"
-                      >
-                        <Star
-                          className={`w-6 h-6 ${
-                            star <= reviewForm.rating
-                              ? "fill-amber-400 text-amber-400"
-                              : "text-neutral-300 dark:text-neutral-700"
-                          }`}
-                        />
-                      </button>
-                    ))}
+                  <div className="mt-2">
+                    <PeekRating
+                      value={reviewForm.rating}
+                      count={5}
+                      shape="star"
+                      labels={['Poor', 'Fair', 'Good', 'Great', 'Superb']}
+                      activeColor="#10B981"
+                      idleColor="#a3a3a3"
+                      tipColor="#18181b"
+                      tipTextColor="#f5f5f5"
+                      size={28}
+                      lift={7}
+                      magnify={1.15}
+                      riseDuration={320}
+                      popScale={1.3}
+                      showTip
+                      allowClear={false}
+                      onChange={(val) => setReviewForm({ ...reviewForm, rating: val })}
+                    />
                   </div>
                 </div>
 

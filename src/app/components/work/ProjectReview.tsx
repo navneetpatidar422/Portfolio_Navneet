@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Star, Send, MessageSquare, X } from "lucide-react";
+import { Send, MessageSquare, X } from "lucide-react";
 import { toast } from "sonner";
+import PeekRating from "../ui/PeekRating";
 import { submitToBackend } from "../../utils/formSubmit";
 
 interface ProjectReviewProps {
@@ -12,7 +13,6 @@ interface ProjectReviewProps {
 export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectReviewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [text, setText] = useState("");
@@ -151,31 +151,29 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                 <div className="px-8 pb-8 pt-5">
                   <form onSubmit={handleSubmit} className="space-y-5">
 
-                    {/* Star Rating */}
+                    {/* Star Rating — PeekRating */}
                     <div>
                       <label className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-3 block">
                         Your Rating
                       </label>
-                      <div className="flex gap-2">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button
-                            key={star}
-                            type="button"
-                            onMouseEnter={() => setHoverRating(star)}
-                            onMouseLeave={() => setHoverRating(0)}
-                            onClick={() => setRating(star)}
-                            className="transition-transform hover:scale-110"
-                          >
-                            <Star
-                              className={`w-8 h-8 transition-colors ${
-                                star <= (hoverRating || rating)
-                                  ? "text-amber-400 fill-amber-400"
-                                  : "text-neutral-200 fill-neutral-200 dark:text-neutral-700 dark:fill-neutral-700"
-                              }`}
-                            />
-                          </button>
-                        ))}
-                      </div>
+                      <PeekRating
+                        value={rating}
+                        count={5}
+                        shape="star"
+                        labels={['Poor', 'Fair', 'Good', 'Great', 'Superb']}
+                        activeColor={accentColor}
+                        idleColor="#a3a3a3"
+                        tipColor="#18181b"
+                        tipTextColor="#f5f5f5"
+                        size={32}
+                        lift={7}
+                        magnify={1.15}
+                        riseDuration={320}
+                        popScale={1.3}
+                        showTip
+                        allowClear
+                        onChange={(val) => setRating(val)}
+                      />
                     </div>
 
                     {/* Name */}
