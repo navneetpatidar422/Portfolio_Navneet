@@ -14,6 +14,7 @@ const galleryItems = [
   { id: 8, image: "/gallery/hitman.png" },
   { id: 9, image: "/gallery/oumuamua.jpeg" },
   { id: 10, image: "/gallery/Figmatrophy.jpeg" },
+  { id: 11, image: "/gallery/kohli01.png" },
 ];
 
 const ANIM_DURATION_MS = 55000;
