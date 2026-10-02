@@ -22,6 +22,22 @@ const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+// Custom Figma Community Icon
+const FigmaIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 38 57"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/>
+    <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z"/>
+    <path d="M19 0v19h9.5a9.5 9.5 0 0 0 0-19H19z"/>
+    <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/>
+    <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/>
+  </svg>
+);
+
 // Custom Pinterest Icon
 const PinterestIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -54,6 +70,7 @@ const projectLinks = [
 const socials = [
   { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/navneet-patidar/" },
   { name: "Behance", icon: BehanceIcon, href: "https://www.behance.net/navneetpatidar" },
+  { name: "Figma", icon: FigmaIcon, href: "https://www.figma.com/@navneet4svg" },
   { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/navneet.svg" },
   { name: "Pinterest", icon: PinterestIcon, href: "https://in.pinterest.com/navneet4svg/" },
   { name: "Email", icon: Mail, href: "mailto:designer.navneet.patidar@gmail.com" },
