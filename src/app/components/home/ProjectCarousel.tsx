@@ -181,7 +181,7 @@ const ProjectCard = ({
               {/* Bottom: Status Pill */}
               <span className="relative inline-flex self-start items-center gap-2 bg-neutral-100 dark:bg-neutral-800/90 border border-neutral-300/80 dark:border-neutral-700/80 text-neutral-700 dark:text-neutral-300 px-3.5 py-1.5 rounded-full text-[10px] font-subheading font-bold uppercase tracking-wider cursor-default select-none shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Releasing Soon</span>
+                <span>Stay Tuned</span>
               </span>
             </div>
           </div>
@@ -304,7 +304,7 @@ const ProjectCard = ({
               <div className="pt-1">
                 <span className="relative inline-flex items-center gap-2.5 bg-neutral-100 dark:bg-neutral-800/90 border border-neutral-300/80 dark:border-neutral-700/80 text-neutral-700 dark:text-neutral-300 px-6 py-3 rounded-full text-xs font-subheading font-bold uppercase tracking-widest cursor-default select-none shadow-sm">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>Releasing Soon • Stay Tuned</span>
+                  <span>Stay Tuned</span>
                 </span>
               </div>
             </div>

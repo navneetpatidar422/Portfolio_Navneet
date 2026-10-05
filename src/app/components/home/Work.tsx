@@ -7,9 +7,9 @@ const projects = [
     id: "first-case-study",
     title: "My First UX Case Study",
     subtitle: "A comprehensive deep dive into user research, problem framing, systems thinking, and interactive product design. Final polish in progress.",
-    year: "Releasing Soon",
+    year: "2026",
     image: "/projects/first-case-study-thumb.png",
-    tags: ["First Case Study", "Releasing Soon"],
+    tags: ["First Case Study", "UX Research"],
     path: "#",
     color: "#185B46",
     comingSoon: true
