@@ -195,6 +195,57 @@ const toolsData = [
         </g>
       </svg>
     )
+  },
+  {
+    name: "Notion",
+    brandColorClass: "group-hover:text-black dark:group-hover:text-white group-hover:border-black/40 dark:group-hover:border-white/40",
+    bgColorClass: "group-hover:bg-neutral-500/[0.03]",
+    logoBgClass: "group-hover:bg-neutral-200/50 dark:group-hover:bg-neutral-800/60 group-hover:border-neutral-400/30",
+    logo: (
+      <svg className="w-7 h-7 text-black dark:text-white fill-current shrink-0 select-none transition-colors" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514c-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233l4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632"/>
+      </svg>
+    )
+  },
+  {
+    name: "Claude",
+    brandColorClass: "group-hover:text-[#D97757] group-hover:border-[#D97757]/40",
+    bgColorClass: "group-hover:bg-[#D97757]/[0.03]",
+    logoBgClass: "group-hover:bg-[#D97757]/10 group-hover:border-[#D97757]/20",
+    logo: (
+      <svg className="w-7 h-7 text-[#D97757] fill-current shrink-0 select-none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z" />
+      </svg>
+    )
+  },
+  {
+    name: "Gemini",
+    brandColorClass: "group-hover:text-[#1BA1E3] group-hover:border-[#1BA1E3]/40",
+    bgColorClass: "group-hover:bg-[#1BA1E3]/[0.03]",
+    logoBgClass: "group-hover:bg-[#1BA1E3]/10 group-hover:border-[#1BA1E3]/20",
+    logo: (
+      <svg className="w-7 h-7 shrink-0 select-none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gemini-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1BA1E3" />
+            <stop offset="50%" stopColor="#5B7FFF" />
+            <stop offset="100%" stopColor="#9B72CB" />
+          </linearGradient>
+        </defs>
+        <path fill="url(#gemini-gradient)" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81" />
+      </svg>
+    )
+  },
+  {
+    name: "ChatGPT",
+    brandColorClass: "group-hover:text-black dark:group-hover:text-white group-hover:border-black/40 dark:group-hover:border-white/40",
+    bgColorClass: "group-hover:bg-neutral-500/[0.03]",
+    logoBgClass: "group-hover:bg-neutral-200/50 dark:group-hover:bg-neutral-800/60 group-hover:border-neutral-400/30",
+    logo: (
+      <svg className="w-7 h-7 text-black dark:text-white fill-current shrink-0 select-none transition-colors" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.282 9.821a6 6 0 0 0-.516-4.91a6.05 6.05 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a6 6 0 0 0-3.998 2.9a6.05 6.05 0 0 0 .743 7.097a5.98 5.98 0 0 0 .51 4.911a6.05 6.05 0 0 0 6.515 2.9A6 6 0 0 0 13.26 24a6.06 6.06 0 0 0 5.772-4.206a6.06 6.06 0 0 0 3.997-2.9a6.06 6.06 0 0 0-.747-7.073M13.26 22.43a4.48 4.48 0 0 1-2.876-1.04l.141-.081l4.779-2.758a.8.8 0 0 0 .392-.681v-6.737l2.02 1.168a.07.07 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494M3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085l4.783 2.759a.77.77 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646M2.34 7.896a4.5 4.5 0 0 1 2.366-1.973V11.6a.77.77 0 0 0 .388.677l5.815 3.354l-2.02 1.168a.08.08 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.08.08 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667m2.01-3.023l-.141-.085l-4.774-2.782a.78.78 0 0 0-.785 0L9.409 9.23V6.897a.07.07 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.8.8 0 0 0-.393.681zm1.097-2.365l2.602-1.5l2.607 1.5v2.999l-2.597 1.5l-2.607-1.5Z"/>
+      </svg>
+    )
   }
 ];
 
@@ -376,31 +427,29 @@ export const Skills = () => {
               Tools &amp; Ecosystem I Use
             </h3>
 
-            {/* Compact Logo + Name Grid with 3D Comet Card Tilt & Glare Animations */}
+            {/* Compact Logo + Name Grid: Stuck in place, interactive 3D tilt on hover */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {toolsData.map((tool, i) => (
-                <CometCard key={tool.name} rotateDepth={12} translateDepth={12}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.3, 
-                      delay: i * 0.04,
-                      layout: { type: "spring", stiffness: 300, damping: 25 }
-                    }}
-                    viewport={{ once: true }}
-                    className={`group relative p-3 bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-900 rounded-2xl flex items-center gap-3.5 transition-all duration-300 shadow-sm ${tool.brandColorClass} ${tool.bgColorClass}`}
+              {toolsData.map((tool) => (
+                <CometCard
+                  key={tool.name}
+                  rotateDepth={12}
+                  translateDepth={0}
+                  scale={1}
+                  className="w-full"
+                >
+                  <div
+                    className={`group relative p-3 bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-900 rounded-2xl flex items-center gap-3.5 transition-all duration-200 shadow-sm hover:shadow-md ${tool.brandColorClass} ${tool.bgColorClass}`}
                   >
                     {/* Logo Container */}
-                    <div className={`w-11 h-11 flex items-center justify-center p-1.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-xl shrink-0 group-hover:scale-108 group-hover:rotate-3 transition-all duration-300 ${tool.logoBgClass}`}>
+                    <div className={`w-11 h-11 flex items-center justify-center p-1.5 bg-neutral-50 dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-xl shrink-0 group-hover:scale-105 transition-transform duration-200 ${tool.logoBgClass}`}>
                       {tool.logo}
                     </div>
 
                     {/* Info (Only Name, no description) */}
-                    <span className="font-bold text-neutral-800 dark:text-neutral-100 text-sm tracking-wide transition-colors duration-300 truncate">
+                    <span className="font-bold text-neutral-800 dark:text-neutral-100 text-sm tracking-wide transition-colors duration-200 truncate">
                       {tool.name}
                     </span>
-                  </motion.div>
+                  </div>
                 </CometCard>
               ))}
             </div>

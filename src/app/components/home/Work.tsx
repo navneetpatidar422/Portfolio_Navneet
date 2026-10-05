@@ -4,6 +4,17 @@ import { ProjectCarousel } from "./ProjectCarousel";
 
 const projects = [
   {
+    id: "first-case-study",
+    title: "My First UX Case Study",
+    subtitle: "A comprehensive deep dive into user research, problem framing, systems thinking, and interactive product design. Final polish in progress.",
+    year: "Releasing Soon",
+    image: "/projects/first-case-study-thumb.png",
+    tags: ["First Case Study", "Releasing Soon"],
+    path: "#",
+    color: "#185B46",
+    comingSoon: true
+  },
+  {
     id: "Retail_Management",
     title: "Jewellery Retail Management System",
     subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential client.",
