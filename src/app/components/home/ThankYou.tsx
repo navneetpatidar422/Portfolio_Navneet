@@ -20,6 +20,7 @@ export const ThankYou = () => {
       {/* Top Marquee Ribbon Ticker */}
       <div 
         className="w-full overflow-hidden bg-neutral-900 dark:bg-white text-white dark:text-black py-4 select-none mb-16 shadow-sm"
+        aria-hidden="true"
         style={{
           clipPath: "polygon(0 0, 50% 12px, 100% 0, 100% 100%, 50% calc(100% - 12px), 0 100%)",
           WebkitClipPath: "polygon(0 0, 50% 12px, 100% 0, 100% 100%, 50% calc(100% - 12px), 0 100%)"

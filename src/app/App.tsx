@@ -116,6 +116,14 @@ function App() {
   return (
     <BrowserRouter>
       <div className="bg-background min-h-screen text-foreground font-body relative transition-colors duration-500 overflow-x-clip w-full max-w-full">
+        {/* Skip to main content - critical accessibility feature for keyboard/screen-reader users */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:px-6 focus:py-3 focus:bg-emerald-500 focus:text-white focus:font-bold focus:text-sm focus:rounded-full focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-all"
+        >
+          Skip to main content
+        </a>
+
         <AnimatePresence mode="wait">
           {loading && (
             <CreativeLoader onComplete={() => setLoading(false)} />
@@ -127,7 +135,7 @@ function App() {
         <GlobalBackground />
         <Navbar isAppLoading={loading} />
         <div className="relative z-10">
-          <main>
+          <main id="main-content">
             <Suspense fallback={<div className="min-h-screen bg-background" />}>
               <Routes>
                 <Route path="/" element={<MainHome />} />

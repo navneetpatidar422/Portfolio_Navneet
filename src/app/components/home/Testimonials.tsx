@@ -244,11 +244,12 @@ export const Testimonials = () => {
               <form onSubmit={handleReviewSubmit} className="space-y-5">
                 <div>
                   <Label htmlFor="rev-name" className="text-xs font-subheading font-bold uppercase text-neutral-500 dark:text-neutral-400">
-                    Your Name *
+                    Your Name <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                   </Label>
                   <Input
                     id="rev-name"
                     placeholder="e.g. Alex Morgan"
+                    aria-required="true"
                     value={reviewForm.name}
                     onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
                     className="mt-1.5 bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 focus-visible:border-emerald-500 rounded-xl"
@@ -270,12 +271,13 @@ export const Testimonials = () => {
 
                 <div>
                   <Label htmlFor="rev-quote" className="text-xs font-subheading font-bold uppercase text-neutral-500 dark:text-neutral-400">
-                    Your Review / Testimonial *
+                    Your Review / Testimonial <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                   </Label>
                   <Textarea
                     id="rev-quote"
                     placeholder="Share your experience working with Navneet..."
                     rows={4}
+                    aria-required="true"
                     value={reviewForm.quote}
                     onChange={(e) => setReviewForm({ ...reviewForm, quote: e.target.value })}
                     className="mt-1.5 bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 focus-visible:border-emerald-500 rounded-xl resize-none"

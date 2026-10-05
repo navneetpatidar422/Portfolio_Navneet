@@ -5,7 +5,7 @@ import { ProjectCarousel } from "./ProjectCarousel";
 const projects = [
   {
     id: "Retail_Management",
-    title: "Jewellery Retail MANAGEMENT SYSTEM",
+    title: "Jewellery Retail Management System",
     subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential client.",
     year: "2026",
     image: "/projects/Retail_Management-thumb.jpg",

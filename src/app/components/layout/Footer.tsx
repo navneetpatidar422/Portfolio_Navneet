@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { ArrowUpRight, Linkedin, Mail, FileDown, Instagram } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router";
 
-const WHATSAPP_URL = "https://wa.link/vgmz7y";
+const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=917878913449&text=Hi+Navneet%2C+I+came+across+your+portfolio+and+wanted+to+reach+out.+I%E2%80%99d+love+to+discuss+something+with+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com";
 const RESUME_URL = "https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2CJwA1S/view?usp=sharing";
 
 // Custom Behance Icon using the user-provided SVG
@@ -146,7 +146,7 @@ export const Footer = () => {
         {/* Mountain Image (Transparent Sky PNG) */}
         <img
           src="/mountains.png"
-          alt="Dark Mountain Landscape"
+          alt="Mountain landscape footer illustration"
           className="w-full h-full object-cover object-top block opacity-100 relative z-[1]"
         />
 
@@ -202,9 +202,10 @@ export const Footer = () => {
                   rel="noopener noreferrer"
                   whileHover={{ y: -3, scale: 1.1 }}
                   title={s.name}
+                  aria-label={s.name}
                   className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-emerald-500 hover:text-white transition-all duration-300 backdrop-blur-sm"
                 >
-                  <s.icon className="w-4 h-4" />
+                  <s.icon className="w-4 h-4" aria-hidden="true" />
                 </motion.a>
               ))}
             </div>
@@ -260,7 +261,7 @@ export const Footer = () => {
 
           {/* CTA column */}
           <div className="md:col-span-2">
-            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 font-mono mb-6">Let's Connect</h4>
+            <h4 className="text-xs font-subheading font-bold uppercase tracking-widest text-emerald-500 mb-6">Let's Connect</h4>
             <p className="text-neutral-300 text-sm leading-relaxed mb-6">
               Available for full-time roles &amp; freelance collaborations.
             </p>
@@ -302,7 +303,7 @@ export const Footer = () => {
             © {new Date().getFullYear()} Navneet Patidar. All Rights Reserved.
           </p>
           <p className="text-neutral-500 text-[10px] font-mono uppercase tracking-widest">
-            Designed with Passion &amp; Love by Navneet...
+            Designed with passion &amp; love — Navneet
           </p>
         </div>
 
@@ -314,9 +315,9 @@ export const Footer = () => {
             transition={{ duration: 25, ease: "linear", repeat: Infinity }}
           >
             {[1, 2, 3, 4].map((n) => (
-              <h1 key={n} className="text-[12vw] leading-none font-display font-bold text-white/[0.03] tracking-tighter shrink-0 pr-8 uppercase">
+              <div key={n} className="text-[12vw] leading-none font-display font-bold text-white/[0.03] tracking-tighter shrink-0 pr-8 uppercase" aria-hidden="true">
                 NAVNEET PATIDAR
-              </h1>
+              </div>
             ))}
           </motion.div>
         </div>

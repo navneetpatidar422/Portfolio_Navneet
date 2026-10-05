@@ -68,6 +68,9 @@ export const Hero = () => {
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}></div>
       </motion.div>
 
+      {/* Visually-hidden h1 for SEO & screen readers */}
+      <h1 className="sr-only">Navneet Patidar — UI/UX &amp; Product Designer</h1>
+
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full pt-20">
         
@@ -89,7 +92,7 @@ export const Hero = () => {
              >
                  <img 
                      src={profileImg} 
-                     alt="Profile" 
+                     alt="Navneet Patidar — UI/UX & Product Designer" 
                      fetchPriority="high"
                      decoding="async"
                      className="w-full h-full object-contain object-top drop-shadow-2xl pointer-events-none select-none"
@@ -224,6 +227,22 @@ export const Hero = () => {
             </motion.div>
         </div>
       </div>
+
+      {/* Scroll-down indicator */}
+      <motion.button
+        aria-label="Scroll down to see more"
+        onClick={() => {
+          const target = document.querySelector("#work");
+          if (target) target.scrollIntoView({ behavior: "smooth" });
+        }}
+        style={{ opacity }}
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1.5 text-neutral-400 dark:text-neutral-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors duration-300 cursor-pointer bg-transparent border-0 p-0"
+      >
+        <span className="text-[9px] font-subheading font-bold uppercase tracking-[0.2em] text-current">Scroll</span>
+        <ArrowDown className="w-4 h-4" strokeWidth={1.5} />
+      </motion.button>
 
       </section>
   );

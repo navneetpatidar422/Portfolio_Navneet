@@ -207,13 +207,14 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                     {/* Review Text */}
                     <div>
                       <label className="text-xs font-mono uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2 block">
-                        Your Feedback *
+                        Your Feedback <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                       </label>
                       <textarea
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="What did you think about this project? What stood out?"
                         rows={4}
+                        aria-required="true"
                         className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all resize-none"
                       />
                     </div>

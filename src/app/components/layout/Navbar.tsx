@@ -9,7 +9,7 @@ const navLinks = [
   { name: "About", href: "#about" },
 ];
 
-const WHATSAPP_URL = "https://wa.link/vgmz7y";
+const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=917878913449&text=Hi+Navneet%2C+I+came+across+your+portfolio+and+wanted+to+reach+out.+I%E2%80%99d+love+to+discuss+something+with+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com";
 const EMAIL_URL = "mailto:designer.navneet.patidar@gmail.com";
 const PHONE_URL = "tel:+917878913449";
 const RESUME_URL = "https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2CJwA1S/view?usp=sharing";
@@ -90,20 +90,23 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
     }
   };
 
-  const handleTalkClick = () => {
+  const handleTalkClick = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     setIsOpen(false);
-    setTimeout(() => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const target = document.querySelector("#contact");
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 150);
+    } else {
       const target = document.querySelector("#contact");
       if (target) {
         target.scrollIntoView({ behavior: "smooth" });
-      } else {
-        navigate("/");
-        setTimeout(() => {
-          const contactTarget = document.querySelector("#contact");
-          if (contactTarget) contactTarget.scrollIntoView({ behavior: "smooth" });
-        }, 150);
       }
-    }, 300);
+    }
   };
 
   const handleNavClickMobile = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -136,6 +139,7 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
     <>
       {/* Floating Pill Navbar Container (Futuristic Capsule Unfolding Entrance) */}
       <motion.nav
+        aria-label="Main navigation"
         className="fixed top-4 left-4 right-4 sm:left-6 sm:right-6 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-4xl z-50"
         initial={{ y: -80, scaleX: 0.3, scaleY: 0.6, opacity: 0, filter: "blur(10px)" }}
         animate={{ 
@@ -181,6 +185,7 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
             href="/"
             onClick={handleLogoClick}
             className="flex items-center group cursor-pointer select-none shrink-0 relative z-10"
+            aria-label="Go to homepage"
             title="Navneet Patidar"
           >
             <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full ring-2 ring-emerald-500 ring-offset-1 ring-offset-white dark:ring-offset-neutral-900 overflow-hidden shrink-0 shadow-sm transition-transform duration-300 group-hover:scale-105">
@@ -229,13 +234,13 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
               onMouseLeave={() => setIsTalkHovered(false)}
             >
               <div
+                onClick={handleTalkClick}
                 className="flex items-center h-10 bg-[#111111] dark:bg-white text-white dark:text-black rounded-full px-5 border border-black/10 dark:border-white/20 shadow-md transition-all duration-300 cursor-pointer overflow-hidden"
               >
-                {/* Main Label - Fixed Height & Alignment */}
+                {/* Main Label - Redirects to Contact Form */}
                 <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#contact"
+                  onClick={handleTalkClick}
                   className="text-xs font-bold font-anton tracking-wider uppercase whitespace-nowrap hover:text-emerald-400 dark:hover:text-emerald-600 transition-colors cursor-pointer flex items-center h-full"
                 >
                   LET'S TALK
@@ -249,6 +254,7 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
                       animate={{ opacity: 1, width: "auto" }}
                       exit={{ opacity: 0, width: 0 }}
                       transition={{ duration: 0.25, ease: "easeInOut" }}
+                      onClick={(e) => e.stopPropagation()}
                       className="flex items-center gap-1.5 pl-2.5 ml-2.5 border-l border-white/20 dark:border-black/20 h-full overflow-hidden shrink-0"
                     >
                       {/* Official Real WhatsApp Icon Link */}
@@ -257,6 +263,7 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Chat on WhatsApp"
+                        onClick={(e) => e.stopPropagation()}
                         className="w-7 h-7 rounded-full bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900 hover:bg-emerald-500 dark:hover:bg-emerald-500 hover:text-white dark:hover:text-white transition-all transform hover:scale-110 shadow-sm cursor-pointer flex items-center justify-center shrink-0"
                       >
                         <WhatsAppIcon className="w-3.5 h-3.5" />
@@ -266,6 +273,7 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
                       <a
                         href={EMAIL_URL}
                         title="Send Email"
+                        onClick={(e) => e.stopPropagation()}
                         className="w-7 h-7 rounded-full bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900 hover:bg-emerald-500 dark:hover:bg-emerald-500 hover:text-white dark:hover:text-white transition-all transform hover:scale-110 shadow-sm cursor-pointer flex items-center justify-center shrink-0"
                       >
                         <Mail className="w-3.5 h-3.5" />
@@ -275,6 +283,7 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
                       <a
                         href={PHONE_URL}
                         title="Call Phone (+91 78789 13449)"
+                        onClick={(e) => e.stopPropagation()}
                         className="w-7 h-7 rounded-full bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900 hover:bg-emerald-500 dark:hover:bg-emerald-500 hover:text-white dark:hover:text-white transition-all transform hover:scale-110 shadow-sm cursor-pointer flex items-center justify-center shrink-0"
                       >
                         <Phone className="w-3.5 h-3.5" />
@@ -314,7 +323,7 @@ export const Navbar = ({ isAppLoading = false }: { isAppLoading?: boolean }) => 
             className="fixed inset-0 z-40 bg-background/98 dark:bg-[#0A0A0A]/98 backdrop-blur-md pt-28 px-8 md:hidden flex flex-col justify-between pb-12"
           >
             <div className="flex flex-col gap-6">
-              {[...navLinks, { name: "Contact", href: "#contact" }].map((link, i) => (
+              {navLinks.map((link, i) => (
                 <motion.a
                   key={link.name}
                   href={link.href}

@@ -7,6 +7,9 @@ export const WhyIDesign = () => {
   return (
     <section id="why-i-design" className="py-20 md:py-28 px-6 bg-transparent text-foreground relative overflow-hidden transition-colors duration-500">
       <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+        {/* Screen-reader heading for document outline */}
+        <h2 className="sr-only">Design Philosophy</h2>
+
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}

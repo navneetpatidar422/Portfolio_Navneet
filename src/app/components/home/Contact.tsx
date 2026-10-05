@@ -47,17 +47,18 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const SocialLink = ({ href, icon: Icon }: { href: string; icon: any }) => {
+const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label: string }) => {
     return (
         <motion.a 
             href={href}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={label}
             whileHover={{ y: -3, scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             className="group p-3 border border-neutral-200 dark:border-neutral-800 rounded-full bg-white dark:bg-neutral-900 hover:bg-[#10B981] dark:hover:bg-[#10B981] hover:border-[#10B981] dark:hover:border-[#10B981] transition-all duration-300 shadow-sm"
         >
-            <Icon className="w-5 h-5 text-neutral-800 dark:text-neutral-200 group-hover:text-white dark:group-hover:text-white transition-colors duration-300" />
+            <Icon className="w-5 h-5 text-neutral-800 dark:text-neutral-200 group-hover:text-white dark:group-hover:text-white transition-colors duration-300" aria-hidden="true" />
         </motion.a>
     );
 };
@@ -197,10 +198,10 @@ export const Contact = () => {
                         <div className="space-y-4">
                             <p className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-widest font-subheading font-bold">Connect Elsewhere</p>
                             <div className="flex gap-4">
-                                <SocialLink href="https://wa.link/vgmz7y" icon={WhatsAppIcon} />
-                                <SocialLink href="https://www.linkedin.com/in/navneet-patidar/" icon={Linkedin} />
-                                <SocialLink href="https://www.behance.net/navneetpatidar" icon={BehanceIcon} />
-                                <SocialLink href="https://www.instagram.com/navneet.svg/" icon={Instagram} />
+                                <SocialLink href="https://api.whatsapp.com/send/?phone=917878913449&text=Hi+Navneet%2C+I+came+across+your+portfolio+and+wanted+to+reach+out.+I%E2%80%99d+love+to+discuss+something+with+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com" icon={WhatsAppIcon} label="Chat on WhatsApp" />
+                                <SocialLink href="https://www.linkedin.com/in/navneet-patidar/" icon={Linkedin} label="LinkedIn profile" />
+                                <SocialLink href="https://www.behance.net/navneetpatidar" icon={BehanceIcon} label="Behance portfolio" />
+                                <SocialLink href="https://www.instagram.com/navneet.svg/" icon={Instagram} label="Instagram profile" />
                             </div>
                         </div>
                     </motion.div>
@@ -221,6 +222,8 @@ export const Contact = () => {
                                     <Input 
                                         id="name" 
                                         placeholder=" " 
+                                        autoComplete="name"
+                                        aria-required="true"
                                         className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-emerald-500 transition-colors text-foreground"
                                         value={formState.name}
                                         onChange={(e) => setFormState({...formState, name: e.target.value})}
@@ -229,7 +232,7 @@ export const Contact = () => {
                                         htmlFor="name" 
                                         className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-emerald-500 peer-focus:text-xs pointer-events-none"
                                     >
-                                        What's your name?
+                                        What's your name? <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                                     </Label>
                                 </div>
 
@@ -238,6 +241,8 @@ export const Contact = () => {
                                         id="email" 
                                         type="email" 
                                         placeholder=" " 
+                                        autoComplete="email"
+                                        aria-required="true"
                                         className="peer bg-transparent border-0 border-b border-neutral-200 dark:border-neutral-800 rounded-none px-0 py-6 text-lg focus-visible:ring-0 focus-visible:border-emerald-500 transition-colors text-foreground"
                                         value={formState.email}
                                         onChange={(e) => setFormState({...formState, email: e.target.value})}
@@ -246,16 +251,19 @@ export const Contact = () => {
                                         htmlFor="email" 
                                         className="absolute left-0 top-6 text-neutral-500 dark:text-neutral-400 text-lg transition-all duration-300 -translate-y-8 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-neutral-500 peer-focus:-translate-y-8 peer-focus:text-emerald-500 peer-focus:text-xs pointer-events-none"
                                     >
-                                        What's your email?
+                                        What's your email? <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                                     </Label>
                                 </div>
                             </div>
 
                             <div className="space-y-4 pt-4">
-                                <Label htmlFor="description" className="text-neutral-400 dark:text-neutral-500 text-xs uppercase font-subheading font-bold tracking-widest">Description / Message</Label>
+                                <Label htmlFor="description" className="text-neutral-400 dark:text-neutral-500 text-xs uppercase font-subheading font-bold tracking-widest">
+                                    Description / Message <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
+                                </Label>
                                 <Textarea 
                                     id="description" 
                                     placeholder="Tell me about your goals, timeline, and any specific requirements..." 
+                                    aria-required="true"
                                     className="bg-neutral-50 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 focus:border-emerald-500 dark:focus:border-emerald-500 min-h-[150px] resize-none text-base p-4 rounded-xl text-foreground"
                                     value={formState.description}
                                     onChange={(e) => setFormState({...formState, description: e.target.value})}
@@ -267,7 +275,9 @@ export const Contact = () => {
                                 <button 
                                     type="submit" 
                                     disabled={isSubmitting}
-                                    className="relative w-full h-16 bg-[#111111] dark:bg-white text-white dark:text-black font-subheading font-bold text-base md:text-lg uppercase tracking-widest rounded-2xl overflow-hidden group cursor-pointer transition-colors duration-300 border border-black/10 dark:border-white/10"
+                                    aria-busy={isSubmitting}
+                                    aria-label={isSubmitting ? "Sending your message..." : "Send message"}
+                                    className="relative w-full h-16 bg-[#111111] dark:bg-white text-white dark:text-black font-subheading font-bold text-base md:text-lg uppercase tracking-widest rounded-2xl overflow-hidden group cursor-pointer transition-colors duration-300 border border-black/10 dark:border-white/10 disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
                                     <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-white transition-colors duration-300">
                                         {isSubmitting ? "Sending..." : "Send Message"}
