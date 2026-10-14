@@ -1,5 +1,5 @@
 import { useState, lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import { CreativeLoader } from "./components/shared/CreativeLoader";
 import { Navbar } from "./components/layout/Navbar";
@@ -20,6 +20,7 @@ import { SectionTicker } from "./components/shared/SectionTicker";
 import { CloudShader } from "./components/ui/cloud-shader";
 
 // Code Split Heavy Routes using Lazy Loading & Suspense
+const LinkInBio = lazy(() => import("./components/home/LinkInBio").then(m => ({ default: m.LinkInBio })));
 const Retail_ManagementCaseStudy = lazy(() => import("./components/work/Retail_ManagementCaseStudy").then(m => ({ default: m.Retail_ManagementCaseStudy })));
 const PaygoCaseStudy = lazy(() => import("./components/work/PaygoCaseStudy").then(m => ({ default: m.PaygoCaseStudy })));
 const BharatVibeCaseStudy = lazy(() => import("./components/work/BharatVibeCaseStudy").then(m => ({ default: m.BharatVibeCaseStudy })));
@@ -33,40 +34,40 @@ function MainHome() {
   return (
     <>
       <Hero />
-      
-      <SectionTicker 
-        items={["FEATURED CASE STUDIES", "PRODUCT DESIGN", "UI/UX ARCHITECTURE", "SELECTED WORKS"]} 
+
+      <SectionTicker
+        items={["FEATURED CASE STUDIES", "PRODUCT DESIGN", "UI/UX ARCHITECTURE", "SELECTED WORKS"]}
       />
       <Work />
-      
-      <SectionTicker 
-        items={["VISUAL EXPLORATIONS", "GRAPHIC DESIGN", "BRANDING & POSTERS", "CREATIVE MARQUEE"]} 
-        reverse 
+
+      <SectionTicker
+        items={["VISUAL EXPLORATIONS", "GRAPHIC DESIGN", "BRANDING & POSTERS", "CREATIVE MARQUEE"]}
+        reverse
       />
       <GraphicDesign />
-      
-      <SectionTicker 
-        items={["DESIGN PHILOSOPHY", "HUMAN-CENTERED INTENT", "INTERFACE TRANSLATION LAYER", "DESIGN MINDSET"]} 
+
+      <SectionTicker
+        items={["DESIGN PHILOSOPHY", "HUMAN-CENTERED INTENT", "INTERFACE TRANSLATION LAYER", "DESIGN MINDSET"]}
       />
       <WhyIDesign />
-      
-      <SectionTicker 
-        items={["TECHNICAL SKILLS", "DESIGN SYSTEMS", "PROTOTYPING & MOTION", "THE TOOLKIT"]} 
-        reverse 
+
+      <SectionTicker
+        items={["TECHNICAL SKILLS", "DESIGN SYSTEMS", "PROTOTYPING & MOTION", "THE TOOLKIT"]}
+        reverse
       />
       <Skills />
-      
-      <SectionTicker 
-        items={["ABOUT NAVNEET", "THE DESIGNER BEHIND THE WORK", "JOURNEY & EXPERIENCE", "CRAFT & VISION"]} 
+
+      <SectionTicker
+        items={["ABOUT NAVNEET", "THE DESIGNER BEHIND THE WORK", "JOURNEY & EXPERIENCE", "CRAFT & VISION"]}
       />
       <AboutMe />
-      
-      <SectionTicker 
-        items={["CLIENT ENDORSEMENTS", "WORDS FROM COLLABORATORS", "TESTIMONIALS & REVIEWS", "FEEDBACK"]} 
-        reverse 
+
+      <SectionTicker
+        items={["CLIENT ENDORSEMENTS", "WORDS FROM COLLABORATORS", "TESTIMONIALS & REVIEWS", "FEEDBACK"]}
+        reverse
       />
       <Testimonials />
-      
+
       <ThankYou />
       <Contact />
     </>
@@ -77,8 +78,8 @@ function GlobalBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none select-none z-[0] overflow-hidden">
       {/* Dynamic Cloud Shader Background (Faded to 50% intensity) */}
-      <CloudShader 
-        className="absolute inset-0 h-full w-full opacity-55 dark:opacity-55 transition-opacity duration-500" 
+      <CloudShader
+        className="absolute inset-0 h-full w-full opacity-55 dark:opacity-55 transition-opacity duration-500"
         speed={0.5}
         count={5}
         cloudColor="#fbf8f2"
@@ -88,24 +89,85 @@ function GlobalBackground() {
 
       {/* Atmospheric overlay for theme adaptability and text contrast */}
       <div className="absolute inset-0 bg-white/60 dark:bg-[#08090C]/90 transition-colors duration-500" />
-      
+
       {/* Luminous Hardware-Accelerated Fluid Gradients */}
-      <motion.div 
-          animate={{ 
-              x: [0, 60, -30, 0],
-              y: [0, -60, 30, 0],
-              scale: [1, 1.15, 0.9, 1],
-              opacity: [0.3, 0.5, 0.3, 0.3]
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-          style={{ willChange: "transform, opacity" }}
-          className="absolute top-[-20%] left-[-10%] w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-gradient-to-br from-white via-slate-100/90 to-neutral-200/50 dark:from-purple-950/20 dark:via-indigo-900/15 dark:to-slate-900/15 rounded-full blur-[45px] mix-blend-normal dark:mix-blend-screen pointer-events-none"
+      <motion.div
+        animate={{
+          x: [0, 60, -30, 0],
+          y: [0, -60, 30, 0],
+          scale: [1, 1.15, 0.9, 1],
+          opacity: [0.3, 0.5, 0.3, 0.3]
+        }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        style={{ willChange: "transform, opacity" }}
+        className="absolute top-[-20%] left-[-10%] w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-gradient-to-br from-white via-slate-100/90 to-neutral-200/50 dark:from-purple-950/20 dark:via-indigo-900/15 dark:to-slate-900/15 rounded-full blur-[45px] mix-blend-normal dark:mix-blend-screen pointer-events-none"
       />
-      
+
       {/* Ultra High-Performance GPU Noise Texture */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.10] dark:opacity-[0.14] mix-blend-multiply dark:mix-blend-overlay pointer-events-none" />
 
 
+    </div>
+  );
+}
+
+function AppShell({ loading, setLoading }: { loading: boolean; setLoading: (v: boolean) => void }) {
+  const location = useLocation();
+  const isLinkInBio = location.pathname === "/links";
+
+  if (isLinkInBio) {
+    return (
+      <main id="main-content">
+        <ScrollToTop />
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/links" element={<LinkInBio />} />
+          </Routes>
+        </Suspense>
+      </main>
+    );
+  }
+
+  return (
+    <div className="bg-background min-h-screen text-foreground font-body relative transition-colors duration-500 overflow-x-clip w-full max-w-full">
+      {/* Skip to main content - critical accessibility feature for keyboard/screen-reader users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:px-6 focus:py-3 focus:bg-emerald-500 focus:text-white focus:font-bold focus:text-sm focus:rounded-full focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-all"
+      >
+        Skip to main content
+      </a>
+
+      <AnimatePresence mode="wait">
+        {loading && (
+          <CreativeLoader onComplete={() => setLoading(false)} />
+        )}
+      </AnimatePresence>
+
+      <ScrollToTop />
+      <BackToTop />
+      <GlobalBackground />
+      <Navbar isAppLoading={loading} />
+      <div className="relative z-10">
+        <main id="main-content">
+          <Suspense fallback={<div className="min-h-screen bg-background" />}>
+            <Routes>
+              <Route path="/" element={<MainHome />} />
+              <Route path="/work" element={<div className="pt-16"><Work /></div>} />
+              <Route path="/work/Retail_Management" element={<Retail_ManagementCaseStudy />} />
+              <Route path="/work/paygo" element={<PaygoCaseStudy />} />
+              <Route path="/work/bharatvibe" element={<BharatVibeCaseStudy />} />
+              <Route path="/work/flashback" element={<FlashbackCaseStudy />} />
+              <Route path="/work/amazon" element={<AmazonCaseStudy />} />
+              <Route path="/work/isro" element={<IsroCaseStudy />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/reviews" element={<AdminReviews />} />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+      <Toaster />
     </div>
   );
 }
@@ -115,46 +177,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="bg-background min-h-screen text-foreground font-body relative transition-colors duration-500 overflow-x-clip w-full max-w-full">
-        {/* Skip to main content - critical accessibility feature for keyboard/screen-reader users */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-1/2 focus:-translate-x-1/2 focus:z-[100] focus:px-6 focus:py-3 focus:bg-emerald-500 focus:text-white focus:font-bold focus:text-sm focus:rounded-full focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-all"
-        >
-          Skip to main content
-        </a>
-
-        <AnimatePresence mode="wait">
-          {loading && (
-            <CreativeLoader onComplete={() => setLoading(false)} />
-          )}
-        </AnimatePresence>
-
-        <ScrollToTop />
-        <BackToTop />
-        <GlobalBackground />
-        <Navbar isAppLoading={loading} />
-        <div className="relative z-10">
-          <main id="main-content">
-            <Suspense fallback={<div className="min-h-screen bg-background" />}>
-              <Routes>
-                <Route path="/" element={<MainHome />} />
-                <Route path="/work" element={<div className="pt-16"><Work /></div>} />
-                <Route path="/work/Retail_Management" element={<Retail_ManagementCaseStudy />} />
-                <Route path="/work/paygo" element={<PaygoCaseStudy />} />
-                <Route path="/work/bharatvibe" element={<BharatVibeCaseStudy />} />
-                <Route path="/work/flashback" element={<FlashbackCaseStudy />} />
-                <Route path="/work/amazon" element={<AmazonCaseStudy />} />
-                <Route path="/work/isro" element={<IsroCaseStudy />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/admin/reviews" element={<AdminReviews />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
-      </div>
+      <AppShell loading={loading} setLoading={setLoading} />
     </BrowserRouter>
   );
 }

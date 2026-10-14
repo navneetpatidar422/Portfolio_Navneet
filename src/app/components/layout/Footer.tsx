@@ -7,18 +7,18 @@ const RESUME_URL = "https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2C
 
 // Custom Behance Icon using the user-provided SVG
 const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 3333 3333" 
-    shape-rendering="geometricPrecision" 
-    text-rendering="geometricPrecision" 
-    image-rendering="optimizeQuality" 
-    fill-rule="evenodd" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 3333 3333"
+    shape-rendering="geometricPrecision"
+    text-rendering="geometricPrecision"
+    image-rendering="optimizeQuality"
+    fill-rule="evenodd"
     clip-rule="evenodd"
     fill="currentColor"
     {...props}
   >
-    <path d="M1667 0c920 0 1667 746 1667 1667 0 920-746 1667-1667 1667C747 3334 0 2588 0 1667 0 747 746 0 1667 0zm-408 1059c57 0 109 5 156 15s87 27 121 49c33 23 59 53 78 91 18 37 27 85 27 140 0 60-14 110-41 151-28 40-68 73-122 99 74 21 128 58 164 111s54 117 54 192c0 61-12 113-35 157-24 44-55 80-94 108s-85 49-136 62c-50 13-102 20-156 20H696V1060h563zm704 96h484v118h-484v-118zm108 890c36 35 87 52 154 52 48 0 90-12 124-36s55-50 63-77h209c-34 104-85 178-154 223s-153 67-250 67c-68 0-129-11-184-33s-101-53-140-93c-38-40-67-88-88-144-20-56-31-118-31-184 0-65 11-125 32-181 22-56 51-104 91-145 39-41 86-73 140-96 54-24 114-35 181-35 73 0 137 14 192 43 55 28 100 67 135 115s60 103 76 164 21 125 17 193h-624c0 68 23 133 59 167zm273-454c-28-31-76-48-134-48-38 0-69 6-94 19s-45 29-60 48-26 39-32 61c-6 21-10 40-11 57h387c-6-61-27-105-55-137zm-1118-50c47 0 85-11 116-33 30-22 45-58 45-108 0-28-5-51-15-69s-24-32-41-42-36-17-58-21-44-6-67-6H960v279h266zm14 508c26 0 50-2 73-8 24-5 44-13 62-25 17-12 32-27 43-48 11-20 16-46 16-77 0-61-17-105-52-132-34-26-80-39-137-39H960v329h281v1z"/>
+    <path d="M1667 0c920 0 1667 746 1667 1667 0 920-746 1667-1667 1667C747 3334 0 2588 0 1667 0 747 746 0 1667 0zm-408 1059c57 0 109 5 156 15s87 27 121 49c33 23 59 53 78 91 18 37 27 85 27 140 0 60-14 110-41 151-28 40-68 73-122 99 74 21 128 58 164 111s54 117 54 192c0 61-12 113-35 157-24 44-55 80-94 108s-85 49-136 62c-50 13-102 20-156 20H696V1060h563zm704 96h484v118h-484v-118zm108 890c36 35 87 52 154 52 48 0 90-12 124-36s55-50 63-77h209c-34 104-85 178-154 223s-153 67-250 67c-68 0-129-11-184-33s-101-53-140-93c-38-40-67-88-88-144-20-56-31-118-31-184 0-65 11-125 32-181 22-56 51-104 91-145 39-41 86-73 140-96 54-24 114-35 181-35 73 0 137 14 192 43 55 28 100 67 135 115s60 103 76 164 21 125 17 193h-624c0 68 23 133 59 167zm273-454c-28-31-76-48-134-48-38 0-69 6-94 19s-45 29-60 48-26 39-32 61c-6 21-10 40-11 57h387c-6-61-27-105-55-137zm-1118-50c47 0 85-11 116-33 30-22 45-58 45-108 0-28-5-51-15-69s-24-32-41-42-36-17-58-21-44-6-67-6H960v279h266zm14 508c26 0 50-2 73-8 24-5 44-13 62-25 17-12 32-27 43-48 11-20 16-46 16-77 0-61-17-105-52-132-34-26-80-39-137-39H960v329h281v1z" />
   </svg>
 );
 
@@ -30,11 +30,11 @@ const FigmaIcon = (props: React.SVGProps<SVGSVGElement>) => (
     fill="currentColor"
     {...props}
   >
-    <path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/>
-    <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z"/>
-    <path d="M19 0v19h9.5a9.5 9.5 0 0 0 0-19H19z"/>
-    <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/>
-    <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/>
+    <path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" />
+    <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z" />
+    <path d="M19 0v19h9.5a9.5 9.5 0 0 0 0-19H19z" />
+    <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" />
+    <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" />
   </svg>
 );
 
@@ -46,7 +46,7 @@ const PinterestIcon = (props: React.SVGProps<SVGSVGElement>) => (
     fill="currentColor"
     {...props}
   >
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
   </svg>
 );
 
@@ -134,9 +134,8 @@ export const Footer = () => {
   return (
     <footer className={`text-white relative overflow-hidden ${isIsro ? "bg-[#050508]" : "bg-transparent"}`}>
       {/* Solid Footer Background: Covers only the bottom section below mountain peaks */}
-      <div className={`absolute top-[280px] sm:top-[340px] md:top-[400px] lg:top-[440px] bottom-0 left-0 right-0 z-0 ${
-        isIsro ? "bg-[#050508]" : "bg-[#0E0E0E]"
-      }`} />
+      <div className={`absolute top-[280px] sm:top-[340px] md:top-[400px] lg:top-[440px] bottom-0 left-0 right-0 z-0 ${isIsro ? "bg-[#050508]" : "bg-[#0E0E0E]"
+        }`} />
 
       {/* Mountain View Header Backdrop */}
       <div className="relative w-full h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] overflow-hidden select-none pointer-events-none z-[1]">
@@ -151,16 +150,15 @@ export const Footer = () => {
         />
 
         {/* Bottom Fade Gradient: Starts below mountain peaks to keep sky 100% clear */}
-        <div className={`absolute top-[45%] bottom-0 left-0 right-0 z-[2] bg-gradient-to-b ${
-          isIsro 
-            ? "from-transparent via-[#050508]/80 to-[#050508]" 
+        <div className={`absolute top-[45%] bottom-0 left-0 right-0 z-[2] bg-gradient-to-b ${isIsro
+            ? "from-transparent via-[#050508]/80 to-[#050508]"
             : "from-transparent via-[#0E0E0E]/80 to-[#0E0E0E]"
-        }`} />
+          }`} />
       </div>
 
       {/* Main Footer Content: Positioned comfortably lower over the mountain base */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 -mt-16 sm:-mt-24 md:-mt-32 lg:-mt-40 pb-8">
-        
+
 
 
         {/* Main Grid */}
@@ -209,6 +207,40 @@ export const Footer = () => {
                 </motion.a>
               ))}
             </div>
+
+            {/* Creative Link-in-Bio Canvas Redirect Option */}
+            <div className="pt-4">
+              <Link
+                to="/links"
+                className="group relative inline-flex items-center gap-3 px-3.5 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-emerald-500/50 transition-all duration-300 shadow-sm"
+                title="Open Link in Bio Canvas"
+              >
+                {/* Canvas selection frame indicator */}
+                <div className="relative w-5 h-6 border border-emerald-400/80 bg-emerald-500/10 flex items-center justify-center shrink-0">
+                  <span className="absolute -top-1 -left-1 w-1.5 h-1.5 bg-white border border-emerald-400" />
+                  <span className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-white border border-emerald-400" />
+                  <span className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-white border border-emerald-400" />
+                  <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-white border border-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                </div>
+
+                <div className="flex flex-col text-left">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-200 group-hover:text-emerald-400 transition-colors">
+                      Link in Bio
+                    </span>
+                    <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-white/10 text-neutral-300">
+                      176×220
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-neutral-400 font-body">
+                    Design canvas &amp; links page
+                  </span>
+                </div>
+
+                <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all ml-1 shrink-0" />
+              </Link>
+            </div>
           </div>
 
           {/* Sitemap */}
@@ -227,6 +259,15 @@ export const Footer = () => {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link
+                  to="/links"
+                  className="text-neutral-300 hover:text-white text-sm font-body font-light transition-colors flex items-center gap-1.5 group w-fit cursor-pointer"
+                >
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-emerald-500 shrink-0" />
+                  Link in Bio
+                </Link>
+              </li>
               <li>
                 <a
                   href={RESUME_URL}
@@ -280,7 +321,7 @@ export const Footer = () => {
                 fill="currentColor"
                 className="w-4 h-4"
               >
-                <path d="M476.9 161.1C435 119.1 379.2 96 319.9 96C197.5 96 97.9 195.6 97.9 318C97.9 357.1 108.1 395.3 127.5 429L96 544L213.7 513.1C246.1 530.8 282.6 540.1 319.8 540.1L319.9 540.1C442.2 540.1 544 440.5 544 318.1C544 258.8 518.8 203.1 476.9 161.1zM319.9 502.7C286.7 502.7 254.2 493.8 225.9 477L219.2 473L149.4 491.3L168 423.2L163.6 416.2C145.1 386.8 135.4 352.9 135.4 318C135.4 216.3 218.2 133.5 320 133.5C369.3 133.5 415.6 152.7 450.4 187.6C485.2 222.5 506.6 268.8 506.5 318.1C506.5 419.9 421.6 502.7 319.9 502.7zM421.1 364.5C415.6 361.7 388.3 348.3 383.2 346.5C378.1 344.6 374.4 343.7 370.7 349.3C367 354.9 356.4 367.3 353.1 371.1C349.9 374.8 346.6 375.3 341.1 372.5C308.5 356.2 287.1 343.4 265.6 306.5C259.9 296.7 271.3 297.4 281.9 276.2C283.7 272.5 282.8 269.3 281.4 266.5C280 263.7 268.9 236.4 264.3 225.3C259.8 214.5 255.2 216 251.8 215.8C248.6 215.6 244.9 215.6 241.2 215.6C237.5 215.6 231.5 217 226.4 222.5C221.3 228.1 207 241.5 207 268.8C207 296.1 226.9 322.5 229.6 326.2C232.4 329.9 268.7 385.9 324.4 410C359.6 425.2 373.4 426.5 391 423.9C401.7 422.3 423.8 410.5 428.4 397.5C433 384.5 433 373.4 431.6 371.1C430.3 368.6 426.6 367.2 421.1 364.5z"/>
+                <path d="M476.9 161.1C435 119.1 379.2 96 319.9 96C197.5 96 97.9 195.6 97.9 318C97.9 357.1 108.1 395.3 127.5 429L96 544L213.7 513.1C246.1 530.8 282.6 540.1 319.8 540.1L319.9 540.1C442.2 540.1 544 440.5 544 318.1C544 258.8 518.8 203.1 476.9 161.1zM319.9 502.7C286.7 502.7 254.2 493.8 225.9 477L219.2 473L149.4 491.3L168 423.2L163.6 416.2C145.1 386.8 135.4 352.9 135.4 318C135.4 216.3 218.2 133.5 320 133.5C369.3 133.5 415.6 152.7 450.4 187.6C485.2 222.5 506.6 268.8 506.5 318.1C506.5 419.9 421.6 502.7 319.9 502.7zM421.1 364.5C415.6 361.7 388.3 348.3 383.2 346.5C378.1 344.6 374.4 343.7 370.7 349.3C367 354.9 356.4 367.3 353.1 371.1C349.9 374.8 346.6 375.3 341.1 372.5C308.5 356.2 287.1 343.4 265.6 306.5C259.9 296.7 271.3 297.4 281.9 276.2C283.7 272.5 282.8 269.3 281.4 266.5C280 263.7 268.9 236.4 264.3 225.3C259.8 214.5 255.2 216 251.8 215.8C248.6 215.6 244.9 215.6 241.2 215.6C237.5 215.6 231.5 217 226.4 222.5C221.3 228.1 207 241.5 207 268.8C207 296.1 226.9 322.5 229.6 326.2C232.4 329.9 268.7 385.9 324.4 410C359.6 425.2 373.4 426.5 391 423.9C401.7 422.3 423.8 410.5 428.4 397.5C433 384.5 433 373.4 431.6 371.1C430.3 368.6 426.6 367.2 421.1 364.5z" />
               </svg>
               Chat on WhatsApp
             </motion.a>
