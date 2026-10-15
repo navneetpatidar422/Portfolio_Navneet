@@ -68,12 +68,12 @@ const projectLinks = [
 ];
 
 const socials = [
-  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/navneet-patidar/" },
-  { name: "Behance", icon: BehanceIcon, href: "https://www.behance.net/navneetpatidar" },
-  { name: "Figma", icon: FigmaIcon, href: "https://www.figma.com/@navneet4svg" },
-  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/navneet.svg" },
-  { name: "Pinterest", icon: PinterestIcon, href: "https://in.pinterest.com/navneet4svg/" },
-  { name: "Email", icon: Mail, href: "mailto:designer.navneet.patidar@gmail.com" },
+  { name: "LinkedIn",  icon: Linkedin,      href: "https://www.linkedin.com/in/navneet-patidar/",        color: "#0A66C2" },
+  { name: "Behance",   icon: BehanceIcon,   href: "https://www.behance.net/navneetpatidar",              color: "#1769FF" },
+  { name: "Figma",     icon: FigmaIcon,     href: "https://www.figma.com/@navneet4svg",                  color: "#A259FF" },
+  { name: "Instagram", icon: Instagram,     href: "https://www.instagram.com/navneet.svg",               color: "#E4405F" },
+  { name: "Pinterest", icon: PinterestIcon, href: "https://in.pinterest.com/navneet4svg/",               color: "#E60023" },
+  { name: "Email",     icon: Mail,          href: "mailto:designer.navneet.patidar@gmail.com",           color: "#10B981" },
 ];
 
 const FooterStarField = () => {
@@ -193,18 +193,44 @@ export const Footer = () => {
             {/* Socials */}
             <div className="flex gap-3">
               {socials.map((s) => (
-                <motion.a
-                  key={s.name}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3, scale: 1.1 }}
-                  title={s.name}
-                  aria-label={s.name}
-                  className="p-2.5 bg-white/5 border border-white/10 rounded-full hover:bg-emerald-500 hover:text-white transition-all duration-300 backdrop-blur-sm"
-                >
-                  <s.icon className="w-4 h-4" aria-hidden="true" />
-                </motion.a>
+                <div key={s.name} className="relative group inline-flex">
+                  {/* Tooltip */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 rounded-md text-white text-xs font-semibold whitespace-nowrap shadow-lg z-50 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200"
+                    style={{ backgroundColor: s.color }}
+                  >
+                    {s.name}
+                    <span
+                      className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent"
+                      style={{ borderTopColor: s.color }}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <motion.a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ y: -3, scale: 1.1 }}
+                    whileTap={{ scale: 0.92 }}
+                    aria-label={s.name}
+                    className="flex p-2.5 bg-white/5 border border-white/10 rounded-full transition-all duration-300 backdrop-blur-sm"
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.backgroundColor = s.color;
+                      el.style.borderColor = s.color;
+                      el.style.color = '#fff';
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.backgroundColor = '';
+                      el.style.borderColor = '';
+                      el.style.color = '';
+                    }}
+                  >
+                    <s.icon className="w-4 h-4" aria-hidden="true" />
+                  </motion.a>
+                </div>
               ))}
             </div>
 

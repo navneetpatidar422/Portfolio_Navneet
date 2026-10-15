@@ -47,20 +47,56 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const SOCIAL_COLORS: Record<string, string> = {
+  "Chat on WhatsApp":   "#25D366",
+  "LinkedIn profile":   "#0A66C2",
+  "Behance portfolio":  "#1769FF",
+  "Instagram profile":  "#E4405F",
+};
+
 const SocialLink = ({ href, icon: Icon, label }: { href: string; icon: any; label: string }) => {
-    return (
-        <motion.a 
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={label}
-            whileHover={{ y: -3, scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="group p-3 border border-neutral-200 dark:border-neutral-800 rounded-full bg-white dark:bg-neutral-900 hover:bg-[#10B981] dark:hover:bg-[#10B981] hover:border-[#10B981] dark:hover:border-[#10B981] transition-all duration-300 shadow-sm"
-        >
-            <Icon className="w-5 h-5 text-neutral-800 dark:text-neutral-200 group-hover:text-white dark:group-hover:text-white transition-colors duration-300" aria-hidden="true" />
-        </motion.a>
-    );
+  const color = SOCIAL_COLORS[label] ?? "#10B981";
+  const displayName = label.replace(/ profile| portfolio/, "").replace("Chat on ", "");
+  return (
+    <div className="relative group inline-flex">
+      {/* Tooltip */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 rounded-md text-white text-xs font-semibold whitespace-nowrap shadow-lg z-50 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200"
+        style={{ backgroundColor: color }}
+      >
+        {displayName}
+        <span
+          className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent"
+          style={{ borderTopColor: color }}
+          aria-hidden="true"
+        />
+      </span>
+
+      {/* Icon button */}
+      <motion.a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={label}
+        whileHover={{ y: -3, scale: 1.1 }}
+        whileTap={{ scale: 0.92 }}
+        className="p-3 border border-neutral-200 dark:border-neutral-800 rounded-full bg-white dark:bg-neutral-900 transition-all duration-300 shadow-sm"
+        onMouseEnter={(e) => {
+          const el = e.currentTarget as HTMLElement;
+          el.style.backgroundColor = color;
+          el.style.borderColor = color;
+        }}
+        onMouseLeave={(e) => {
+          const el = e.currentTarget as HTMLElement;
+          el.style.backgroundColor = "";
+          el.style.borderColor = "";
+        }}
+      >
+        <Icon className="w-5 h-5 text-neutral-800 dark:text-neutral-200 group-hover:text-white transition-colors duration-300" aria-hidden="true" />
+      </motion.a>
+    </div>
+  );
 };
 
 export const Contact = () => {

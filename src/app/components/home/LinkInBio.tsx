@@ -1418,7 +1418,7 @@ export const LinkInBio = () => {
                 <div className="tv-screen-out">
                   <div className="tv-screen-out1">
                     <div className="tv-screen">
-                      You made it to the bottom of my little universe — thanks for being part of it.
+                      “End of page, beginning of a tiny appreciation for your excellent taste in scrolling.” 
                     </div>
                   </div>
                 </div>
