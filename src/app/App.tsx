@@ -117,14 +117,14 @@ function AppShell({ loading, setLoading }: { loading: boolean; setLoading: (v: b
 
   if (isLinkInBio) {
     return (
-      <main id="main-content">
+      <div id="main-content">
         <ScrollToTop />
         <Suspense fallback={null}>
           <Routes>
             <Route path="/links" element={<LinkInBio />} />
           </Routes>
         </Suspense>
-      </main>
+      </div>
     );
   }
 

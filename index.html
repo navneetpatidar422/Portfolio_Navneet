@@ -14,6 +14,19 @@
       })();
     </script>
 
+    <!-- Link in Bio opening sequence early hiding -->
+    <script>
+      (function () {
+        var r = document.documentElement;
+        try {
+          if ((location.pathname === '/links' || location.pathname.endsWith('/links')) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            r.classList.add('seq-on');
+            setTimeout(function () { r.classList.remove('seq-on'); }, 7000);
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <title>Navneet Patidar - UI/UX & Product Designer</title>
 
     <meta

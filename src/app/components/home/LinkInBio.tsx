@@ -191,6 +191,158 @@ export const LinkInBio = () => {
     };
   }, []);
 
+  if (typeof window !== "undefined") {
+    try {
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("seq-on");
+      }
+    } catch (e) {}
+  }
+
+  useEffect(() => {
+    var seq = document.getElementById("seq");
+    if (!seq) return;
+    var root = document.documentElement;
+    if (!root.classList.contains("seq-on")) {
+      if (seq.parentNode) seq.remove();
+      return;
+    }
+    var main = (document.querySelector("main.wrap") || document.querySelector("main")) as HTMLElement | null;
+    if (!main) return;
+    var $ = function (id: string) { return document.getElementById(id); };
+    var frame = $("sFrame"), cvs = $("sCanvas") as HTMLCanvasElement | null, tag = $("sTag"), cur = $("sCur"), pct = $("sPct"), lab = $("sLab");
+    var gh1 = $("gh1"), gh2 = $("gh2"), gv1 = $("gv1"), gv2 = $("gv2"), bar = $("sBar"), load = $("sLoad");
+    if (!frame || !cvs || !tag || !cur || !pct || !lab || !gh1 || !gh2 || !gv1 || !gv2 || !bar || !load) return;
+
+    var rFrame = main.querySelector(".frame") as HTMLElement | null;
+    var rBar = main.querySelector(".bar") as HTMLElement | null;
+    var rCur = main.querySelector(".cursor") as HTMLElement | null;
+    var rWrap = main;
+    if (!rFrame || !rBar || !rCur) return;
+    var img = rFrame.querySelector("img") as HTMLImageElement | null;
+    var BW = 352, BH = 440;
+    cvs.width = BW; cvs.height = BH;
+    var ctx = cvs.getContext("2d");
+    var off = document.createElement("canvas"), octx = off.getContext("2d");
+    var lastS = -1, t0 = 0, raf = 0, revealed = false, started = false;
+    var revealTimeout: any = 0, fadeTimeout: any = 0, removeTimeout: any = 0;
+
+    seq.classList.add("live");
+    (main as any).inert = true;
+    root.style.overflow = "hidden";
+
+    function clamp(v: number) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+    function outCubic(x: number) { return 1 - Math.pow(1 - x, 3); }
+    function inOutCubic(x: number) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+    function inOutQuad(x: number) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+
+    function pixelate(s: number) {
+      if (s === lastS || !ctx || !octx) return;
+      lastS = s;
+      var ready = img && img.complete && img.naturalWidth > 0;
+      if (!ready) { ctx.fillStyle = "#FFF8EC"; ctx.fillRect(0, 0, BW, BH); return; }
+      if (s <= 1) { ctx.imageSmoothingEnabled = true; ctx.drawImage(img, 0, 0, BW, BH); return; }
+      var tw = Math.max(1, Math.round(BW / s)), th = Math.max(1, Math.round(BH / s));
+      off.width = tw; off.height = th;
+      octx.drawImage(img, 0, 0, tw, th);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(off, 0, 0, tw, th, 0, 0, BW, BH);
+    }
+
+    function place(el: HTMLElement, x: number, y: number) { el.style.transform = "translate(" + x + "px," + y + "px)"; }
+
+    function tick(now: number) {
+      if (!started) { t0 = now; started = true; }
+      var t = now - t0;
+      if (!rFrame || !rBar || !rCur || !rWrap || !frame || !cvs || !tag || !cur || !pct || !lab || !gh1 || !gh2 || !gv1 || !gv2 || !bar || !load || !seq) return;
+      var f = rFrame.getBoundingClientRect(), b = rBar.getBoundingClientRect(), c = rCur.getBoundingClientRect(), w = rWrap.getBoundingClientRect();
+
+      if (t > 60) seq.classList.add("s0");
+      if (t > 250) seq.classList.add("s1");
+
+      gh1.style.top = f.top + "px"; gh2.style.top = (f.bottom - 1) + "px";
+      gv1.style.left = f.left + "px"; gv2.style.left = (f.right - 1) + "px";
+      bar.style.left = b.left + "px"; bar.style.top = b.top + "px"; bar.style.width = b.width + "px";
+      load.style.left = w.left + "px";
+
+      var dp = clamp((t - 800) / 550), e = outCubic(dp);
+      var fw = f.width * e, fh = f.height * e;
+      frame.style.left = f.left + "px"; frame.style.top = f.top + "px";
+      frame.style.width = fw + "px"; frame.style.height = fh + "px";
+      cvs.style.width = Math.max(0, f.width - 3) + "px"; cvs.style.height = Math.max(0, f.height - 3) + "px";
+      if (t >= 800) { frame.style.opacity = "1"; frame.classList.add("show"); }
+      if (t >= 1500) frame.classList.add("on");
+      tag.textContent = Math.round(fw) + " × " + Math.round(fh);
+
+      var s = 1 + Math.round(46 * Math.pow(1 - clamp((t - 1300) / 1050), 2));
+      pixelate(s);
+
+      var p = Math.min(100, Math.floor(100 * inOutQuad(clamp(t / 2350))));
+      pct.textContent = String(p);
+      if (p >= 100) lab.textContent = "Ready";
+
+      var bx: number, by: number;
+      if (t >= 500) {
+        cur.style.opacity = "1";
+        if (t < 800) {
+          var u = outCubic(clamp((t - 500) / 300));
+          bx = (f.left - 140) + (f.left - (f.left - 140)) * u;
+          by = (f.top - 110) + (f.top - (f.top - 110)) * u - Math.sin(Math.PI * u) * 26;
+          bx -= 2; by -= 1.5;
+        } else if (t < 1350) {
+          bx = f.left + (f.width) * e - 2;
+          by = f.top + (f.height) * e - 1.5;
+        } else {
+          var g = inOutCubic(clamp((t - 1350) / 550));
+          var sx = f.right - 2, sy = f.bottom - 1.5;
+          bx = sx + (c.left - sx) * g;
+          by = sy + (c.top - sy) * g;
+        }
+        place(cur, bx, by);
+      }
+
+      if (t >= 2450) { reveal(); return; }
+      raf = requestAnimationFrame(tick);
+    }
+
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      cancelAnimationFrame(raf);
+      if (seq) seq.classList.add("go");
+      root.classList.remove("seq-on");
+      if (main) (main as any).inert = false;
+      root.style.overflow = "";
+      fadeTimeout = setTimeout(function () { if (seq) seq.classList.add("fade"); }, 950);
+      removeTimeout = setTimeout(function () { if (seq && seq.parentNode) seq.remove(); }, 1400);
+    }
+
+    function skip() { if (!revealed && started) t0 = performance.now() - 2460; }
+    seq.addEventListener("click", skip);
+    function onKeyDown(e: KeyboardEvent) {
+      if (!revealed && (e.key === "Enter" || e.key === "Escape" || e.key === " ")) {
+        e.preventDefault();
+        skip();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+
+    revealTimeout = setTimeout(reveal, 6000);
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(revealTimeout);
+      clearTimeout(fadeTimeout);
+      clearTimeout(removeTimeout);
+      if (seq) seq.removeEventListener("click", skip);
+      document.removeEventListener("keydown", onKeyDown);
+      root.classList.remove("seq-on");
+      if (main) (main as any).inert = false;
+      root.style.overflow = "";
+    };
+  }, []);
+
   const handleCopy = () => {
     const text = mailRef.current ? mailRef.current.textContent?.trim() || "" : "designer.navneet.patidar@gmail.com";
 
@@ -696,6 +848,20 @@ export const LinkInBio = () => {
           display: flex;
           flex-direction: column;
           align-items: center;
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
+          transition: transform .2s ease, filter .2s ease;
+        }
+        .tv-main-wrap:hover {
+          transform: translateY(-3px);
+          filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+        }
+        .tv-main-wrap:hover .tv-screen {
+          background-color: #013788;
+        }
+        .tv-main-wrap:active {
+          transform: translateY(0);
         }
         .tv-antenna {
           width: 4.2em; height: 4.2em;
@@ -1077,7 +1243,111 @@ export const LinkInBio = () => {
         .s-be .ch { width: 38px; height: var(--h); background: var(--c2); border: 1.5px solid var(--pen); border-radius: 6px 6px 0 0; transform-origin: bottom; transform: scaleY(0); animation: growy .55s var(--d) cubic-bezier(.3, 1.4, .5, 1) forwards; }
         @keyframes growy { to { transform: scaleY(1); } }
         .s-be .hx { font: 500 8px var(--mono); letter-spacing: .02em; opacity: 0; animation: fadein .3s calc(var(--d) + .4s) forwards; }
+
+        /* ===== opening sequence: a canvas boots, a cursor drags out the portrait frame ===== */
+        html.seq-on .rise, html.seq-on .link-in-bio-page .rise { opacity: 0; animation: none; }
+        .seq { display: none; position: fixed; inset: 0; z-index: 60; overflow: hidden; cursor: pointer; }
+        html.seq-on .seq, .seq.live { display: block; }
+        .seq.go { pointer-events: none; }
+        .seq.fade { opacity: 0; transition: opacity .35s ease; }
+
+        .s-panels i {
+          position: absolute; top: 0; bottom: 0; left: calc(var(--n) * 25%); width: calc(25% + 1px);
+          background: radial-gradient(rgba(20, 22, 31, .16) 1.2px, transparent 1.4px) 0 0 / 18px 18px, var(--p);
+          transition: transform .75s cubic-bezier(.7, 0, .2, 1) calc(var(--n) * 90ms);
+        }
+        .seq.go .s-panels i { transform: translateY(-101%); }
+
+        .s-mq { position: absolute; left: 0; right: 0; top: 60%; transform: translateY(-50%); display: grid; gap: 4px; opacity: 0; transition: opacity .5s .2s; pointer-events: none; }
+        .seq.s0 .s-mq { opacity: 1; }
+        .mq { display: flex; width: max-content; font: 800 4.6rem/1 var(--display); letter-spacing: -0.03em; text-transform: uppercase; white-space: nowrap; }
+        .mq span { padding-right: .5em; }
+        .mq.m1 { color: transparent; -webkit-text-stroke: 2px var(--paper); animation: mq 8s linear infinite; }
+        .mq.m2 { color: var(--paper); animation: mq 10s linear infinite reverse; }
+        @keyframes mq { to { transform: translateX(-50%); } }
+
+        .g { position: absolute; opacity: .8; transition: transform .55s cubic-bezier(.2, .8, .2, 1); }
+        .gh { left: 0; right: 0; height: 1px; background: repeating-linear-gradient(90deg, var(--paper) 0 7px, transparent 7px 13px); transform: scaleX(0); transform-origin: left; }
+        .gv { top: 0; bottom: 0; width: 1px; background: repeating-linear-gradient(180deg, var(--paper) 0 7px, transparent 7px 13px); transform: scaleY(0); transform-origin: top; }
+        .seq.s1 .g { transform: none; }
+
+        .s-bar { position: absolute; display: flex; justify-content: space-between; gap: 12px; font: 500 .68rem var(--mono); letter-spacing: .08em; text-transform: uppercase; opacity: 0; transform: translateY(-8px); transition: opacity .4s .1s, transform .4s .1s; }
+        .s-bar span { background: var(--paper); color: var(--pen); border: 1.5px solid var(--pen); padding: 3px 7px; }
+        .seq.s0 .s-bar { opacity: 1; transform: none; }
+
+        .s-load {
+          position: absolute; bottom: max(24px, env(safe-area-inset-bottom, 0px)); display: grid; gap: 2px; padding: 10px 14px 12px;
+          background: var(--paper); color: var(--pen); border: 1.5px solid var(--pen); box-shadow: 4px 4px 0 var(--pen);
+          opacity: 0; transform: translateY(10px); transition: opacity .4s .15s, transform .4s .15s;
+        }
+        .seq.s0 .s-load { opacity: 1; transform: none; }
+        .s-load .lab { font: 500 .62rem var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+        .s-load .num { display: flex; align-items: baseline; gap: 4px; font-family: var(--display); font-weight: 800; letter-spacing: -0.04em; line-height: .9; }
+        .s-load .num b { min-width: 2.1ch; text-align: right; font-size: 3.6rem; font-variant-numeric: tabular-nums; }
+        .s-load .num span { font-size: 1.4rem; }
+        .s-load .skip { font: 400 .62rem var(--mono); letter-spacing: .08em; opacity: .7; }
+
+        .seq.go .s-bar, .seq.go .s-load, .seq.go .s-mq, .seq.go .g { opacity: 0; transition: opacity .25s; }
+
+        .ifr { position: absolute; left: 0; top: 0; width: 0; height: 0; border: 1.5px solid var(--paper); background: var(--pen); opacity: 0; transition: border-color .35s; }
+        .ifr .clip { position: absolute; inset: 0; overflow: hidden; }
+        .ifr canvas { position: absolute; left: 0; top: 0; display: block; }
+        .ifr .h { background: var(--paper); border-color: var(--pen); opacity: 0; transform: scale(.3); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), opacity .2s, border-color .35s, background-color .35s; }
+        .ifr.on .h { opacity: 1; transform: none; }
+        .ifr .size-tag { top: calc(100% + 13.5px); background: var(--paper); color: var(--pen); box-shadow: 0 0 0 1.5px var(--pen); opacity: 0; transition: opacity .2s, background-color .35s, color .35s, box-shadow .35s; }
+        .ifr.show .size-tag { opacity: 1; }
+        .seq.go .ifr { border-color: var(--accent); }
+        .seq.go .ifr .h { border-color: var(--accent); background: var(--surface); }
+        .seq.go .ifr .size-tag { background: var(--accent); color: var(--on-accent); box-shadow: none; }
+        .seq .icur { left: 0; top: 0; right: auto; bottom: auto; opacity: 0; will-change: transform; }
       `}</style>
+
+      {/* Opening Sequence */}
+      <div className="seq" id="seq" aria-hidden="true">
+        <div className="s-panels">
+          <i style={{ "--n": 0, "--p": "#14566F" } as React.CSSProperties}></i>
+          <i style={{ "--n": 1, "--p": "#F2622B" } as React.CSSProperties}></i>
+          <i style={{ "--n": 2, "--p": "#F7A03A" } as React.CSSProperties}></i>
+          <i style={{ "--n": 3, "--p": "#14161F" } as React.CSSProperties}></i>
+        </div>
+        <div className="s-mq">
+          <div className="mq m1">
+            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+          </div>
+          <div className="mq m2">
+            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+          </div>
+        </div>
+        <b className="g gh" id="gh1" style={{ transitionDelay: ".05s" }}></b>
+        <b className="g gh" id="gh2" style={{ transitionDelay: ".15s" }}></b>
+        <b className="g gv" id="gv1" style={{ transitionDelay: ".1s" }}></b>
+        <b className="g gv" id="gv2" style={{ transitionDelay: ".2s" }}></b>
+        <div className="s-bar" id="sBar">
+          <span>Navneet Patidar</span>
+          <span>Links</span>
+        </div>
+        <div className="s-load" id="sLoad">
+          <span className="lab" id="sLab">Loading canvas</span>
+          <div className="num"><b id="sPct">0</b><span>%</span></div>
+          <span className="skip">Tap to skip</span>
+        </div>
+        <div className="ifr" id="sFrame">
+          <div className="clip"><canvas id="sCanvas"></canvas></div>
+          <span className="h tl"></span>
+          <span className="h tr"></span>
+          <span className="h bl"></span>
+          <span className="h br"></span>
+          <span className="size-tag" id="sTag">0 × 0</span>
+        </div>
+        <div className="cursor icur" id="sCur">
+          <svg viewBox="0 0 18 18">
+            <path d="M2 1.5 15 8l-5.6 1.6L7.6 15.5Z" strokeLinejoin="round" />
+          </svg>
+          <span className="pill">Navneet</span>
+        </div>
+      </div>
 
       {/* Hidden SVG Sprite */}
       <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style={{ position: "absolute" }} aria-hidden="true" focusable="false">
@@ -1398,7 +1668,13 @@ export const LinkInBio = () => {
 
         {/* Retro TV Footer */}
         <div className="tv-footer rise" style={{ "--i": 6 } as React.CSSProperties}>
-          <div className="tv-main-wrap">
+          <a
+            href="https://drive.google.com/drive/folders/1ccwlwfpjawOXJLxwctsXGOPA3B3la0az?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tv-main-wrap"
+            aria-label="Claim your prize on Google Drive"
+          >
             {/* Antenna */}
             <div className="tv-antenna">
               <div className="tv-antenna-shadow" />
@@ -1418,7 +1694,7 @@ export const LinkInBio = () => {
                 <div className="tv-screen-out">
                   <div className="tv-screen-out1">
                     <div className="tv-screen">
-                      “End of page, beginning of a tiny appreciation for your excellent taste in scrolling.” 
+                      Thanks for tolerating my chaos. Click to claim your Prize, legend. 🎁↗
                     </div>
                   </div>
                 </div>
@@ -1448,7 +1724,7 @@ export const LinkInBio = () => {
               <div className="tv-base2" />
               <div className="tv-base3" />
             </div>
-          </div>
+          </a>
         </div>
       </main>
 
