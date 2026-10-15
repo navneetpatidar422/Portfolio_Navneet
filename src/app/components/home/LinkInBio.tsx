@@ -684,6 +684,239 @@ export const LinkInBio = () => {
           color: var(--muted);
         }
 
+        /* ── Retro TV footer ── */
+        .tv-footer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0;
+          padding-top: 8px;
+        }
+        .tv-main-wrap {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .tv-antenna {
+          width: 4.2em; height: 4.2em;
+          border-radius: 50%;
+          border: 2px solid #1d0e01;
+          background-color: #d36604;
+          margin-bottom: -5em;
+          z-index: 0;
+          position: relative;
+        }
+        .tv-antenna::after {
+          content: "";
+          position: absolute;
+          margin-top: -8em; margin-left: 0.3em;
+          transform: rotate(-25deg);
+          width: 0.9em; height: 0.45em;
+          border-radius: 50%;
+          background-color: #f69e50;
+        }
+        .tv-antenna::before {
+          content: "";
+          position: absolute;
+          margin-top: 0.2em; margin-left: 1em;
+          transform: rotate(-20deg);
+          width: 1.3em; height: 0.7em;
+          border-radius: 50%;
+          background-color: #f69e50;
+        }
+        .tv-antenna-shadow {
+          position: absolute;
+          background-color: transparent;
+          width: 42px; height: 48px;
+          margin-left: 1.4em;
+          border-radius: 45%;
+          transform: rotate(140deg);
+          border: 4px solid transparent;
+          box-shadow: inset 0px 14px #a85103, inset 0px 14px 1px 1px #a85103;
+        }
+        .tv-a1 {
+          position: relative;
+          top: -88%; left: -115%;
+          width: 10em; height: 4.8em;
+          border-radius: 50px;
+          background-image: linear-gradient(#171717,#171717,#353535,#353535,#171717);
+          transform: rotate(-29deg);
+          clip-path: polygon(50% 0%, 49% 100%, 52% 100%);
+        }
+        .tv-a1d {
+          position: relative;
+          top: -185%; left: -28%;
+          transform: rotate(45deg);
+          width: 0.45em; height: 0.45em;
+          border-radius: 50%;
+          border: 2px solid #1d0e01;
+          background-color: #979797;
+          z-index: 99;
+        }
+        .tv-a2 {
+          position: relative;
+          top: -182%; left: -6%;
+          width: 10em; height: 3.5em;
+          border-radius: 50px;
+          background-image: linear-gradient(#171717,#171717,#353535,#353535,#171717);
+          clip-path: polygon(47% 0,47% 0,34% 34%,54% 25%,32% 100%,29% 96%,49% 32%,30% 38%);
+          transform: rotate(-8deg);
+        }
+        .tv-a2d {
+          position: relative;
+          top: -257%; left: 80%;
+          width: 0.45em; height: 0.45em;
+          border-radius: 50%;
+          border: 2px solid #1d0e01;
+          background-color: #979797;
+          z-index: 99;
+        }
+        .tv-body {
+          width: 15em; height: 8em;
+          margin-top: 2.5em;
+          border-radius: 13px;
+          background-color: #d36604;
+          display: flex;
+          justify-content: center;
+          border: 2px solid #1d0e01;
+          box-shadow: inset 0.18em 0.18em #e69635;
+          position: relative;
+          z-index: 1;
+        }
+        .tv-body::after {
+          content: "";
+          position: absolute;
+          width: 15em; height: 8em;
+          border-radius: 13px;
+          background:
+            repeating-radial-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 50% 0/2500px 2500px,
+            repeating-conic-gradient(#d36604 0 0.0001%, #00000070 0 0.0002%) 60% 60%/2500px 2500px;
+          background-blend-mode: difference;
+          opacity: 0.09;
+          border-radius: 13px;
+        }
+        .tv-cruve { position: relative; }
+        .tv-curve-svg {
+          position: absolute;
+          margin-top: 0.2em; margin-left: -0.2em;
+          height: 11px; width: 11px;
+          fill: #1d0e01;
+        }
+        .tv-display {
+          display: flex;
+          align-items: center;
+          align-self: center;
+          justify-content: center;
+          border-radius: 13px;
+          box-shadow: 3px 3px 0px #e69635;
+        }
+        .tv-screen-out {
+          width: auto; height: auto;
+          border-radius: 9px;
+        }
+        .tv-screen-out1 {
+          width: 9.5em; height: 6.8em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 9px;
+        }
+        .tv-screen {
+          width: 11.5em; height: 6.9em;
+          border: 2px solid #1d0e01;
+          background-color: #012d6e;
+          border-radius: 9px;
+          z-index: 99;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          color: #fff;
+          letter-spacing: 0;
+          text-align: center;
+          padding: 6px 8px;
+          font-size: 0.64em;
+          line-height: 1.4;
+          font-family: var(--body);
+        }
+        .tv-lines {
+          display: flex;
+          column-gap: 0.1em;
+          align-self: flex-end;
+        }
+        .tv-line1, .tv-line3 {
+          width: 2px; height: 0.45em;
+          background-color: #1d0e01;
+          border-radius: 25px 25px 0 0;
+          margin-top: 0.45em;
+        }
+        .tv-line2 {
+          width: 2px; height: 0.9em;
+          background-color: #1d0e01;
+          border-radius: 25px 25px 0 0;
+        }
+        .tv-buttons {
+          width: 3.8em; height: 7.2em;
+          align-self: center;
+          background-color: #e69635;
+          border: 2px solid #1d0e01;
+          padding: 0.5em;
+          border-radius: 9px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          row-gap: 0.65em;
+          box-shadow: 3px 3px 0 #e69635;
+        }
+        .tv-b1, .tv-b2 {
+          width: 1.45em; height: 1.45em;
+          border-radius: 50%;
+          background-color: #7f5934;
+          border: 2px solid #1d0e01;
+          box-shadow: inset 2px 2px 1px #b49577, -2px 0 #513721, -2px 0 0 1px #1d0e01;
+        }
+        .tv-speakers {
+          display: flex;
+          flex-direction: column;
+          row-gap: 0.45em;
+        }
+        .tv-speakers-row {
+          display: flex;
+          column-gap: 0.22em;
+        }
+        .tv-dot {
+          width: 0.58em; height: 0.58em;
+          border-radius: 50%;
+          background-color: #7f5934;
+          border: 2px solid #1d0e01;
+          box-shadow: inset 1px 1px 1px #b49577;
+        }
+        .tv-grill {
+          width: auto; height: 2px;
+          background-color: #171717;
+        }
+        .tv-bottom {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          column-gap: 7.5em;
+        }
+        .tv-base1, .tv-base2 {
+          height: 0.9em; width: 1.8em;
+          border: 2px solid #171717;
+          background-color: #4d4d4d;
+          margin-top: -0.12em;
+          z-index: 0;
+        }
+        .tv-base3 {
+          position: absolute;
+          height: 0.14em; width: 15.5em;
+          background-color: #171717;
+          margin-top: 0.72em;
+        }
+
         /* Entrance */
         .link-in-bio-page .rise {
           animation: rise .6s cubic-bezier(.2, .7, .2, 1) both;
@@ -1163,10 +1396,60 @@ export const LinkInBio = () => {
           </div>
         </section>
 
-        {/* Footer */}
-        <p className="foot rise" style={{ "--i": 6 } as React.CSSProperties}>
-          Crafted by Navneet with Love
-        </p>
+        {/* Retro TV Footer */}
+        <div className="tv-footer rise" style={{ "--i": 6 } as React.CSSProperties}>
+          <div className="tv-main-wrap">
+            {/* Antenna */}
+            <div className="tv-antenna">
+              <div className="tv-antenna-shadow" />
+              <div className="tv-a1" />
+              <div className="tv-a1d" />
+              <div className="tv-a2" />
+              <div className="tv-a2d" />
+            </div>
+            {/* TV Body */}
+            <div className="tv-body">
+              <div className="tv-cruve">
+                <svg xmlSpace="preserve" viewBox="0 0 189.929 189.929" xmlns="http://www.w3.org/2000/svg" className="tv-curve-svg">
+                  <path d="M70.343,70.343c-30.554,30.553-44.806,72.7-39.102,115.635l-29.738,3.951C-5.442,137.659,11.917,86.34,49.129,49.13C86.34,11.918,137.664-5.445,189.928,1.502l-3.95,29.738C143.041,25.54,100.895,39.789,70.343,70.343z" />
+                </svg>
+              </div>
+              <div className="tv-display">
+                <div className="tv-screen-out">
+                  <div className="tv-screen-out1">
+                    <div className="tv-screen">
+                      You made it to the bottom of my little universe — thanks for being part of it.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="tv-lines">
+                <div className="tv-line1" />
+                <div className="tv-line2" />
+                <div className="tv-line3" />
+              </div>
+              <div className="tv-buttons">
+                <div className="tv-b1" />
+                <div className="tv-b2" />
+                <div className="tv-speakers">
+                  <div className="tv-speakers-row">
+                    <div className="tv-dot" />
+                    <div className="tv-dot" />
+                    <div className="tv-dot" />
+                  </div>
+                  <div className="tv-grill" />
+                  <div className="tv-grill" />
+                </div>
+              </div>
+            </div>
+            {/* Stand */}
+            <div className="tv-bottom">
+              <div className="tv-base1" />
+              <div className="tv-base2" />
+              <div className="tv-base3" />
+            </div>
+          </div>
+        </div>
       </main>
 
       {/* Transition Gate Dialog */}
