@@ -1,11 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { PORTRAIT_SRC } from "./portraitData";
 
 export const LinkInBio = () => {
   const [mood, setMood] = useState<number>(0);
   const [copyLabel, setCopyLabel] = useState<string>("Copy");
+  const [seqDone, setSeqDone] = useState<boolean>(false);
   const mailRef = useRef<HTMLElement | null>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const seqInitializedRef = useRef<boolean>(false);
 
   useEffect(() => {
     // Set page title as specified
@@ -191,20 +193,26 @@ export const LinkInBio = () => {
     };
   }, []);
 
-  if (typeof window !== "undefined") {
-    try {
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.documentElement.classList.add("seq-on");
-      }
-    } catch (e) {}
-  }
+  useLayoutEffect(() => {
+    if (!seqInitializedRef.current) {
+      seqInitializedRef.current = true;
+      try {
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document.documentElement.classList.add("seq-on");
+        }
+      } catch (e) {}
+    }
+  }, []);
 
   useEffect(() => {
     var seq = document.getElementById("seq");
-    if (!seq) return;
+    if (!seq) {
+      setSeqDone(true);
+      return;
+    }
     var root = document.documentElement;
     if (!root.classList.contains("seq-on")) {
-      if (seq.parentNode) seq.remove();
+      setSeqDone(true);
       return;
     }
     var main = (document.querySelector("main.wrap") || document.querySelector("main")) as HTMLElement | null;
@@ -314,7 +322,9 @@ export const LinkInBio = () => {
       if (main) (main as any).inert = false;
       root.style.overflow = "";
       fadeTimeout = setTimeout(function () { if (seq) seq.classList.add("fade"); }, 950);
-      removeTimeout = setTimeout(function () { if (seq && seq.parentNode) seq.remove(); }, 1400);
+      removeTimeout = setTimeout(function () {
+        setSeqDone(true);
+      }, 1400);
     }
 
     function skip() { if (!revealed && started) t0 = performance.now() - 2460; }
@@ -455,6 +465,7 @@ export const LinkInBio = () => {
           color-scheme: dark;
         }
 
+        .link-in-bio-page[data-mood="0"] { --accent: var(--a1); }
         .link-in-bio-page[data-mood="1"] { --accent: var(--a2); }
         .link-in-bio-page[data-mood="2"] { --accent: var(--a3); }
         .link-in-bio-page[data-mood="3"] { --accent: var(--a4); }
@@ -1303,51 +1314,53 @@ export const LinkInBio = () => {
       `}</style>
 
       {/* Opening Sequence */}
-      <div className="seq" id="seq" aria-hidden="true">
-        <div className="s-panels">
-          <i style={{ "--n": 0, "--p": "#14566F" } as React.CSSProperties}></i>
-          <i style={{ "--n": 1, "--p": "#F2622B" } as React.CSSProperties}></i>
-          <i style={{ "--n": 2, "--p": "#F7A03A" } as React.CSSProperties}></i>
-          <i style={{ "--n": 3, "--p": "#14161F" } as React.CSSProperties}></i>
-        </div>
-        <div className="s-mq">
-          <div className="mq m1">
-            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
-            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+      {!seqDone && (
+        <div className="seq" id="seq" aria-hidden="true">
+          <div className="s-panels">
+            <i style={{ "--n": 0, "--p": "#14566F" } as React.CSSProperties}></i>
+            <i style={{ "--n": 1, "--p": "#F2622B" } as React.CSSProperties}></i>
+            <i style={{ "--n": 2, "--p": "#F7A03A" } as React.CSSProperties}></i>
+            <i style={{ "--n": 3, "--p": "#14161F" } as React.CSSProperties}></i>
           </div>
-          <div className="mq m2">
-            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
-            <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+          <div className="s-mq">
+            <div className="mq m1">
+              <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+              <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+            </div>
+            <div className="mq m2">
+              <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+              <span>What if? / What if? / What if? / What if? / What if? / What if? /</span>
+            </div>
+          </div>
+          <b className="g gh" id="gh1" style={{ transitionDelay: ".05s" }}></b>
+          <b className="g gh" id="gh2" style={{ transitionDelay: ".15s" }}></b>
+          <b className="g gv" id="gv1" style={{ transitionDelay: ".1s" }}></b>
+          <b className="g gv" id="gv2" style={{ transitionDelay: ".2s" }}></b>
+          <div className="s-bar" id="sBar">
+            <span>Navneet Patidar</span>
+            <span>Links</span>
+          </div>
+          <div className="s-load" id="sLoad">
+            <span className="lab" id="sLab">Loading canvas</span>
+            <div className="num"><b id="sPct">0</b><span>%</span></div>
+            <span className="skip">Tap to skip</span>
+          </div>
+          <div className="ifr" id="sFrame">
+            <div className="clip"><canvas id="sCanvas"></canvas></div>
+            <span className="h tl"></span>
+            <span className="h tr"></span>
+            <span className="h bl"></span>
+            <span className="h br"></span>
+            <span className="size-tag" id="sTag">0 × 0</span>
+          </div>
+          <div className="cursor icur" id="sCur">
+            <svg viewBox="0 0 18 18">
+              <path d="M2 1.5 15 8l-5.6 1.6L7.6 15.5Z" strokeLinejoin="round" />
+            </svg>
+            <span className="pill">Navneet</span>
           </div>
         </div>
-        <b className="g gh" id="gh1" style={{ transitionDelay: ".05s" }}></b>
-        <b className="g gh" id="gh2" style={{ transitionDelay: ".15s" }}></b>
-        <b className="g gv" id="gv1" style={{ transitionDelay: ".1s" }}></b>
-        <b className="g gv" id="gv2" style={{ transitionDelay: ".2s" }}></b>
-        <div className="s-bar" id="sBar">
-          <span>Navneet Patidar</span>
-          <span>Links</span>
-        </div>
-        <div className="s-load" id="sLoad">
-          <span className="lab" id="sLab">Loading canvas</span>
-          <div className="num"><b id="sPct">0</b><span>%</span></div>
-          <span className="skip">Tap to skip</span>
-        </div>
-        <div className="ifr" id="sFrame">
-          <div className="clip"><canvas id="sCanvas"></canvas></div>
-          <span className="h tl"></span>
-          <span className="h tr"></span>
-          <span className="h bl"></span>
-          <span className="h br"></span>
-          <span className="size-tag" id="sTag">0 × 0</span>
-        </div>
-        <div className="cursor icur" id="sCur">
-          <svg viewBox="0 0 18 18">
-            <path d="M2 1.5 15 8l-5.6 1.6L7.6 15.5Z" strokeLinejoin="round" />
-          </svg>
-          <span className="pill">Navneet</span>
-        </div>
-      </div>
+      )}
 
       {/* Hidden SVG Sprite */}
       <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style={{ position: "absolute" }} aria-hidden="true" focusable="false">
