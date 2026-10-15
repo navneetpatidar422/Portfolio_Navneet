@@ -69,7 +69,7 @@ const projectLinks = [
 
 const socials = [
   { name: "LinkedIn",  icon: Linkedin,      href: "https://www.linkedin.com/in/navneet-patidar/",        color: "#0A66C2" },
-  { name: "Behance",   icon: BehanceIcon,   href: "https://www.behance.net/navneetpatidar",              color: "#1769FF" },
+  { name: "Behance",   icon: BehanceIcon,   href: "https://www.behance.net/navneet4svg",              color: "#1769FF" },
   { name: "Figma",     icon: FigmaIcon,     href: "https://www.figma.com/@navneet4svg",                  color: "#A259FF" },
   { name: "Instagram", icon: Instagram,     href: "https://www.instagram.com/navneet.svg",               color: "#E4405F" },
   { name: "Pinterest", icon: PinterestIcon, href: "https://in.pinterest.com/navneet4svg/",               color: "#E60023" },

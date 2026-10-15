@@ -236,7 +236,7 @@ export const Contact = () => {
                             <div className="flex gap-4">
                                 <SocialLink href="https://api.whatsapp.com/send/?phone=917878913449&text=Hi+Navneet%2C+I+came+across+your+portfolio+and+wanted+to+reach+out.+I%E2%80%99d+love+to+discuss+something+with+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com" icon={WhatsAppIcon} label="Chat on WhatsApp" />
                                 <SocialLink href="https://www.linkedin.com/in/navneet-patidar/" icon={Linkedin} label="LinkedIn profile" />
-                                <SocialLink href="https://www.behance.net/navneetpatidar" icon={BehanceIcon} label="Behance portfolio" />
+                                <SocialLink href="https://www.behance.net/navneet4svg" icon={BehanceIcon} label="Behance portfolio" />
                                 <SocialLink href="https://www.instagram.com/navneet.svg/" icon={Instagram} label="Instagram profile" />
                             </div>
                         </div>

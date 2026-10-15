@@ -1643,7 +1643,7 @@ export const LinkInBio = () => {
                 className="card"
                 role="link"
                 tabIndex={0}
-                data-href="https://www.behance.net/navneetpatidar"
+                data-href="https://www.behance.net/navneet4svg"
                 style={{ "--c": "#B7BFF0" } as React.CSSProperties}
               >
                 <span className="chip">
@@ -1654,7 +1654,7 @@ export const LinkInBio = () => {
                 </span>
                 <span className="txt">
                   <strong>Behance</strong>
-                  <span>navneetpatidar</span>
+                  <span>navneet4svg</span>
                 </span>
                 <span className="go" aria-hidden="true">
                   <svg viewBox="0 0 24 24">
