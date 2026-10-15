@@ -4,17 +4,6 @@ import { ProjectCarousel } from "./ProjectCarousel";
 
 const projects = [
   {
-    id: "first-case-study",
-    title: "My First UX Case Study",
-    subtitle: "A comprehensive deep dive into user research, problem framing, systems thinking, and interactive product design. Final polish in progress.",
-    year: "2026",
-    image: "/projects/first-case-study-thumb.png",
-    tags: ["First Case Study", "UX Research"],
-    path: "#",
-    color: "#185B46",
-    comingSoon: true
-  },
-  {
     id: "Retail_Management",
     title: "Jewellery Retail Management System",
     subtitle: "Digitizing pricing, inventory, billing, employee operations, and customer experiences for a confidential client.",
@@ -73,6 +62,17 @@ const projects = [
     tags: ["First UI/UX Project", "UI Concept", "Space Tech"],
     path: "/work/isro",
     color: "#2563EB"
+  },
+  {
+    id: "first-case-study",
+    title: "My First UX Case Study",
+    subtitle: "A comprehensive deep dive into user research, problem framing, systems thinking, and interactive product design. Final polish in progress.",
+    year: "2026",
+    image: "/projects/first-case-study-thumb.png",
+    tags: ["First Case Study", "UX Research"],
+    path: "#",
+    color: "#185B46",
+    comingSoon: true
   }
 ];
 
