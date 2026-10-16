@@ -114,7 +114,7 @@ function GlobalBackground() {
 
 function AppShell({ loading, setLoading }: { loading: boolean; setLoading: (v: boolean) => void }) {
   const location = useLocation();
-  const isLinkInBio = location.pathname === "/links";
+  const isLinkInBio = location.pathname === "/links" || location.pathname === "/bio";
   const isResearch = location.pathname === "/research" || location.pathname === "/user-persona-form";
 
   if (isLinkInBio) {
@@ -123,6 +123,7 @@ function AppShell({ loading, setLoading }: { loading: boolean; setLoading: (v: b
         <ScrollToTop />
         <Suspense fallback={null}>
           <Routes>
+            <Route path="/links" element={<LinkInBio />} />
             <Route path="/links" element={<LinkInBio />} />
           </Routes>
         </Suspense>

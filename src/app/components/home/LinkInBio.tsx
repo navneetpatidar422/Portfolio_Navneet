@@ -1520,7 +1520,7 @@ export const LinkInBio = () => {
             className="card feature"
             role="link"
             tabIndex={0}
-            data-href="/research"
+            data-href="/research?from=bio"
             style={{ "--c": "#10B981" } as React.CSSProperties}
           >
             <span className="chip" style={{ background: "#10B981" }}>

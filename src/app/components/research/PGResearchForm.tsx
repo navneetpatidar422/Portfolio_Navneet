@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams, useNavigate } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowLeft,
@@ -29,6 +29,8 @@ import {
 import {
   Language,
   OWNER_TRANSLATIONS,
+  TENANT_TRANSLATIONS,
+  INTRO_TRANSLATIONS,
 } from "./pgTranslations";
 import {
   submitPGResearchForm,
@@ -41,6 +43,35 @@ import {
 } from "../../utils/pgResearchSubmit";
 
 export const PGResearchForm = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // Robust origin detection: query param -> sessionStorage -> document.referrer -> default 'portfolio'
+  const [source, setSource] = useState<"bio" | "portfolio">(() => {
+    if (typeof window !== "undefined") {
+      const fromParam = new URLSearchParams(window.location.search).get("from");
+      if (fromParam === "bio" || fromParam === "links") {
+        try { sessionStorage.setItem("pg_research_source", "bio"); } catch {}
+        return "bio";
+      }
+      if (fromParam === "portfolio" || fromParam === "home" || fromParam === "work") {
+        try { sessionStorage.setItem("pg_research_source", "portfolio"); } catch {}
+        return "portfolio";
+      }
+      try {
+        const stored = sessionStorage.getItem("pg_research_source");
+        if (stored === "bio" || stored === "portfolio") return stored;
+      } catch {}
+      if (document.referrer.includes("/links") || document.referrer.includes("/links")) {
+        try { sessionStorage.setItem("pg_research_source", "bio"); } catch {}
+        return "bio";
+      }
+    }
+    return "portfolio";
+  });
+
+  const isFromBio = source === "bio";
+
   // Selected role: null (intro screen) | 'tenant' | 'owner'
   const [selectedRole, setSelectedRole] = useState<"tenant" | "owner" | null>(null);
 
@@ -137,10 +168,17 @@ export const PGResearchForm = () => {
   const currentStep = quizSteps[stepIndex] || null;
   const isLastStep = stepIndex >= quizSteps.length - 1;
 
-  // Localized section details
+  // Localized section details (Tenant & Owner)
   const getLocalizedSection = (sec: FormSection) => {
-    if (selectedRole === "owner" && OWNER_TRANSLATIONS[language]) {
-      const tSec = OWNER_TRANSLATIONS[language].sections[sec.id];
+    const translations =
+      selectedRole === "owner"
+        ? OWNER_TRANSLATIONS[language]
+        : selectedRole === "tenant"
+        ? TENANT_TRANSLATIONS[language]
+        : null;
+
+    if (translations) {
+      const tSec = translations.sections[sec.id];
       if (tSec) {
         return {
           title: tSec.title || sec.title,
@@ -154,10 +192,17 @@ export const PGResearchForm = () => {
     };
   };
 
-  // Localized question details
+  // Localized question details (Tenant & Owner)
   const getLocalizedQ = (sec: FormSection, q: FormQuestion) => {
-    if (selectedRole === "owner" && OWNER_TRANSLATIONS[language]) {
-      const tSec = OWNER_TRANSLATIONS[language].sections[sec.id];
+    const translations =
+      selectedRole === "owner"
+        ? OWNER_TRANSLATIONS[language]
+        : selectedRole === "tenant"
+        ? TENANT_TRANSLATIONS[language]
+        : null;
+
+    if (translations) {
+      const tSec = translations.sections[sec.id];
       if (tSec && tSec.questions[q.id]) {
         const trans = tSec.questions[q.id];
         return {
@@ -413,46 +458,96 @@ export const PGResearchForm = () => {
     ? Math.min(100, Math.round((answeredCount / totalQuestions) * 100))
     : 0;
 
+  const sourceExitPath = isFromBio ? "/links" : "/";
+  const sourceExitLabel = isFromBio
+    ? (language === "hi"
+        ? "लिंक इन बायो पर वापस"
+        : language === "hinglish"
+        ? "Back to Link in Bio"
+        : "Exit to Link in Bio")
+    : (language === "hi"
+        ? "पोर्टफोलियो पर वापस"
+        : language === "hinglish"
+        ? "Back to Portfolio"
+        : "Exit to Portfolio");
+
+  const sourceExitMobileLabel = isFromBio
+    ? (language === "hi" ? "बायो" : "Link in Bio")
+    : (language === "hi" ? "पोर्टफोलियो" : "Portfolio");
+
+  const handleExitToSource = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    navigate(sourceExitPath);
+  };
+
+  const locIntro = INTRO_TRANSLATIONS[language];
+
   return (
     <div
       ref={containerRef}
       className="min-h-screen bg-[#FDFCF9] dark:bg-[#0D0F12] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-200"
     >
-      {/* ── Thick Sticky Progress Bar Attached to Top Edge ── */}
-      {hasStarted && !isSubmitted && (
-        <div className="fixed top-0 left-0 right-0 z-50 h-2 bg-neutral-200 dark:bg-neutral-800">
-          <motion.div
-            className="h-full bg-emerald-600 dark:bg-emerald-500 transition-all duration-300 ease-out"
-            style={{ width: `${progressPercent}%` }}
-          />
-        </div>
-      )}
+      {/* ── Fixed Top Bar with Integrated Progress Line (Permanently locked to top of viewport) ── */}
+      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-[#FDFCF9] dark:bg-[#0D0F12] border-b border-neutral-200 dark:border-neutral-800 transition-colors shadow-xs">
+        {/* Progress bar attached directly to top of fixed header */}
+        {hasStarted && !isSubmitted && (
+          <div className="w-full h-1.5 sm:h-2 bg-neutral-200 dark:bg-neutral-800">
+            <motion.div
+              className="h-full bg-emerald-600 dark:bg-emerald-500 transition-all duration-300 ease-out"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+        )}
 
-      {/* ── Sticky Clean Top Bar ── */}
-      <header
-        className={`sticky top-0 z-40 bg-[#FDFCF9]/95 dark:bg-[#0D0F12]/95 backdrop-blur-sm border-b border-neutral-200/80 dark:border-neutral-800/80 py-3.5 px-4 sm:px-8 transition-colors ${
-          hasStarted ? "mt-2" : ""
-        }`}
-      >
-        <div className="max-w-2xl mx-auto flex items-center justify-between gap-3">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Exit to Portfolio</span>
-            <span className="sm:hidden">Exit</span>
-          </Link>
+        <div className="max-w-2xl mx-auto py-3 sm:py-3.5 px-4 sm:px-6 flex items-center justify-between gap-3">
+          {/* Exit Button: In quiz -> returns to initial intro page; On intro -> returns to referrer (Portfolio or Link in Bio) */}
+          {hasStarted && !isSubmitted ? (
+            <button
+              type="button"
+              onClick={() => {
+                setHasStarted(false);
+                setValidationError(null);
+                scrollToTop();
+              }}
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">
+                {language === "hi"
+                  ? "प्रश्नावली से बाहर"
+                  : language === "hinglish"
+                  ? "Exit Questionnaire"
+                  : "Exit Questionnaire"}
+              </span>
+              <span className="sm:hidden">
+                {language === "hi" ? "बाहर" : "Exit"}
+              </span>
+            </button>
+          ) : (
+            <Link
+              to={sourceExitPath}
+              onClick={handleExitToSource}
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">{sourceExitLabel}</span>
+              <span className="sm:hidden">{sourceExitMobileLabel}</span>
+            </Link>
+          )}
 
           <span className="text-xs sm:text-sm font-bold tracking-wide text-neutral-800 dark:text-neutral-200 truncate">
-            PG App UX Research
+            {language === "hi" ? "PG ऐप UX रिसर्च" : "PG App UX Research"}
           </span>
 
           {hasStarted && !isSubmitted && currentStep ? (
             <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-md border border-emerald-200 dark:border-emerald-800 flex-shrink-0">
               {currentStep.type === "question"
-                ? `Q ${currentStep.globalQuestionNumber} of ${currentStep.totalQuestions}`
-                : `Part ${currentStep.sectionIndex + 1} of ${totalSections}`}
+                ? (language === "hi"
+                    ? `प्रश्न ${currentStep.globalQuestionNumber} / ${currentStep.totalQuestions}`
+                    : `Q ${currentStep.globalQuestionNumber} of ${currentStep.totalQuestions}`)
+                : (language === "hi"
+                    ? `भाग ${currentStep.sectionIndex + 1} / ${totalSections}`
+                    : `Part ${currentStep.sectionIndex + 1} of ${totalSections}`)}
             </span>
           ) : (
             <div className="w-8 sm:w-16" />
@@ -460,10 +555,13 @@ export const PGResearchForm = () => {
         </div>
       </header>
 
+      {/* Spacer so content starts smoothly below fixed header */}
+      <div className={hasStarted && !isSubmitted ? "h-14 sm:h-16" : "h-12 sm:h-14"} aria-hidden="true" />
+
       {/* ── Content Container ── */}
       <main
         className={`max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-14 ${
-          selectedRole === "owner" && !isSubmitted ? "pb-24 sm:pb-28" : ""
+          !isSubmitted ? "pb-24 sm:pb-28" : ""
         }`}
       >
         {/* =========================================================
@@ -479,22 +577,22 @@ export const PGResearchForm = () => {
             {/* Friendly Greeting Header */}
             <div className="space-y-3">
               <div className="inline-block text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-3 py-1 rounded-full border border-emerald-200/60 dark:border-emerald-800/60">
-                User Research Survey
+                {locIntro.surveyBadge}
               </div>
 
               <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-neutral-900 dark:text-white leading-tight">
-                Hey there! Help me build a better PG Management App.
+                {locIntro.heading}
               </h1>
 
               <p className="text-sm sm:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                Hi, I’m Navneet, a UI/UX designer building a case study for a simpler PG management app for owners and tenants. Existing apps like RentOk do a lot, but I believe the everyday experience can be much easier. Your 3-minute response will help me improve real frustrations like rent tracking, maintenance delays and document safety.
+                {locIntro.subheading}
               </p>
             </div>
 
             {/* In Short: What to expect */}
             <div className="bg-white dark:bg-neutral-900 rounded-xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-3">
               <h2 className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                What to expect
+                {locIntro.whatToExpect}
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
@@ -504,10 +602,10 @@ export const PGResearchForm = () => {
                   </div>
                   <div>
                     <span className="block text-xs font-bold text-neutral-900 dark:text-white">
-                      Takes ~3 minutes
+                      {locIntro.timeTitle}
                     </span>
                     <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
-                      4 short, simple sections
+                      {locIntro.timeSub}
                     </span>
                   </div>
                 </div>
@@ -518,10 +616,10 @@ export const PGResearchForm = () => {
                   </div>
                   <div>
                     <span className="block text-xs font-bold text-neutral-900 dark:text-white">
-                      No right or wrong
+                      {locIntro.honestTitle}
                     </span>
                     <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
-                      Just your honest story
+                      {locIntro.honestSub}
                     </span>
                   </div>
                 </div>
@@ -532,10 +630,10 @@ export const PGResearchForm = () => {
                   </div>
                   <div>
                     <span className="block text-xs font-bold text-neutral-900 dark:text-white">
-                      100% Anonymous
+                      {locIntro.anonTitle}
                     </span>
                     <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
-                      No spam, strictly research
+                      {locIntro.anonSub}
                     </span>
                   </div>
                 </div>
@@ -545,7 +643,7 @@ export const PGResearchForm = () => {
             {/* Choose Your Role */}
             <div className="space-y-3">
               <label className="block text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
-                Please select which describes you best:
+                {locIntro.rolePrompt}
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -577,12 +675,11 @@ export const PGResearchForm = () => {
                     <div className="flex items-center gap-2">
                       <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                       <strong className="text-base font-bold text-neutral-900 dark:text-white">
-                        Tenant / Student
+                        {selectedRole === "tenant" ? locIntro.tenantTitle : (language === "hi" ? "किरायेदार / छात्र" : language === "hinglish" ? "Tenant / Student" : "Tenant / Student")}
                       </strong>
                     </div>
                     <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                      I live (or have lived) in a PG or hostel. I deal with rent payments,
-                      complaints, and sharing ID documents.
+                      {locIntro.tenantSub}
                     </p>
                   </div>
                 </div>
@@ -615,19 +712,12 @@ export const PGResearchForm = () => {
                     <div className="flex items-center gap-2">
                       <Building className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                       <strong className="text-base font-bold text-neutral-900 dark:text-white">
-                        PG Owner / Manager
+                        {selectedRole === "owner" ? locIntro.ownerTitle : (language === "hi" ? "PG मालिक / प्रबंधक" : language === "hinglish" ? "PG Owner / Manager" : "PG Owner / Manager")}
                       </strong>
                     </div>
                     <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                      I own or manage a PG/hostel property. I track rents, collect payments,
-                      verify KYC, and handle complaints.
+                      {locIntro.ownerSub}
                     </p>
-                    {/* {selectedRole === "owner" && (
-                      <div className="pt-1.5 flex items-center gap-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                        <Languages className="w-3.5 h-3.5" />
-                        <span>Translator ready: English • हिंदी • Hinglish</span>
-                      </div>
-                    )} */}
                   </div>
                 </div>
               </div>
@@ -655,13 +745,9 @@ export const PGResearchForm = () => {
                 <span>
                   {selectedRole
                     ? selectedRole === "tenant"
-                      ? "Start Tenant Questionnaire →"
-                      : language === "hi"
-                      ? "ओनर प्रश्नावली शुरू करें →"
-                      : language === "hinglish"
-                      ? "Owner Questionnaire Shuru Karein →"
-                      : "Start Owner Questionnaire →"
-                    : "Select an option above to continue"}
+                      ? locIntro.startTenantBtn
+                      : locIntro.startOwnerBtn
+                    : locIntro.selectRolePrompt}
                 </span>
               </button>
             </div>
@@ -692,7 +778,7 @@ export const PGResearchForm = () => {
                       <>
                         <div className="space-y-3">
                           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800/60">
-                            {selectedRole === "owner" && language === "hi"
+                            {language === "hi"
                               ? `भाग ${currentStep.sectionIndex + 1} / ${totalSections}`
                               : `Part ${currentStep.sectionIndex + 1} of ${totalSections}`}
                           </div>
@@ -715,17 +801,17 @@ export const PGResearchForm = () => {
                           <div className="flex items-center gap-2 font-medium">
                             <Clock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                             <span>
-                              {selectedRole === "owner" && language === "hi"
+                              {language === "hi"
                                 ? `इस भाग में ${qCount} प्रश्न हैं`
-                                : selectedRole === "owner" && language === "hinglish"
+                                : language === "hinglish"
                                 ? `Is part mein ${qCount} questions hain`
                                 : `${qCount} questions in this part`}
                             </span>
                           </div>
                           <span className="text-[11px] text-neutral-500 dark:text-neutral-400 font-semibold">
-                            {selectedRole === "owner" && language === "hi"
+                            {language === "hi"
                               ? "एक-एक करके उत्तर दें"
-                              : selectedRole === "owner" && language === "hinglish"
+                              : language === "hinglish"
                               ? "Ek-ek karke answer dein"
                               : "1 question at a time"}
                           </span>
@@ -738,9 +824,9 @@ export const PGResearchForm = () => {
                             onClick={handleBackStep}
                             className="px-5 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs sm:text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                           >
-                            {selectedRole === "owner" && language === "hi"
+                            {language === "hi"
                               ? "← वापस"
-                              : selectedRole === "owner" && language === "hinglish"
+                              : language === "hinglish"
                               ? "← Back"
                               : "← Back"}
                           </button>
@@ -751,11 +837,11 @@ export const PGResearchForm = () => {
                             className="px-6 sm:px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-[0.99]"
                           >
                             <span>
-                              {selectedRole === "owner" && language === "hi"
+                              {language === "hi"
                                 ? "प्रश्नोत्तरी जारी रखें →"
-                                : selectedRole === "owner" && language === "hinglish"
+                                : language === "hinglish"
                                 ? "Questions Shuru Karein →"
-                                : "Continue to Questions"}
+                                : "Continue to Questions →"}
                             </span>
                             <ArrowRight className="w-4 h-4" />
                           </button>
@@ -788,7 +874,7 @@ export const PGResearchForm = () => {
                         <div className="space-y-3 pb-3 border-b border-neutral-100 dark:border-neutral-800/80">
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider truncate">
-                              {selectedRole === "owner" && language === "hi"
+                              {language === "hi"
                                 ? `भाग ${currentStep.sectionIndex + 1}`
                                 : `Part ${currentStep.sectionIndex + 1}`}
                               {" · "}
@@ -798,7 +884,7 @@ export const PGResearchForm = () => {
                                 .replace(/^भाग \d+:\s*/i, "")}
                             </span>
                             <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-200/80 dark:border-emerald-800/60 flex-shrink-0">
-                              {selectedRole === "owner" && language === "hi"
+                              {language === "hi"
                                 ? `प्रश्न ${currentStep.globalQuestionNumber} / ${currentStep.totalQuestions}`
                                 : `Question ${currentStep.globalQuestionNumber} of ${currentStep.totalQuestions}`}
                             </span>
@@ -842,14 +928,14 @@ export const PGResearchForm = () => {
                                   >
                                     {/* Round Radio Marker */}
                                     <div
-                                      className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+                                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
                                         isSelected
                                           ? "border-emerald-600 bg-white dark:bg-neutral-900"
-                                          : "border-neutral-400 dark:border-neutral-600"
+                                          : "border-neutral-400 dark:border-neutral-600 bg-white dark:bg-neutral-900"
                                       }`}
                                     >
                                       {isSelected && (
-                                        <div className="w-2 h-2 rounded-full bg-emerald-600" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
                                       )}
                                     </div>
                                     <span className="text-xs sm:text-sm font-medium leading-relaxed">
@@ -884,7 +970,7 @@ export const PGResearchForm = () => {
                             </div>
                           )}
 
-                          {/* 2. MULTI SELECT (SQUARE CHECKBOXES) */}
+                          {/* 2. MULTI SELECT (CONVENTIONAL SQUARE CHECKBOXES) */}
                           {q.type === "multi" && locQ.options && (
                             <div className="space-y-2.5">
                               <span className="block text-[11px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
@@ -908,15 +994,15 @@ export const PGResearchForm = () => {
                                         : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-700 dark:text-neutral-300"
                                     }`}
                                   >
-                                    {/* Square Checkbox Marker */}
+                                    {/* Conventional Square Checkbox Marker */}
                                     <div
-                                      className={`w-4 h-4 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+                                      className={`w-5 h-5 rounded-[3px] border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
                                         isChecked
                                           ? "border-emerald-600 bg-emerald-600 text-white"
-                                          : "border-neutral-400 dark:border-neutral-600 bg-transparent"
+                                          : "border-neutral-400 dark:border-neutral-600 bg-white dark:bg-neutral-900"
                                       }`}
                                     >
-                                      {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                                      {isChecked && <Check className="w-3.5 h-3.5 stroke-[3] text-white" />}
                                     </div>
                                     <span className="text-xs sm:text-sm font-medium leading-relaxed">
                                       {opt}
@@ -1011,9 +1097,9 @@ export const PGResearchForm = () => {
                           >
                             <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
                             <span>
-                              {selectedRole === "owner" && language === "hi"
+                              {language === "hi"
                                 ? "कृपया आगे बढ़ने से पहले इस प्रश्न का उत्तर दें।"
-                                : selectedRole === "owner" && language === "hinglish"
+                                : language === "hinglish"
                                 ? "Aage badhne ke liye is question ka answer dein."
                                 : "Please answer this question to proceed."}
                             </span>
@@ -1027,9 +1113,9 @@ export const PGResearchForm = () => {
                             onClick={handleBackStep}
                             className="px-5 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs sm:text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                           >
-                            {selectedRole === "owner" && language === "hi"
+                            {language === "hi"
                               ? "← पिछला प्रश्न"
-                              : selectedRole === "owner" && language === "hinglish"
+                              : language === "hinglish"
                               ? "← Previous"
                               : "← Back"}
                           </button>
@@ -1042,18 +1128,18 @@ export const PGResearchForm = () => {
                           >
                             {isSubmitting ? (
                               <span>
-                                {selectedRole === "owner" && language === "hi"
+                                {language === "hi"
                                   ? "जवाब सबमिट हो रहे हैं..."
-                                  : selectedRole === "owner" && language === "hinglish"
+                                  : language === "hinglish"
                                   ? "Responses submit ho rahe hain..."
                                   : "Submitting responses..."}
                               </span>
                             ) : isLastStep ? (
                               <>
                                 <span>
-                                  {selectedRole === "owner" && language === "hi"
+                                  {language === "hi"
                                     ? "जवाब सबमिट करें"
-                                    : selectedRole === "owner" && language === "hinglish"
+                                    : language === "hinglish"
                                     ? "Responses Submit Karein"
                                     : "Submit Responses"}
                                 </span>
@@ -1062,9 +1148,9 @@ export const PGResearchForm = () => {
                             ) : (
                               <>
                                 <span>
-                                  {selectedRole === "owner" && language === "hi"
+                                  {language === "hi"
                                     ? "अगला प्रश्न →"
-                                    : selectedRole === "owner" && language === "hinglish"
+                                    : language === "hinglish"
                                     ? "Next Question →"
                                     : "Next Question →"}
                                 </span>
@@ -1116,11 +1202,16 @@ export const PGResearchForm = () => {
               </button>
 
               <Link
-                to="/"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold transition-colors shadow-sm"
+                to={sourceExitPath}
+                onClick={handleExitToSource}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold transition-colors shadow-sm cursor-pointer"
               >
                 <Home className="w-4 h-4" />
-                <span>Return to Portfolio</span>
+                <span>
+                  {isFromBio
+                    ? (language === "hi" ? "लिंक इन बायो पर वापस" : "Return to Link in Bio")
+                    : (language === "hi" ? "पोर्टफोलियो पर वापस" : "Return to Portfolio")}
+                </span>
               </Link>
             </div>
           </motion.div>
@@ -1128,7 +1219,7 @@ export const PGResearchForm = () => {
       </main>
 
       {/* ── STICKY SIDE TRANSLATOR WITH DROPDOWN MENU & RADIO BUTTONS ── */}
-      {selectedRole === "owner" && !isSubmitted && (
+      {!isSubmitted && (
         <div
           ref={langMenuRef}
           className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 select-none"
