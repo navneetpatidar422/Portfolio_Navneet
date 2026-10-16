@@ -838,10 +838,10 @@ export const PGResearchForm = () => {
                           >
                             <span>
                               {language === "hi"
-                                ? "प्रश्नोत्तरी जारी रखें →"
+                                ? "प्रश्नोत्तरी जारी रखें"
                                 : language === "hinglish"
-                                ? "Questions Shuru Karein →"
-                                : "Continue to Questions →"}
+                                ? "Questions Shuru Karein"
+                                : "Continue to Questions"}
                             </span>
                             <ArrowRight className="w-4 h-4" />
                           </button>
