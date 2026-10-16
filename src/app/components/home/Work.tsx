@@ -69,8 +69,8 @@ const projects = [
     subtitle: "A comprehensive deep dive into user research, problem framing, systems thinking, and interactive product design. Final polish in progress.",
     year: "2026",
     image: "/projects/first-case-study-thumb.png",
-    tags: ["First Case Study", "UX Research"],
-    path: "#",
+    tags: ["First Case Study", "UX Research", "PG Management App"],
+    path: "/research",
     color: "#185B46",
     comingSoon: true
   }

@@ -53,10 +53,17 @@ export const LinkInBio = () => {
       instagram: { h: 'Framing the shot', s: ['Finding the light', 'Holding still', 'Say cheese'] },
       pinterest: { h: 'Pinning things down', s: ['Dropping pins', 'Arranging the board', 'Mind the gap'] },
       figma: { h: 'Two cursors, one canvas', s: ['Joining the file', 'Applying auto layout', 'Nudging by one pixel'] },
-      behance: { h: 'Mixing the palette', s: ['Picking swatches', 'Matching the hex codes', 'Tasting the colour'] }
+      behance: { h: 'Mixing the palette', s: ['Picking swatches', 'Matching the hex codes', 'Tasting the colour'] },
+      'become user persona': { h: 'Crafting user personas', s: ['Setting up questions', 'Structuring the sections', 'Opening questionnaire'] }
     };
 
     const SCENES: Record<string, string> = {
+      'become user persona': '<svg class="sc s-pn" viewBox="0 0 240 150" aria-hidden="true">' +
+        '<text class="mono-t" x="10" y="146">USER RESEARCH • PG APP</text>' +
+        '<circle class="hp" cx="120" cy="50" r="24" stroke="#10B981" stroke-width="2.5" fill="none"/>' +
+        '<path class="curve" pathLength="1" d="M72 120 C 72 88, 168 88, 168 120" stroke="#10B981" stroke-width="2.5" fill="none"/>' +
+        '<rect class="an" x="115" y="45" width="10" height="10" style="animation-delay:1.9s"/>' +
+        '</svg>',
       portfolio: '<svg class="sc s-pn" viewBox="0 0 240 150" aria-hidden="true">' +
         '<text class="mono-t" x="10" y="146">PEN TOOL  P</text>' +
         '<line class="hd" x1="24" y1="112" x2="64" y2="8"/><line class="hd" x1="214" y1="36" x2="128" y2="136"/>' +
@@ -111,8 +118,9 @@ export const LinkInBio = () => {
       gName.textContent = title;
       const mark = card.querySelector('.logo') || card.querySelector('.chip b');
       gLogo.innerHTML = mark ? mark.outerHTML : '';
-      gTitle.textContent = copy.h;
-      go.href = card.getAttribute('data-href') || '#';
+      const targetHref = card.getAttribute('data-href') || '#';
+      go.href = targetHref;
+      go.target = targetHref.startsWith('/') ? '_self' : '_blank';
       go.textContent = 'Open now';
       back.textContent = 'Cancel';
       gate.classList.remove('run', 'done');
@@ -1500,6 +1508,28 @@ export const LinkInBio = () => {
             </span>
             <span className="txt">
               <strong>Portfolio</strong>
+            </span>
+            <span className="go" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M7 17 17 7M8 7h9v9"/>
+              </svg>
+            </span>
+          </a>
+
+          <a
+            className="card feature"
+            role="link"
+            tabIndex={0}
+            data-href="/research"
+            style={{ "--c": "#10B981" } as React.CSSProperties}
+          >
+            <span className="chip" style={{ background: "#10B981" }}>
+              <b>UX</b>
+              <small>#10B981</small>
+            </span>
+            <span className="txt">
+              <strong>Become User Persona</strong>
+              <span>PG Management App Case Study Survey • ~3 mins</span>
             </span>
             <span className="go" aria-hidden="true">
               <svg viewBox="0 0 24 24">

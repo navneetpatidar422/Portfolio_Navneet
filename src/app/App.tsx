@@ -29,6 +29,7 @@ const AmazonCaseStudy = lazy(() => import("./components/work/AmazonCaseStudy").t
 const IsroCaseStudy = lazy(() => import("./components/work/IsroCaseStudy").then(m => ({ default: m.IsroCaseStudy })));
 const Admin = lazy(() => import("./components/home/Admin").then(m => ({ default: m.Admin })));
 const AdminReviews = lazy(() => import("./components/admin/AdminReviews").then(m => ({ default: m.AdminReviews })));
+const PGResearchForm = lazy(() => import("./components/research/PGResearchForm").then(m => ({ default: m.PGResearchForm })));
 
 function MainHome() {
   return (
@@ -114,6 +115,7 @@ function GlobalBackground() {
 function AppShell({ loading, setLoading }: { loading: boolean; setLoading: (v: boolean) => void }) {
   const location = useLocation();
   const isLinkInBio = location.pathname === "/links";
+  const isResearch = location.pathname === "/research" || location.pathname === "/user-persona-form";
 
   if (isLinkInBio) {
     return (
@@ -124,6 +126,21 @@ function AppShell({ loading, setLoading }: { loading: boolean; setLoading: (v: b
             <Route path="/links" element={<LinkInBio />} />
           </Routes>
         </Suspense>
+      </div>
+    );
+  }
+
+  if (isResearch) {
+    return (
+      <div id="main-content">
+        <ScrollToTop />
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/research" element={<PGResearchForm />} />
+            <Route path="/user-persona-form" element={<PGResearchForm />} />
+          </Routes>
+        </Suspense>
+        <Toaster />
       </div>
     );
   }
