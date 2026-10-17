@@ -1011,3 +1011,52 @@ export const INTRO_TRANSLATIONS: Record<Language, {
     selectRolePrompt: "Aage badhne ke liye upar ek option select karein",
   },
 };
+
+// -------------------------------------------------------------
+// EXIT CONFIRMATION MODAL TRANSLATIONS (English, Hindi, Hinglish)
+// Follows human-centered UX copy standards
+// -------------------------------------------------------------
+export const EXIT_MODAL_TRANSLATIONS: Record<
+  Language,
+  {
+    badge: string;
+    title: string;
+    description: string;
+    progressLabel: string;
+    progressSuffix: string;
+    continueBtn: string;
+    exitBtn: string;
+    toastExit: string;
+  }
+> = {
+  en: {
+    badge: "Exit Confirmation",
+    title: "Leave questionnaire?",
+    description: "Your responses will not be saved if you exit now. You can finish in just a couple of minutes.",
+    progressLabel: "Your Progress",
+    progressSuffix: "answered",
+    continueBtn: "Continue Answering",
+    exitBtn: "Exit & Discard",
+    toastExit: "Questionnaire exited. Responses have been cleared.",
+  },
+  hi: {
+    badge: "बाहर निकलने की पुष्टि",
+    title: "क्या आप प्रश्नावली छोड़ना चाहते हैं?",
+    description: "यदि आप अभी बाहर निकलते हैं, तो आपके उत्तर सुरक्षित नहीं रहेंगे। बस कुछ ही मिनटों में आप इसे पूरा कर सकते हैं।",
+    progressLabel: "आपकी प्रगति",
+    progressSuffix: "उत्तर दिए गए",
+    continueBtn: "उत्तर देना जारी रखें",
+    exitBtn: "हाँ, बाहर निकलें",
+    toastExit: "प्रश्नावली से बाहर आ गए। उत्तर साफ़ कर दिए गए हैं।",
+  },
+  hinglish: {
+    badge: "Exit Confirmation",
+    title: "Questionnaire chhodna chahte hain?",
+    description: "Agar aap abhi exit karenge toh aapke answers save nahi honge. Bas 2 minute mein complete ho sakta hai.",
+    progressLabel: "Aapki Progress",
+    progressSuffix: "answers complete",
+    continueBtn: "Continue Karein",
+    exitBtn: "Exit & Clear",
+    toastExit: "Questionnaire exit ho gaya. Responses clear kar diye gaye.",
+  },
+};

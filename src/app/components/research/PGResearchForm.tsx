@@ -17,6 +17,7 @@ import {
   Languages,
   RotateCcw,
   ChevronDown,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -31,6 +32,7 @@ import {
   OWNER_TRANSLATIONS,
   TENANT_TRANSLATIONS,
   INTRO_TRANSLATIONS,
+  EXIT_MODAL_TRANSLATIONS,
 } from "./pgTranslations";
 import {
   submitPGResearchForm,
@@ -76,6 +78,55 @@ export const PGResearchForm = () => {
 
   // Current step in the quiz flow (0 = Section 1 Splash, 1 = Q1, etc.)
   const [stepIndex, setStepIndex] = useState<number>(0);
+
+  // Highest step index reached in current session (tracks if user reached Q1+)
+  const [maxStepReached, setMaxStepReached] = useState<number>(0);
+
+  // Exit confirmation modal visibility
+  const [isExitModalOpen, setIsExitModalOpen] = useState<boolean>(false);
+
+  // Ref to primary continue button in modal for auto-focus
+  const continueBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  // Update maxStepReached whenever stepIndex advances
+  useEffect(() => {
+    if (stepIndex > maxStepReached) {
+      setMaxStepReached(stepIndex);
+    }
+  }, [stepIndex, maxStepReached]);
+
+  // Handle ESC key to dismiss modal
+  useEffect(() => {
+    if (!isExitModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsExitModalOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isExitModalOpen]);
+
+  // Lock body scroll when modal is open to prevent background jank
+  useEffect(() => {
+    if (isExitModalOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isExitModalOpen]);
+
+  // Auto-focus the safe "Continue Answering" button when modal opens
+  useEffect(() => {
+    if (isExitModalOpen) {
+      const timer = setTimeout(() => {
+        continueBtnRef.current?.focus();
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [isExitModalOpen]);
 
   // Slide transition direction: 1 = forward, -1 = backward
   const [slideDirection, setSlideDirection] = useState<number>(1);
@@ -155,6 +206,23 @@ export const PGResearchForm = () => {
   const totalSections = schema ? schema.sections.length : 0;
   const totalQuestions = schema
     ? schema.sections.reduce((acc, sec) => acc + sec.questions.length, 0)
+    : 0;
+
+  // Answered questions count for gamified progress calculation & exit confirmation checks
+  const answeredCount = schema
+    ? schema.sections.reduce((acc, sec) => {
+        return (
+          acc +
+          sec.questions.filter((q) => {
+            const val = answers[q.id];
+            return val !== undefined && val !== "" && (!Array.isArray(val) || val.length > 0);
+          }).length
+        );
+      }, 0)
+    : 0;
+
+  const progressPercent = hasStarted && totalQuestions > 0
+    ? Math.min(100, Math.round((answeredCount / totalQuestions) * 100))
     : 0;
 
   // Build linear quiz steps: [Section 1 Intro, Q1, Q2, ..., Section 2 Intro, Q6, ...]
@@ -300,6 +368,8 @@ export const PGResearchForm = () => {
     setSelectedRole(role);
     setValidationError(null);
     setStepIndex(0);
+    setMaxStepReached(0);
+    setIsExitModalOpen(false);
     setAnswers({});
     setOtherValues({});
   };
@@ -319,13 +389,36 @@ export const PGResearchForm = () => {
     setOtherValues({});
     setValidationError(null);
     setStepIndex(0);
+    setMaxStepReached(0);
     setHasStarted(false);
     setSelectedRole(null);
     setIsSubmitted(false);
     setIsLangMenuOpen(false);
     setIsTransitioning(false);
+    setIsExitModalOpen(false);
     scrollToTop();
     toast.success("Ready for a new submission! Form has been cleared.", { duration: 2500 });
+  };
+
+  // User confirms exit in modal: wipes in-progress responses and returns to intro
+  const handleConfirmExit = () => {
+    setIsExitModalOpen(false);
+    clearFormDraft();
+    setAnswers({});
+    setOtherValues({});
+    setValidationError(null);
+    setStepIndex(0);
+    setMaxStepReached(0);
+    setHasStarted(false);
+    setSelectedRole(null);
+    scrollToTop();
+    const tExit = EXIT_MODAL_TRANSLATIONS[language] || EXIT_MODAL_TRANSLATIONS.en;
+    toast.info(tExit.toastExit, { duration: 3000 });
+  };
+
+  // User cancels exit / chooses to continue questionnaire
+  const handleCancelExit = () => {
+    setIsExitModalOpen(false);
   };
 
   // Helper to find the parent section for any question ID in current schema
@@ -557,6 +650,13 @@ export const PGResearchForm = () => {
     if (isTransitioning) return;
     setValidationError(null);
     if (stepIndex === 0) {
+      // If user has reached question 1 or beyond, or has answered questions,
+      // backing out from Section 1 Splash would exit questionnaire to intro screen.
+      // Show confirmation modal according to UX rules!
+      if (maxStepReached >= 1 || answeredCount > 0) {
+        setIsExitModalOpen(true);
+        return;
+      }
       setHasStarted(false);
       scrollToTop();
       return;
@@ -623,23 +723,6 @@ export const PGResearchForm = () => {
     }
   };
 
-  // Answered questions count for gamified progress calculation
-  const answeredCount = schema
-    ? schema.sections.reduce((acc, sec) => {
-        return (
-          acc +
-          sec.questions.filter((q) => {
-            const val = answers[q.id];
-            return val !== undefined && val !== "" && (!Array.isArray(val) || val.length > 0);
-          }).length
-        );
-      }, 0)
-    : 0;
-
-  const progressPercent = hasStarted && totalQuestions > 0
-    ? Math.min(100, Math.round((answeredCount / totalQuestions) * 100))
-    : 0;
-
   const sourceExitPath = isFromBio ? "/links" : "/";
   const sourceExitLabel = isFromBio
     ? (language === "hi"
@@ -669,6 +752,7 @@ export const PGResearchForm = () => {
   };
 
   const locIntro = INTRO_TRANSLATIONS[language];
+  const tExit = EXIT_MODAL_TRANSLATIONS[language] || EXIT_MODAL_TRANSLATIONS.en;
 
   return (
     <div
@@ -688,19 +772,12 @@ export const PGResearchForm = () => {
         )}
 
         <div className="max-w-2xl mx-auto py-3 sm:py-3.5 px-4 sm:px-6 flex items-center justify-between gap-3">
-          {/* Exit Button: In quiz -> returns to initial intro page; On intro -> returns to referrer (Portfolio or Link in Bio) */}
+          {/* Exit Button: In quiz -> opens confirmation modal; On intro -> returns to referrer (Portfolio or Link in Bio) */}
           {hasStarted && !isSubmitted ? (
             <button
               type="button"
               onClick={() => {
-                clearFormDraft();
-                setAnswers({});
-                setOtherValues({});
-                setValidationError(null);
-                setStepIndex(0);
-                setHasStarted(false);
-                setSelectedRole(null);
-                scrollToTop();
+                setIsExitModalOpen(true);
               }}
               className="inline-flex items-center gap-1.5 sm:gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
             >
@@ -728,6 +805,7 @@ export const PGResearchForm = () => {
             </Link>
           )}
 
+          {/* Center Brand Title */}
           <span className="text-sm sm:text-base font-bold tracking-wide text-neutral-800 dark:text-neutral-200 truncate">
             {language === "hi" ? "PG ऐप UX रिसर्च" : "PG App UX Research"}
           </span>
@@ -925,6 +1003,8 @@ export const PGResearchForm = () => {
                   if (selectedRole) {
                     setHasStarted(true);
                     setStepIndex(0);
+                    setMaxStepReached(0);
+                    setIsExitModalOpen(false);
                     setSlideDirection(1);
                     setIsTransitioning(false);
                     setValidationError(null);
@@ -1556,6 +1636,133 @@ export const PGResearchForm = () => {
           </button>
         </div>
       )}
+
+      {/* =========================================================
+          CONFIRMATION MODAL: EXIT / ABANDON QUESTIONNAIRE
+          Strictly follows modern UX heuristics:
+          1. Safe default action ("Continue Answering" is primary & auto-focused)
+          2. Clear, transparent consequence ("Your responses will not be saved")
+          3. Progress context card with visual progress bar (Loss aversion)
+          4. Descriptive action verbs (Never generic Yes/No)
+          5. Full accessibility (Escape key, Outside click, X button, scroll lock, a11y attributes)
+          6. Multi-language localization (EN, HI, Hinglish)
+          ========================================================= */}
+      <AnimatePresence>
+        {isExitModalOpen && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="exit-modal-title"
+            aria-describedby="exit-modal-description"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
+          >
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={handleCancelExit}
+              className="fixed inset-0 bg-neutral-950/70 backdrop-blur-sm cursor-pointer"
+              aria-hidden="true"
+            />
+
+            {/* Modal Dialog Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 16 }}
+              transition={{ type: "spring", stiffness: 350, damping: 30 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-md bg-white dark:bg-neutral-900 rounded-[28px] p-6 sm:p-8 shadow-2xl border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 overflow-hidden z-10"
+            >
+              {/* Subtle decorative gradient glow at the top */}
+              <div
+                className="absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-36 bg-gradient-to-b from-amber-500/15 via-emerald-500/10 to-transparent blur-2xl pointer-events-none rounded-full"
+                aria-hidden="true"
+              />
+
+              {/* Close Button (X) */}
+              <button
+                type="button"
+                onClick={handleCancelExit}
+                aria-label="Close dialog and continue questionnaire"
+                className="absolute top-5 right-5 p-2 rounded-full text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* Icon & Badge */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-sm flex-shrink-0">
+                  <AlertCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-100/80 dark:bg-amber-950/60 px-2.5 py-0.5 rounded-full border border-amber-200/60 dark:border-amber-800/60">
+                    {tExit.badge}
+                  </span>
+                  <h3
+                    id="exit-modal-title"
+                    className="text-lg sm:text-xl font-bold tracking-tight text-neutral-900 dark:text-white mt-0.5"
+                  >
+                    {tExit.title}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Explanation text */}
+              <p
+                id="exit-modal-description"
+                className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed"
+              >
+                {tExit.description}
+              </p>
+
+              {/* Progress Card (Loss Aversion Heuristic) */}
+              {totalQuestions > 0 && (
+                <div className="mt-4 p-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200/70 dark:border-neutral-800">
+                  <div className="flex items-center justify-between text-xs font-semibold text-neutral-600 dark:text-neutral-300 mb-1.5">
+                    <span>{tExit.progressLabel}</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 font-bold">
+                      {answeredCount} / {totalQuestions} {tExit.progressSuffix} ({progressPercent}%)
+                    </span>
+                  </div>
+                  <div className="w-full h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${progressPercent}%` }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className="h-full bg-emerald-500 rounded-full"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Action Button Row */}
+              <div className="mt-6 flex flex-col-reverse sm:flex-row items-center gap-2.5 sm:gap-3">
+                {/* Secondary Destructive Button */}
+                <button
+                  type="button"
+                  onClick={handleConfirmExit}
+                  className="w-full sm:flex-1 py-3 px-4 rounded-xl text-sm font-semibold text-neutral-600 dark:text-neutral-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 border border-neutral-200 dark:border-neutral-800 transition-colors cursor-pointer text-center"
+                >
+                  {tExit.exitBtn}
+                </button>
+
+                {/* Primary Safe Button (Auto-focused) */}
+                <button
+                  ref={continueBtnRef}
+                  type="button"
+                  onClick={handleCancelExit}
+                  className="w-full sm:flex-1 py-3 px-4 rounded-xl text-sm font-bold bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 transition-all shadow-sm active:scale-[0.98] cursor-pointer text-center flex items-center justify-center gap-1.5"
+                >
+                  <span>{tExit.continueBtn}</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

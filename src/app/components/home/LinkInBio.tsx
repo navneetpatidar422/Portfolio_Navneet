@@ -1,8 +1,26 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { PORTRAIT_SRC } from "./portraitData";
+import { ThemeSwitch } from "../ui/ThemeSwitch";
 
 export const LinkInBio = () => {
   const [mood, setMood] = useState<number>(0);
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("np_link_theme");
+      if (saved === "light" || saved === "dark") return saved;
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
+    }
+    return "light";
+  });
+
+  const handleToggleTheme = (isDark: boolean) => {
+    const next = isDark ? "dark" : "light";
+    setTheme(next);
+    try {
+      localStorage.setItem("np_link_theme", next);
+    } catch {}
+  };
+
   const [copyLabel, setCopyLabel] = useState<string>("Copy");
   const [seqDone, setSeqDone] = useState<boolean>(false);
   const mailRef = useRef<HTMLElement | null>(null);
@@ -402,7 +420,7 @@ export const LinkInBio = () => {
   };
 
   return (
-    <div className="link-in-bio-page" data-mood={mood}>
+    <div className="link-in-bio-page" data-mood={mood} data-theme={theme}>
       <style>{`
         .link-in-bio-page {
           --bg: #ECEEF2;
@@ -473,6 +491,22 @@ export const LinkInBio = () => {
           color-scheme: dark;
         }
 
+        .link-in-bio-page[data-theme="light"] {
+          --bg: #ECEEF2;
+          --surface: #F8F9FB;
+          --ink: #14161F;
+          --muted: #565B6C;
+          --edge: #14161F;
+          --shadow: #14161F;
+          --grid: rgba(20, 22, 31, 0.1);
+          --a1: #14566F;
+          --a2: #C94A12;
+          --a3: #A35A00;
+          --a4: #2B3A8F;
+          --on-accent: #FFFFFF;
+          color-scheme: light;
+        }
+
         .link-in-bio-page[data-mood="0"] { --accent: var(--a1); }
         .link-in-bio-page[data-mood="1"] { --accent: var(--a2); }
         .link-in-bio-page[data-mood="2"] { --accent: var(--a3); }
@@ -493,12 +527,19 @@ export const LinkInBio = () => {
         .link-in-bio-page .bar {
           display: flex;
           justify-content: space-between;
+          align-items: center;
           gap: 12px;
           font-family: var(--mono);
           font-size: 0.68rem;
           letter-spacing: 0.08em;
           text-transform: uppercase;
           color: var(--muted);
+        }
+
+        .link-in-bio-page .bar-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
         }
 
         /* Hero */
@@ -1410,7 +1451,15 @@ export const LinkInBio = () => {
         {/* Top bar */}
         <div className="bar rise" style={{ "--i": 0 } as React.CSSProperties}>
           <span>Navneet Patidar</span>
-          <span>Links</span>
+          <div className="bar-actions">
+            <ThemeSwitch
+              checked={theme === "dark"}
+              onChange={handleToggleTheme}
+              size={13}
+              aria-label="Toggle dark/light theme"
+            />
+            <span>Links</span>
+          </div>
         </div>
 
         {/* Hero */}
