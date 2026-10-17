@@ -49,19 +49,19 @@ export const PGResearchForm = () => {
     if (typeof window !== "undefined") {
       const fromParam = new URLSearchParams(window.location.search).get("from");
       if (fromParam === "bio" || fromParam === "links") {
-        try { sessionStorage.setItem("pg_research_source", "bio"); } catch {}
+        try { sessionStorage.setItem("pg_research_source", "bio"); } catch { }
         return "bio";
       }
       if (fromParam === "portfolio" || fromParam === "home" || fromParam === "work") {
-        try { sessionStorage.setItem("pg_research_source", "portfolio"); } catch {}
+        try { sessionStorage.setItem("pg_research_source", "portfolio"); } catch { }
         return "portfolio";
       }
       try {
         const stored = sessionStorage.getItem("pg_research_source");
         if (stored === "bio" || stored === "portfolio") return stored;
-      } catch {}
+      } catch { }
       if (document.referrer.includes("/links") || document.referrer.includes("/links")) {
-        try { sessionStorage.setItem("pg_research_source", "bio"); } catch {}
+        try { sessionStorage.setItem("pg_research_source", "bio"); } catch { }
         return "bio";
       }
     }
@@ -200,8 +200,8 @@ export const PGResearchForm = () => {
     selectedRole === "tenant"
       ? TENANT_FORM_SCHEMA
       : selectedRole === "owner"
-      ? OWNER_FORM_SCHEMA
-      : null;
+        ? OWNER_FORM_SCHEMA
+        : null;
 
   const totalSections = schema ? schema.sections.length : 0;
   const totalQuestions = schema
@@ -211,14 +211,14 @@ export const PGResearchForm = () => {
   // Answered questions count for gamified progress calculation & exit confirmation checks
   const answeredCount = schema
     ? schema.sections.reduce((acc, sec) => {
-        return (
-          acc +
-          sec.questions.filter((q) => {
-            const val = answers[q.id];
-            return val !== undefined && val !== "" && (!Array.isArray(val) || val.length > 0);
-          }).length
-        );
-      }, 0)
+      return (
+        acc +
+        sec.questions.filter((q) => {
+          const val = answers[q.id];
+          return val !== undefined && val !== "" && (!Array.isArray(val) || val.length > 0);
+        }).length
+      );
+    }, 0)
     : 0;
 
   const progressPercent = hasStarted && totalQuestions > 0
@@ -276,8 +276,8 @@ export const PGResearchForm = () => {
       selectedRole === "owner"
         ? OWNER_TRANSLATIONS[language]
         : selectedRole === "tenant"
-        ? TENANT_TRANSLATIONS[language]
-        : null;
+          ? TENANT_TRANSLATIONS[language]
+          : null;
 
     if (translations) {
       const tSec = translations.sections[sec.id];
@@ -300,8 +300,8 @@ export const PGResearchForm = () => {
       selectedRole === "owner"
         ? OWNER_TRANSLATIONS[language]
         : selectedRole === "tenant"
-        ? TENANT_TRANSLATIONS[language]
-        : null;
+          ? TENANT_TRANSLATIONS[language]
+          : null;
 
     if (translations) {
       const tSec = translations.sections[sec.id];
@@ -432,8 +432,8 @@ export const PGResearchForm = () => {
       selectedRole === "owner"
         ? OWNER_TRANSLATIONS[targetLang]
         : selectedRole === "tenant"
-        ? TENANT_TRANSLATIONS[targetLang]
-        : null;
+          ? TENANT_TRANSLATIONS[targetLang]
+          : null;
     const tSec = translations?.sections[secId];
     const tQ = tSec?.questions[q.id];
     return tQ?.options || q.options || [];
@@ -726,13 +726,13 @@ export const PGResearchForm = () => {
   const sourceExitPath = isFromBio ? "/links" : "/";
   const sourceExitLabel = isFromBio
     ? (language === "hi"
-        ? "लिंक इन बायो पर वापस"
-        : language === "hinglish"
+      ? "लिंक इन बायो पर वापस"
+      : language === "hinglish"
         ? "Back to Link in Bio"
         : "Exit to Link in Bio")
     : (language === "hi"
-        ? "पोर्टफोलियो पर वापस"
-        : language === "hinglish"
+      ? "पोर्टफोलियो पर वापस"
+      : language === "hinglish"
         ? "Back to Portfolio"
         : "Exit to Portfolio");
 
@@ -786,8 +786,8 @@ export const PGResearchForm = () => {
                 {language === "hi"
                   ? "प्रश्नावली से बाहर"
                   : language === "hinglish"
-                  ? "Exit Questionnaire"
-                  : "Exit Questionnaire"}
+                    ? "Exit Questionnaire"
+                    : "Exit Questionnaire"}
               </span>
               <span className="sm:hidden">
                 {language === "hi" ? "बाहर" : "Exit"}
@@ -814,11 +814,11 @@ export const PGResearchForm = () => {
             <span className="text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-md border border-emerald-200 dark:border-emerald-800 flex-shrink-0">
               {currentStep.type === "question"
                 ? (language === "hi"
-                    ? `प्रश्न ${currentStep.globalQuestionNumber} / ${currentStep.totalQuestions}`
-                    : `Q ${currentStep.globalQuestionNumber} of ${currentStep.totalQuestions}`)
+                  ? `प्रश्न ${currentStep.globalQuestionNumber} / ${currentStep.totalQuestions}`
+                  : `Q ${currentStep.globalQuestionNumber} of ${currentStep.totalQuestions}`)
                 : (language === "hi"
-                    ? `भाग ${currentStep.sectionIndex + 1} / ${totalSections}`
-                    : `Part ${currentStep.sectionIndex + 1} of ${totalSections}`)}
+                  ? `भाग ${currentStep.sectionIndex + 1} / ${totalSections}`
+                  : `Part ${currentStep.sectionIndex + 1} of ${totalSections}`)}
             </span>
           ) : (
             <div className="w-8 sm:w-16" />
@@ -831,9 +831,8 @@ export const PGResearchForm = () => {
 
       {/* ── Content Container ── */}
       <main
-        className={`max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-14 ${
-          !isSubmitted ? "pb-24 sm:pb-28" : ""
-        }`}
+        className={`max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-14 ${!isSubmitted ? "pb-24 sm:pb-28" : ""
+          }`}
       >
         {/* =========================================================
             SCREEN 1: HUMAN INTRO & ROLE PICKER (BEFORE STARTING)
@@ -921,20 +920,18 @@ export const PGResearchForm = () => {
                 {/* Tenant Radio Card */}
                 <div
                   onClick={() => handleSelectRole("tenant")}
-                  className={`p-5 rounded-xl border-2 text-left cursor-pointer transition-all duration-150 flex items-start gap-4 ${
-                    selectedRole === "tenant"
-                      ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 dark:border-emerald-500 shadow-sm"
-                      : "border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-300 dark:hover:border-neutral-700"
-                  }`}
+                  className={`p-5 rounded-xl border-2 text-left cursor-pointer transition-all duration-150 flex items-start gap-4 ${selectedRole === "tenant"
+                    ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 dark:border-emerald-500 shadow-sm"
+                    : "border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-300 dark:hover:border-neutral-700"
+                    }`}
                 >
                   <div className="pt-0.5">
                     {/* Clear radio button */}
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                        selectedRole === "tenant"
-                          ? "border-emerald-600 bg-white dark:bg-neutral-900"
-                          : "border-neutral-400 dark:border-neutral-600"
-                      }`}
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${selectedRole === "tenant"
+                        ? "border-emerald-600 bg-white dark:bg-neutral-900"
+                        : "border-neutral-400 dark:border-neutral-600"
+                        }`}
                     >
                       {selectedRole === "tenant" && (
                         <div className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
@@ -958,20 +955,18 @@ export const PGResearchForm = () => {
                 {/* Owner Radio Card */}
                 <div
                   onClick={() => handleSelectRole("owner")}
-                  className={`p-5 rounded-xl border-2 text-left cursor-pointer transition-all duration-150 flex items-start gap-4 ${
-                    selectedRole === "owner"
-                      ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 dark:border-emerald-500 shadow-sm"
-                      : "border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-300 dark:hover:border-neutral-700"
-                  }`}
+                  className={`p-5 rounded-xl border-2 text-left cursor-pointer transition-all duration-150 flex items-start gap-4 ${selectedRole === "owner"
+                    ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 dark:border-emerald-500 shadow-sm"
+                    : "border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-300 dark:hover:border-neutral-700"
+                    }`}
                 >
                   <div className="pt-0.5">
                     {/* Clear radio button */}
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                        selectedRole === "owner"
-                          ? "border-emerald-600 bg-white dark:bg-neutral-900"
-                          : "border-neutral-400 dark:border-neutral-600"
-                      }`}
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${selectedRole === "owner"
+                        ? "border-emerald-600 bg-white dark:bg-neutral-900"
+                        : "border-neutral-400 dark:border-neutral-600"
+                        }`}
                     >
                       {selectedRole === "owner" && (
                         <div className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
@@ -1011,11 +1006,10 @@ export const PGResearchForm = () => {
                     scrollToTop();
                   }
                 }}
-                className={`w-full py-4 px-6 rounded-xl text-base font-bold flex items-center justify-center gap-2 transition-all duration-150 ${
-                  selectedRole
-                    ? "bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 cursor-pointer shadow-sm active:scale-[0.99]"
-                    : "bg-neutral-200 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 cursor-not-allowed"
-                }`}
+                className={`w-full py-4 px-6 rounded-xl text-base font-bold flex items-center justify-center gap-2 transition-all duration-150 ${selectedRole
+                  ? "bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 cursor-pointer shadow-sm active:scale-[0.99]"
+                  : "bg-neutral-200 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 cursor-not-allowed"
+                  }`}
               >
                 <span>
                   {selectedRole
@@ -1081,16 +1075,16 @@ export const PGResearchForm = () => {
                               {language === "hi"
                                 ? `इस भाग में ${qCount} प्रश्न हैं`
                                 : language === "hinglish"
-                                ? `Is part mein ${qCount} questions hain`
-                                : `${qCount} questions in this part`}
+                                  ? `Is part mein ${qCount} questions hain`
+                                  : `${qCount} questions in this part`}
                             </span>
                           </div>
                           <span className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 font-semibold">
                             {language === "hi"
                               ? "एक-एक करके उत्तर दें"
                               : language === "hinglish"
-                              ? "Ek-ek karke answer dein"
-                              : "1 question at a time"}
+                                ? "Ek-ek karke answer dein"
+                                : "1 question at a time"}
                           </span>
                         </div>
 
@@ -1102,10 +1096,10 @@ export const PGResearchForm = () => {
                             className="px-5 py-3 sm:py-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                           >
                             {language === "hi"
-                              ? "← वापस"
+                              ? "< वापस"
                               : language === "hinglish"
-                              ? "← Back"
-                              : "← Back"}
+                                ? "< Back"
+                                : "< Back"}
                           </button>
 
                           <button
@@ -1117,8 +1111,8 @@ export const PGResearchForm = () => {
                               {language === "hi"
                                 ? "प्रश्नोत्तरी जारी रखें"
                                 : language === "hinglish"
-                                ? "Questions Shuru Karein"
-                                : "Continue to Questions"}
+                                  ? "Questions Shuru Karein"
+                                  : "Continue to Questions"}
                             </span>
                             <ArrowRight className="w-4 h-4" />
                           </button>
@@ -1204,19 +1198,17 @@ export const PGResearchForm = () => {
                                   <div
                                     key={opt}
                                     onClick={() => handleSingleSelect(q.id, opt)}
-                                    className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl border-2 transition-all cursor-pointer ${
-                                      isSelected
-                                        ? "border-emerald-600 bg-emerald-50/40 dark:bg-emerald-950/20 text-neutral-900 dark:text-white shadow-xs"
-                                        : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-700 dark:text-neutral-300"
-                                    }`}
+                                    className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl border-2 transition-all cursor-pointer ${isSelected
+                                      ? "border-emerald-600 bg-emerald-50/40 dark:bg-emerald-950/20 text-neutral-900 dark:text-white shadow-xs"
+                                      : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-700 dark:text-neutral-300"
+                                      }`}
                                   >
                                     {/* Round Radio Marker */}
                                     <div
-                                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                                        isSelected
-                                          ? "border-emerald-600 bg-white dark:bg-neutral-900"
-                                          : "border-neutral-400 dark:border-neutral-600 bg-white dark:bg-neutral-900"
-                                      }`}
+                                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${isSelected
+                                        ? "border-emerald-600 bg-white dark:bg-neutral-900"
+                                        : "border-neutral-400 dark:border-neutral-600 bg-white dark:bg-neutral-900"
+                                        }`}
                                     >
                                       {isSelected && (
                                         <div className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
@@ -1236,26 +1228,26 @@ export const PGResearchForm = () => {
                                   q,
                                   currentAnswer
                                 ) && (
-                                <motion.div
-                                  initial={{ opacity: 0, y: -4 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  className="pt-1.5 pl-2"
-                                >
-                                  <input
-                                    type="text"
-                                    value={otherValues[q.id] || ""}
-                                    onChange={(e) => handleOtherTextChange(q.id, e.target.value)}
-                                    placeholder={
-                                      locQ.placeholder ||
-                                      (selectedRole === "owner" && language === "hi"
-                                        ? "कृपया विवरण लिखें..."
-                                        : "Please specify...")
-                                    }
-                                    className="w-full text-base sm:text-base p-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400"
-                                    autoFocus
-                                  />
-                                </motion.div>
-                              )}
+                                  <motion.div
+                                    initial={{ opacity: 0, y: -4 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="pt-1.5 pl-2"
+                                  >
+                                    <input
+                                      type="text"
+                                      value={otherValues[q.id] || ""}
+                                      onChange={(e) => handleOtherTextChange(q.id, e.target.value)}
+                                      placeholder={
+                                        locQ.placeholder ||
+                                        (selectedRole === "owner" && language === "hi"
+                                          ? "कृपया विवरण लिखें..."
+                                          : "Please specify...")
+                                      }
+                                      className="w-full text-base sm:text-base p-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400"
+                                      autoFocus
+                                    />
+                                  </motion.div>
+                                )}
                             </div>
                           )}
 
@@ -1266,8 +1258,8 @@ export const PGResearchForm = () => {
                                 {selectedRole === "owner" && language === "hi"
                                   ? "(जो भी लागू हों, सब चुनें)"
                                   : selectedRole === "owner" && language === "hinglish"
-                                  ? "(Jo apply hota ho, sab select karein)"
-                                  : "(Select all that apply)"}
+                                    ? "(Jo apply hota ho, sab select karein)"
+                                    : "(Select all that apply)"}
                               </span>
 
                               {locQ.options.map((opt, optIdx) => {
@@ -1289,19 +1281,17 @@ export const PGResearchForm = () => {
                                         optIdx
                                       )
                                     }
-                                    className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl border-2 transition-all cursor-pointer ${
-                                      isChecked
-                                        ? "border-emerald-600 bg-emerald-50/40 dark:bg-emerald-950/20 text-neutral-900 dark:text-white shadow-xs"
-                                        : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-700 dark:text-neutral-300"
-                                    }`}
+                                    className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl border-2 transition-all cursor-pointer ${isChecked
+                                      ? "border-emerald-600 bg-emerald-50/40 dark:bg-emerald-950/20 text-neutral-900 dark:text-white shadow-xs"
+                                      : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-700 dark:text-neutral-300"
+                                      }`}
                                   >
                                     {/* Conventional Square Checkbox Marker */}
                                     <div
-                                      className={`w-5 h-5 rounded-[3px] border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                                        isChecked
-                                          ? "border-emerald-600 bg-emerald-600 text-white"
-                                          : "border-neutral-400 dark:border-neutral-600 bg-white dark:bg-neutral-900"
-                                      }`}
+                                      className={`w-5 h-5 rounded-[3px] border-2 flex items-center justify-center flex-shrink-0 transition-colors ${isChecked
+                                        ? "border-emerald-600 bg-emerald-600 text-white"
+                                        : "border-neutral-400 dark:border-neutral-600 bg-white dark:bg-neutral-900"
+                                        }`}
                                     >
                                       {isChecked && <Check className="w-3.5 h-3.5 stroke-[3] text-white" />}
                                     </div>
@@ -1355,11 +1345,10 @@ export const PGResearchForm = () => {
                                       key={val}
                                       type="button"
                                       onClick={() => handleScaleSelect(q.id, val)}
-                                      className={`h-12 sm:h-14 rounded-xl border-2 font-bold text-base sm:text-lg transition-all flex items-center justify-center cursor-pointer ${
-                                        isSelected
-                                          ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
-                                          : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-800 dark:text-neutral-200 bg-neutral-50/50 dark:bg-neutral-800/30"
-                                      }`}
+                                      className={`h-12 sm:h-14 rounded-xl border-2 font-bold text-base sm:text-lg transition-all flex items-center justify-center cursor-pointer ${isSelected
+                                        ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
+                                        : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-800 dark:text-neutral-200 bg-neutral-50/50 dark:bg-neutral-800/30"
+                                        }`}
                                     >
                                       {val}
                                     </button>
@@ -1405,8 +1394,8 @@ export const PGResearchForm = () => {
                               {language === "hi"
                                 ? "कृपया आगे बढ़ने से पहले इस प्रश्न का उत्तर दें।"
                                 : language === "hinglish"
-                                ? "Aage badhne ke liye is question ka answer dein."
-                                : "Please answer this question to proceed."}
+                                  ? "Aage badhne ke liye is question ka answer dein."
+                                  : "Please answer this question to proceed."}
                             </span>
                           </motion.div>
                         )}
@@ -1419,10 +1408,10 @@ export const PGResearchForm = () => {
                             className="px-5 py-3 sm:py-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                           >
                             {language === "hi"
-                              ? "← पिछला प्रश्न"
+                              ? "< पिछला प्रश्न"
                               : language === "hinglish"
-                              ? "← Previous"
-                              : "← Back"}
+                                ? "< Previous"
+                                : "< Back"}
                           </button>
 
                           <button
@@ -1436,8 +1425,8 @@ export const PGResearchForm = () => {
                                 {language === "hi"
                                   ? "जवाब सबमिट हो रहे हैं..."
                                   : language === "hinglish"
-                                  ? "Responses submit ho rahe hain..."
-                                  : "Submitting responses..."}
+                                    ? "Responses submit ho rahe hain..."
+                                    : "Submitting responses..."}
                               </span>
                             ) : isLastStep ? (
                               <>
@@ -1445,8 +1434,8 @@ export const PGResearchForm = () => {
                                   {language === "hi"
                                     ? "जवाब सबमिट करें"
                                     : language === "hinglish"
-                                    ? "Responses Submit Karein"
-                                    : "Submit Responses"}
+                                      ? "Responses Submit Karein"
+                                      : "Submit Responses"}
                                 </span>
                                 <CheckCircle2 className="w-4 h-4" />
                               </>
@@ -1454,10 +1443,10 @@ export const PGResearchForm = () => {
                               <>
                                 <span>
                                   {language === "hi"
-                                    ? "अगला प्रश्न →"
+                                    ? "अगला प्रश्न>"
                                     : language === "hinglish"
-                                    ? "Next Question →"
-                                    : "Next Question →"}
+                                      ? "Next Question >"
+                                      : "Next Question >"}
                                 </span>
                               </>
                             )}
@@ -1545,7 +1534,7 @@ export const PGResearchForm = () => {
                     <Languages className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>Language / भाषा</span>
                   </span>
-  
+
                 </div>
 
                 {/* Radio Options List */}
@@ -1578,19 +1567,17 @@ export const PGResearchForm = () => {
                           handleLanguageChange(item.id);
                           toast.success(item.toastMsg, { duration: 1500 });
                         }}
-                        className={`flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all ${
-                          isSelected
-                            ? "bg-emerald-50/70 dark:bg-emerald-950/40 text-neutral-900 dark:text-white"
-                            : "hover:bg-neutral-100 dark:hover:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300"
-                        }`}
+                        className={`flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all ${isSelected
+                          ? "bg-emerald-50/70 dark:bg-emerald-950/40 text-neutral-900 dark:text-white"
+                          : "hover:bg-neutral-100 dark:hover:bg-neutral-800/60 text-neutral-700 dark:text-neutral-300"
+                          }`}
                       >
                         {/* Round Radio Button Circle */}
                         <div
-                          className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                            isSelected
-                              ? "border-emerald-600 bg-white dark:bg-neutral-900"
-                              : "border-neutral-400 dark:border-neutral-600"
-                          }`}
+                          className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${isSelected
+                            ? "border-emerald-600 bg-white dark:bg-neutral-900"
+                            : "border-neutral-400 dark:border-neutral-600"
+                            }`}
                         >
                           {isSelected && (
                             <div className="w-2 h-2 rounded-full bg-emerald-600" />
@@ -1628,9 +1615,8 @@ export const PGResearchForm = () => {
             <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-200">
               <span>{language === "hi" ? "हिंदी" : language === "hinglish" ? "Hinglish" : "English"}</span>
               <ChevronDown
-                className={`w-3.5 h-3.5 text-neutral-400 transition-transform duration-200 ${
-                  isLangMenuOpen ? "rotate-180 text-emerald-600" : ""
-                }`}
+                className={`w-3.5 h-3.5 text-neutral-400 transition-transform duration-200 ${isLangMenuOpen ? "rotate-180 text-emerald-600" : ""
+                  }`}
               />
             </div>
           </button>

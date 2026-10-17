@@ -966,8 +966,8 @@ export const INTRO_TRANSLATIONS: Record<Language, {
     tenantSub: "Currently staying or stayed in a PG, hostel, or shared accommodation.",
     ownerTitle: "I am a PG Owner / Manager",
     ownerSub: "Managing or running PG properties, rooms, or hostel accommodation.",
-    startTenantBtn: "Start Tenant Questionnaire →",
-    startOwnerBtn: "Start Owner Questionnaire →",
+    startTenantBtn: "Start Tenant Questionnaire>",
+    startOwnerBtn: "Start Owner Questionnaire>",
     selectRolePrompt: "Select an option above to continue",
   },
   hi: {
@@ -986,8 +986,8 @@ export const INTRO_TRANSLATIONS: Record<Language, {
     tenantSub: "वर्तमान में या पहले किसी PG, हॉस्टल या शेयर्ड रूम में रहे हैं।",
     ownerTitle: "मैं PG का मालिक / प्रबंधक हूँ",
     ownerSub: "PG प्रॉपर्टी, कमरे या हॉस्टल का संचालन या प्रबंधन करते हैं।",
-    startTenantBtn: "किरायेदार प्रश्नावली शुरू करें →",
-    startOwnerBtn: "ओनर प्रश्नावली शुरू करें →",
+    startTenantBtn: "किरायेदार प्रश्नावली शुरू करें>",
+    startOwnerBtn: "ओनर प्रश्नावली शुरू करें>",
     selectRolePrompt: "आगे बढ़ने के लिए ऊपर से एक विकल्प चुनें",
   },
   hinglish: {
@@ -1006,8 +1006,8 @@ export const INTRO_TRANSLATIONS: Record<Language, {
     tenantSub: "Currently PG, hostel ya shared room mein rehte hain ya rahe hain.",
     ownerTitle: "Main PG Owner / Manager hoon",
     ownerSub: "PG properties, rooms ya hostel run ya manage karte hain.",
-    startTenantBtn: "Tenant Questionnaire Shuru Karein →",
-    startOwnerBtn: "Owner Questionnaire Shuru Karein →",
+    startTenantBtn: "Tenant Questionnaire Shuru Karein>",
+    startOwnerBtn: "Owner Questionnaire Shuru Karein>",
     selectRolePrompt: "Aage badhne ke liye upar ek option select karein",
   },
 };

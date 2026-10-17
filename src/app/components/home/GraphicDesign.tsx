@@ -26,18 +26,18 @@ export const GraphicDesign = () => {
   const marqueeItems = [...galleryItems, ...galleryItems, ...galleryItems];
 
   /* ── Refs ────────────────────────────────────────────────────────────── */
-  const wrapRef       = useRef<HTMLDivElement>(null);
-  const trackRef      = useRef<HTMLDivElement>(null);
-  const dragging      = useRef(false);
-  const didDrag       = useRef(false);
-  const startX        = useRef(0);
-  const startTX       = useRef(0);
-  const currentTX     = useRef(0);
-  const autoPlaying   = useRef(true);
-  const rafId         = useRef<number | null>(null);
-  const velocity      = useRef(0);
-  const lastX         = useRef(0);
-  const lastT         = useRef(0);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+  const didDrag = useRef(false);
+  const startX = useRef(0);
+  const startTX = useRef(0);
+  const currentTX = useRef(0);
+  const autoPlaying = useRef(true);
+  const rafId = useRef<number | null>(null);
+  const velocity = useRef(0);
+  const lastX = useRef(0);
+  const lastT = useRef(0);
 
   /* ── Core helpers ────────────────────────────────────────────────────── */
 
@@ -76,10 +76,10 @@ export const GraphicDesign = () => {
     if (!el || autoPlaying.current) return;
     const tile = el.scrollWidth / 3;
     if (tile === 0) return;
-    const rawTX       = wrapTX(currentTX.current);
-    const frac        = Math.abs(rawTX) / tile;
+    const rawTX = wrapTX(currentTX.current);
+    const frac = Math.abs(rawTX) / tile;
     const remainingMs = frac * ANIM_DURATION_MS;
-    const delayS      = -(ANIM_DURATION_MS - remainingMs) / 1000;
+    const delayS = -(ANIM_DURATION_MS - remainingMs) / 1000;
     el.style.transform = "";
     el.style.animation = `visualMarquee ${ANIM_DURATION_MS / 1000}s ${delayS}s linear infinite`;
     autoPlaying.current = true;
@@ -91,7 +91,7 @@ export const GraphicDesign = () => {
     const dx = clientX - startX.current;
     if (Math.abs(dx) > 4) didDrag.current = true;
     const now = performance.now();
-    const dt  = now - lastT.current;
+    const dt = now - lastT.current;
     if (dt > 0) velocity.current = (clientX - lastX.current) / dt;
     lastX.current = clientX;
     lastT.current = now;
@@ -107,11 +107,11 @@ export const GraphicDesign = () => {
     }
     pauseAuto();
     dragging.current = true;
-    didDrag.current  = false;
-    startX.current   = clientX;
-    startTX.current  = currentTX.current;
-    lastX.current    = clientX;
-    lastT.current    = performance.now();
+    didDrag.current = false;
+    startX.current = clientX;
+    startTX.current = currentTX.current;
+    lastX.current = clientX;
+    lastT.current = performance.now();
     velocity.current = 0;
   }, [pauseAuto]);
 
@@ -123,15 +123,15 @@ export const GraphicDesign = () => {
 
     const v = velocity.current;
     if (Math.abs(v) > 0.05) {
-      const snapTX  = currentTX.current;
-      const snapT   = performance.now();
-      const decay   = 420; // ms — longer = more satisfying glide
+      const snapTX = currentTX.current;
+      const snapT = performance.now();
+      const decay = 420; // ms — longer = more satisfying glide
       const totalPx = v * decay * 0.5;
 
       const glide = (now: number) => {
-        const t     = Math.min((now - snapT) / decay, 1);
+        const t = Math.min((now - snapT) / decay, 1);
         const eased = 1 - (1 - t) * (1 - t) * (1 - t); // ease-out cubic
-        const px    = wrapTX(snapTX + totalPx * eased);
+        const px = wrapTX(snapTX + totalPx * eased);
         currentTX.current = px;
         applyTX(px);
         if (t < 1) {
@@ -188,15 +188,15 @@ export const GraphicDesign = () => {
     const onTouchEnd = () => handleRelease();
     const onTouchCancel = () => handleRelease();
 
-    wrap.addEventListener("touchstart",  onTouchStart,  { passive: true  });
-    wrap.addEventListener("touchmove",   onTouchMove,   { passive: false }); // ← key: non-passive
-    wrap.addEventListener("touchend",    onTouchEnd,    { passive: true  });
-    wrap.addEventListener("touchcancel", onTouchCancel, { passive: true  });
+    wrap.addEventListener("touchstart", onTouchStart, { passive: true });
+    wrap.addEventListener("touchmove", onTouchMove, { passive: false }); // < key: non-passive
+    wrap.addEventListener("touchend", onTouchEnd, { passive: true });
+    wrap.addEventListener("touchcancel", onTouchCancel, { passive: true });
 
     return () => {
-      wrap.removeEventListener("touchstart",  onTouchStart);
-      wrap.removeEventListener("touchmove",   onTouchMove);
-      wrap.removeEventListener("touchend",    onTouchEnd);
+      wrap.removeEventListener("touchstart", onTouchStart);
+      wrap.removeEventListener("touchmove", onTouchMove);
+      wrap.removeEventListener("touchend", onTouchEnd);
       wrap.removeEventListener("touchcancel", onTouchCancel);
     };
   }, [handleStart, handleMove, handleRelease]);
