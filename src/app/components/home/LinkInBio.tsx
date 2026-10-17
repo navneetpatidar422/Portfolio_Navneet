@@ -1578,7 +1578,7 @@ export const LinkInBio = () => {
             </span>
             <span className="txt">
               <strong>Become User Persona</strong>
-              <span>PG Management App Case Study Survey • ~3 mins</span>
+              <span>Be a part of my UX Case Study. It will take just ~3 mins</span>
             </span>
             <span className="go" aria-hidden="true">
               <svg viewBox="0 0 24 24">
