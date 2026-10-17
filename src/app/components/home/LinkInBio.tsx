@@ -1786,7 +1786,7 @@ export const LinkInBio = () => {
                 <div className="tv-screen-out">
                   <div className="tv-screen-out1">
                     <div className="tv-screen">
-                      Thanks for tolerating my chaos. Click to claim your gift, legend. 🎁↗
+                      Thanks for tolerating my chaos. I have a small gift for you. CLICK ME...
                     </div>
                   </div>
                 </div>
