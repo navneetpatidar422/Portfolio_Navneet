@@ -199,7 +199,7 @@ export const ProjectReview = ({ projectId, accentColor = "#6d28d9" }: ProjectRev
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your@email.com"
+                        placeholder="your@gmail.com"
                         className="w-full border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-600 focus:outline-none focus:border-purple-400 focus:bg-white dark:focus:bg-neutral-900 transition-all"
                       />
                     </div>
