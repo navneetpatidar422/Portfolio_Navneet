@@ -175,6 +175,7 @@ export const OWNER_TRANSLATIONS: Record<Language, SchemaTranslation> = {
               "Too costly",
               "Didn't know about it",
               "Not needed",
+              "Still using an app / Never stopped",
             ],
           },
           o_monthly_willingness_pay: {
@@ -353,6 +354,7 @@ export const OWNER_TRANSLATIONS: Record<Language, SchemaTranslation> = {
               "बहुत महंगा था",
               "इसके बारे में जानकारी नहीं थी",
               "इसकी कोई ज़रूरत नहीं लगी",
+              "अभी भी ऐप का उपयोग कर रहे हैं / कभी बंद नहीं किया",
             ],
           },
           o_monthly_willingness_pay: {
@@ -531,6 +533,7 @@ export const OWNER_TRANSLATIONS: Record<Language, SchemaTranslation> = {
               "Bohat mehenga (costly) tha",
               "Iske baare me pata nahi tha",
               "Zaroorat hi feel nahi hui",
+              "Abhi bhi app use kar rahe hain / Kabhi band nahi kiya",
             ],
           },
           o_monthly_willingness_pay: {
@@ -600,8 +603,14 @@ export const TENANT_TRANSLATIONS: Record<Language, SchemaTranslation> = {
           },
           t_late_action: {
             question: "When you can't pay on time, what do you do?",
-            hint: "Optional — helps uncover psychological friction during payment delays",
-            options: ["Call or message the owner", "Tell in person", "Avoid the owner", "Just pay late without informing"],
+            hint: "Helps uncover psychological friction during payment delays",
+            options: [
+              "Call or message the owner",
+              "Tell in person",
+              "Avoid the owner",
+              "Just pay late without informing",
+              "I always pay on time / Never delayed",
+            ],
           },
           t_receipt_proof: {
             question: "Do you get a receipt or proof of payment?",
@@ -716,8 +725,14 @@ export const TENANT_TRANSLATIONS: Record<Language, SchemaTranslation> = {
           },
           t_late_action: {
             question: "जब समय पर किराया नहीं दे पाते, तब आप क्या करते हैं?",
-            hint: "वैकल्पिक — इससे भुगतान में देरी के मानसिक तनाव को समझने में मदद मिलती है",
-            options: ["मालिक को कॉल या मैसेज करते हैं", "सामने मिलकर बताते हैं", "मालिक से मिलने से बचते हैं", "बिना बताए बस देर से दे देते हैं"],
+            hint: "इससे भुगतान में देरी के मानसिक तनाव को समझने में मदद मिलती है",
+            options: [
+              "मालिक को कॉल या मैसेज करते हैं",
+              "सामने मिलकर बताते हैं",
+              "मालिक से मिलने से बचते हैं",
+              "बिना बताए बस देर से दे देते हैं",
+              "हमेशा समय पर भुगतान करता हूँ / कभी देरी नहीं होती",
+            ],
           },
           t_receipt_proof: {
             question: "क्या आपको किराये की रसीद या प्रूफ मिलता है?",
@@ -832,8 +847,14 @@ export const TENANT_TRANSLATIONS: Record<Language, SchemaTranslation> = {
           },
           t_late_action: {
             question: "Jab time par rent nahi de paate, tab aap kya karte hain?",
-            hint: "Optional — payment delays ke time aane wali hesitation samajhne ke liye",
-            options: ["Owner ko call ya message karte hain", "Milkar direct batate hain", "Owner se bachne ki koshish karte hain", "Bina bataye delay se pay karte hain"],
+            hint: "Payment delays ke time aane wali hesitation samajhne ke liye",
+            options: [
+              "Owner ko call ya message karte hain",
+              "Milkar direct batate hain",
+              "Owner se bachne ki koshish karte hain",
+              "Bina bataye delay se pay karte hain",
+              "Hamesha time par pay karta hoon / Kabhi delay nahi hota",
+            ],
           },
           t_receipt_proof: {
             question: "Kya payment karne par aapko receipt ya proof milta hai?",
@@ -931,8 +952,8 @@ export const INTRO_TRANSLATIONS: Record<Language, {
 }> = {
   en: {
     surveyBadge: "User Research Survey",
-    heading: "Hey there! Help me build a better PG Management App.",
-    subheading: "Hi, I’m Navneet, a UI/UX designer building a case study for a simpler PG management app for owners and tenants. Existing apps like RentOk do a lot, but I believe the everyday experience can be much easier. Your 3-minute response will help me improve real frustrations like rent tracking, maintenance delays and document safety.",
+    heading: "Hey there! Help me build a better PG Management App UX Case Study.",
+    subheading: "Hi, I’m Navneet, a UI/UX designer building a UX case study for a simpler PG management app for owners and tenants. Existing apps like RentOk do a lot, but I believe the everyday experience can be much easier. Your 3-minute response will help me improve real frustrations like rent tracking, maintenance delays and document safety.",
     whatToExpect: "What to expect",
     timeTitle: "Takes ~3 minutes",
     timeSub: "4 short, simple sections",

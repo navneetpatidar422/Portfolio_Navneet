@@ -84,6 +84,46 @@ export const PGResearchForm = () => {
   // Slide transition direction: 1 = forward, -1 = backward
   const [slideDirection, setSlideDirection] = useState<number>(1);
 
+  // Transition locking flag to prevent double-click skips
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+
+  // Safety fallback for transition lock in case of background tab or reduced motion
+  useEffect(() => {
+    if (isTransitioning) {
+      const timer = setTimeout(() => setIsTransitioning(false), 350);
+      return () => clearTimeout(timer);
+    }
+  }, [isTransitioning]);
+
+  // High performance spring physics variants for buttery smooth slider feel
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? "35%" : "-35%",
+      opacity: 0,
+      scale: 0.985,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        x: { type: "spring", stiffness: 350, damping: 32, mass: 0.6 },
+        opacity: { duration: 0.22, ease: "easeOut" },
+        scale: { duration: 0.22, ease: "easeOut" },
+      },
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? "-35%" : "35%",
+      opacity: 0,
+      scale: 0.985,
+      transition: {
+        x: { type: "spring", stiffness: 350, damping: 32, mass: 0.6 },
+        opacity: { duration: 0.16, ease: "easeIn" },
+        scale: { duration: 0.16, ease: "easeIn" },
+      },
+    }),
+  };
+
   // Validation error on current question (if required and uncompleted)
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -241,6 +281,24 @@ export const PGResearchForm = () => {
     };
   }, [isLangMenuOpen]);
 
+  // Role selection helper with clean draft isolation
+  const handleSelectRole = (role: "tenant" | "owner") => {
+    setSelectedRole(role);
+    setValidationError(null);
+    setStepIndex(0);
+    const saved = getFormDraft(role);
+    if (saved && saved.answers && Object.keys(saved.answers).length > 0) {
+      setAnswers(saved.answers);
+      setOtherValues(saved.otherValues || {});
+      if (typeof saved.stepIndex === "number" && saved.stepIndex >= 0) {
+        setStepIndex(saved.stepIndex);
+      }
+    } else {
+      setAnswers({});
+      setOtherValues({});
+    }
+  };
+
   // Restore draft if saved (only if not already submitted)
   useEffect(() => {
     if (isSubmitted) return;
@@ -252,6 +310,9 @@ export const PGResearchForm = () => {
         if (typeof saved.stepIndex === "number" && saved.stepIndex >= 0) {
           setStepIndex(saved.stepIndex);
         }
+      } else {
+        setAnswers({});
+        setOtherValues({});
       }
     }
   }, [selectedRole, isSubmitted]);
@@ -264,8 +325,11 @@ export const PGResearchForm = () => {
     }
   }, [selectedRole, answers, otherValues, stepIndex, isSubmitted]);
 
+  // Non-janky scroll to top
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (typeof window !== "undefined" && window.scrollY > 80) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   // Reset form completely for a fresh new submission (no prefilled answers)
@@ -280,6 +344,7 @@ export const PGResearchForm = () => {
     setSelectedRole(null);
     setIsSubmitted(false);
     setIsLangMenuOpen(false);
+    setIsTransitioning(false);
     scrollToTop();
     toast.success("Ready for a new submission! Form has been cleared.", { duration: 2500 });
   };
@@ -319,13 +384,14 @@ export const PGResearchForm = () => {
     }
   };
 
-  // Check if current question is answered before advancing
+  // Strict check if current question is answered before advancing
   const isCurrentQuestionAnswered = (q: FormQuestion): boolean => {
     if (!q.required) return true;
     const ans = answers[q.id];
     if (ans === undefined || ans === null || ans === "") return false;
 
     if (q.type === "single") {
+      if (typeof ans !== "string" || ans.trim().length === 0) return false;
       if (ans === "Other" && q.hasOther) {
         return !!otherValues[q.id] && otherValues[q.id].trim().length > 0;
       }
@@ -348,11 +414,11 @@ export const PGResearchForm = () => {
       return typeof ans === "string" && ans.trim().length > 0;
     }
 
-    return true;
+    return false;
   };
 
   const handleNextStep = () => {
-    if (!currentStep) return;
+    if (!currentStep || isTransitioning) return;
 
     // Validate if on a question step
     if (currentStep.type === "question" && currentStep.question) {
@@ -371,12 +437,14 @@ export const PGResearchForm = () => {
       return;
     }
 
+    setIsTransitioning(true);
     setSlideDirection(1);
     setStepIndex((prev) => prev + 1);
     scrollToTop();
   };
 
   const handleBackStep = () => {
+    if (isTransitioning) return;
     setValidationError(null);
     if (stepIndex === 0) {
       setHasStarted(false);
@@ -384,6 +452,7 @@ export const PGResearchForm = () => {
       return;
     }
 
+    setIsTransitioning(true);
     setSlideDirection(-1);
     setStepIndex((prev) => prev - 1);
     scrollToTop();
@@ -509,7 +578,7 @@ export const PGResearchForm = () => {
                 setValidationError(null);
                 scrollToTop();
               }}
-              className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">
@@ -527,7 +596,7 @@ export const PGResearchForm = () => {
             <Link
               to={sourceExitPath}
               onClick={handleExitToSource}
-              className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
+              className="inline-flex items-center gap-1.5 sm:gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">{sourceExitLabel}</span>
@@ -535,12 +604,12 @@ export const PGResearchForm = () => {
             </Link>
           )}
 
-          <span className="text-xs sm:text-sm font-bold tracking-wide text-neutral-800 dark:text-neutral-200 truncate">
+          <span className="text-sm sm:text-base font-bold tracking-wide text-neutral-800 dark:text-neutral-200 truncate">
             {language === "hi" ? "PG ऐप UX रिसर्च" : "PG App UX Research"}
           </span>
 
           {hasStarted && !isSubmitted && currentStep ? (
-            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-md border border-emerald-200 dark:border-emerald-800 flex-shrink-0">
+            <span className="text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-md border border-emerald-200 dark:border-emerald-800 flex-shrink-0">
               {currentStep.type === "question"
                 ? (language === "hi"
                     ? `प्रश्न ${currentStep.globalQuestionNumber} / ${currentStep.totalQuestions}`
@@ -576,7 +645,7 @@ export const PGResearchForm = () => {
           >
             {/* Friendly Greeting Header */}
             <div className="space-y-3">
-              <div className="inline-block text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-3 py-1 rounded-full border border-emerald-200/60 dark:border-emerald-800/60">
+              <div className="inline-block text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-3 py-1 rounded-full border border-emerald-200/60 dark:border-emerald-800/60">
                 {locIntro.surveyBadge}
               </div>
 
@@ -584,14 +653,14 @@ export const PGResearchForm = () => {
                 {locIntro.heading}
               </h1>
 
-              <p className="text-sm sm:text-base text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 {locIntro.subheading}
               </p>
             </div>
 
             {/* In Short: What to expect */}
             <div className="bg-white dark:bg-neutral-900 rounded-xl p-5 border border-neutral-200 dark:border-neutral-800 shadow-sm space-y-3">
-              <h2 className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+              <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
                 {locIntro.whatToExpect}
               </h2>
 
@@ -601,10 +670,10 @@ export const PGResearchForm = () => {
                     <Clock className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-neutral-900 dark:text-white">
+                    <span className="block text-sm font-bold text-neutral-900 dark:text-white">
                       {locIntro.timeTitle}
                     </span>
-                    <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
+                    <span className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
                       {locIntro.timeSub}
                     </span>
                   </div>
@@ -615,10 +684,10 @@ export const PGResearchForm = () => {
                     <Sparkles className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-neutral-900 dark:text-white">
+                    <span className="block text-sm font-bold text-neutral-900 dark:text-white">
                       {locIntro.honestTitle}
                     </span>
-                    <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
+                    <span className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
                       {locIntro.honestSub}
                     </span>
                   </div>
@@ -629,10 +698,10 @@ export const PGResearchForm = () => {
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-neutral-900 dark:text-white">
+                    <span className="block text-sm font-bold text-neutral-900 dark:text-white">
                       {locIntro.anonTitle}
                     </span>
-                    <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
+                    <span className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
                       {locIntro.anonSub}
                     </span>
                   </div>
@@ -642,14 +711,14 @@ export const PGResearchForm = () => {
 
             {/* Choose Your Role */}
             <div className="space-y-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
+              <label className="block text-xs sm:text-sm font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400">
                 {locIntro.rolePrompt}
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {/* Tenant Radio Card */}
                 <div
-                  onClick={() => setSelectedRole("tenant")}
+                  onClick={() => handleSelectRole("tenant")}
                   className={`p-5 rounded-xl border-2 text-left cursor-pointer transition-all duration-150 flex items-start gap-4 ${
                     selectedRole === "tenant"
                       ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 dark:border-emerald-500 shadow-sm"
@@ -674,11 +743,11 @@ export const PGResearchForm = () => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      <strong className="text-base font-bold text-neutral-900 dark:text-white">
+                      <strong className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
                         {selectedRole === "tenant" ? locIntro.tenantTitle : (language === "hi" ? "किरायेदार / छात्र" : language === "hinglish" ? "Tenant / Student" : "Tenant / Student")}
                       </strong>
                     </div>
-                    <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                       {locIntro.tenantSub}
                     </p>
                   </div>
@@ -686,7 +755,7 @@ export const PGResearchForm = () => {
 
                 {/* Owner Radio Card */}
                 <div
-                  onClick={() => setSelectedRole("owner")}
+                  onClick={() => handleSelectRole("owner")}
                   className={`p-5 rounded-xl border-2 text-left cursor-pointer transition-all duration-150 flex items-start gap-4 ${
                     selectedRole === "owner"
                       ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/20 dark:border-emerald-500 shadow-sm"
@@ -711,11 +780,11 @@ export const PGResearchForm = () => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <Building className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      <strong className="text-base font-bold text-neutral-900 dark:text-white">
+                      <strong className="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
                         {selectedRole === "owner" ? locIntro.ownerTitle : (language === "hi" ? "PG मालिक / प्रबंधक" : language === "hinglish" ? "PG Owner / Manager" : "PG Owner / Manager")}
                       </strong>
                     </div>
-                    <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                       {locIntro.ownerSub}
                     </p>
                   </div>
@@ -733,10 +802,12 @@ export const PGResearchForm = () => {
                     setHasStarted(true);
                     setStepIndex(0);
                     setSlideDirection(1);
+                    setIsTransitioning(false);
+                    setValidationError(null);
                     scrollToTop();
                   }
                 }}
-                className={`w-full py-4 px-6 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all duration-150 ${
+                className={`w-full py-4 px-6 rounded-xl text-base font-bold flex items-center justify-center gap-2 transition-all duration-150 ${
                   selectedRole
                     ? "bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 cursor-pointer shadow-sm active:scale-[0.99]"
                     : "bg-neutral-200 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 cursor-not-allowed"
@@ -758,18 +829,20 @@ export const PGResearchForm = () => {
             SCREEN 2: QUIZ-STYLE QUESTIONNAIRE (ONE STEP AT A TIME)
             ========================================================= */}
         {hasStarted && schema && currentStep && !isSubmitted && (
-          <div className="space-y-6">
-            <AnimatePresence mode="wait" custom={slideDirection}>
+          <div className="relative w-full overflow-hidden min-h-[440px]">
+            <AnimatePresence mode="popLayout" custom={slideDirection} initial={false}>
               {currentStep.type === "section-splash" ? (
                 /* ── SECTION SPLASH CARD ── */
                 <motion.div
                   key={`splash-${currentStep.sectionIndex}`}
                   custom={slideDirection}
-                  initial={{ opacity: 0, x: slideDirection * 25 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -slideDirection * 25 }}
-                  transition={{ duration: 0.22, ease: "easeOut" }}
-                  className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 sm:p-9 shadow-sm space-y-6"
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  onAnimationComplete={() => setIsTransitioning(false)}
+                  style={{ willChange: "transform, opacity" }}
+                  className="w-full bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 sm:p-9 shadow-sm space-y-6"
                 >
                   {(() => {
                     const locSec = getLocalizedSection(currentStep.section);
@@ -777,7 +850,7 @@ export const PGResearchForm = () => {
                     return (
                       <>
                         <div className="space-y-3">
-                          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800/60">
+                          <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800/60">
                             {language === "hi"
                               ? `भाग ${currentStep.sectionIndex + 1} / ${totalSections}`
                               : `Part ${currentStep.sectionIndex + 1} of ${totalSections}`}
@@ -791,13 +864,13 @@ export const PGResearchForm = () => {
                           </h2>
 
                           {locSec.subtitle && (
-                            <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
                               {locSec.subtitle}
                             </p>
                           )}
                         </div>
 
-                        <div className="p-4 rounded-xl bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200/80 dark:border-neutral-700/60 flex items-center justify-between text-xs text-neutral-600 dark:text-neutral-300">
+                        <div className="p-4 rounded-xl bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200/80 dark:border-neutral-700/60 flex items-center justify-between text-sm text-neutral-600 dark:text-neutral-300">
                           <div className="flex items-center gap-2 font-medium">
                             <Clock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                             <span>
@@ -808,7 +881,7 @@ export const PGResearchForm = () => {
                                 : `${qCount} questions in this part`}
                             </span>
                           </div>
-                          <span className="text-[11px] text-neutral-500 dark:text-neutral-400 font-semibold">
+                          <span className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 font-semibold">
                             {language === "hi"
                               ? "एक-एक करके उत्तर दें"
                               : language === "hinglish"
@@ -822,7 +895,7 @@ export const PGResearchForm = () => {
                           <button
                             type="button"
                             onClick={handleBackStep}
-                            className="px-5 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs sm:text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
+                            className="px-5 py-3 sm:py-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                           >
                             {language === "hi"
                               ? "← वापस"
@@ -834,7 +907,7 @@ export const PGResearchForm = () => {
                           <button
                             type="button"
                             onClick={handleNextStep}
-                            className="px-6 sm:px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+                            className="px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 text-sm sm:text-base font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-[0.99]"
                           >
                             <span>
                               {language === "hi"
@@ -851,15 +924,16 @@ export const PGResearchForm = () => {
                   })()}
                 </motion.div>
               ) : (
-                /* ── SINGLE QUESTION CARD ── */
                 <motion.div
                   key={`q-${currentStep.question!.id}`}
                   custom={slideDirection}
-                  initial={{ opacity: 0, x: slideDirection * 25 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -slideDirection * 25 }}
-                  transition={{ duration: 0.22, ease: "easeOut" }}
-                  className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 sm:p-8 shadow-sm space-y-6"
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  onAnimationComplete={() => setIsTransitioning(false)}
+                  style={{ willChange: "transform, opacity" }}
+                  className="w-full bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 sm:p-8 shadow-sm space-y-6"
                 >
                   {(() => {
                     const q = currentStep.question!;
@@ -873,7 +947,7 @@ export const PGResearchForm = () => {
                         {/* Question Meta Header */}
                         <div className="space-y-3 pb-3 border-b border-neutral-100 dark:border-neutral-800/80">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider truncate">
+                            <span className="text-xs sm:text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider truncate">
                               {language === "hi"
                                 ? `भाग ${currentStep.sectionIndex + 1}`
                                 : `Part ${currentStep.sectionIndex + 1}`}
@@ -883,14 +957,14 @@ export const PGResearchForm = () => {
                                 .replace(/^Part \d+:\s*/i, "")
                                 .replace(/^भाग \d+:\s*/i, "")}
                             </span>
-                            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-200/80 dark:border-emerald-800/60 flex-shrink-0">
+                            <span className="text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-200/80 dark:border-emerald-800/60 flex-shrink-0">
                               {language === "hi"
                                 ? `प्रश्न ${currentStep.globalQuestionNumber} / ${currentStep.totalQuestions}`
                                 : `Question ${currentStep.globalQuestionNumber} of ${currentStep.totalQuestions}`}
                             </span>
                           </div>
 
-                          <h3 className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white leading-snug">
+                          <h3 className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white leading-snug">
                             <span>{locQ.question}</span>
                             {q.required && (
                               <span
@@ -903,7 +977,7 @@ export const PGResearchForm = () => {
                           </h3>
 
                           {locQ.hint && (
-                            <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                            <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400 leading-relaxed">
                               {locQ.hint}
                             </p>
                           )}
@@ -917,7 +991,7 @@ export const PGResearchForm = () => {
                               {locQ.options.map((opt) => {
                                 const isSelected = currentAnswer === opt;
                                 return (
-                                  <div
+                                   <div
                                     key={opt}
                                     onClick={() => handleSingleSelect(q.id, opt)}
                                     className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl border-2 transition-all cursor-pointer ${
@@ -938,7 +1012,7 @@ export const PGResearchForm = () => {
                                         <div className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
                                       )}
                                     </div>
-                                    <span className="text-xs sm:text-sm font-medium leading-relaxed">
+                                    <span className="text-sm sm:text-base font-medium leading-relaxed">
                                       {opt}
                                     </span>
                                   </div>
@@ -962,7 +1036,7 @@ export const PGResearchForm = () => {
                                         ? "कृपया विवरण लिखें..."
                                         : "Please specify...")
                                     }
-                                    className="w-full text-xs sm:text-sm p-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400"
+                                    className="w-full text-base sm:text-base p-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400"
                                     autoFocus
                                   />
                                 </motion.div>
@@ -973,7 +1047,7 @@ export const PGResearchForm = () => {
                           {/* 2. MULTI SELECT (CONVENTIONAL SQUARE CHECKBOXES) */}
                           {q.type === "multi" && locQ.options && (
                             <div className="space-y-2.5">
-                              <span className="block text-[11px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                              <span className="block text-xs sm:text-sm font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
                                 {selectedRole === "owner" && language === "hi"
                                   ? "(जो भी लागू हों, सब चुनें)"
                                   : selectedRole === "owner" && language === "hinglish"
@@ -1004,7 +1078,7 @@ export const PGResearchForm = () => {
                                     >
                                       {isChecked && <Check className="w-3.5 h-3.5 stroke-[3] text-white" />}
                                     </div>
-                                    <span className="text-xs sm:text-sm font-medium leading-relaxed">
+                                    <span className="text-sm sm:text-base font-medium leading-relaxed">
                                       {opt}
                                     </span>
                                   </div>
@@ -1032,7 +1106,7 @@ export const PGResearchForm = () => {
                                           ? "कृपया विवरण लिखें..."
                                           : "Please specify...")
                                       }
-                                      className="w-full text-xs sm:text-sm p-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400"
+                                      className="w-full text-base sm:text-base p-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400"
                                       autoFocus
                                     />
                                   </motion.div>
@@ -1051,7 +1125,7 @@ export const PGResearchForm = () => {
                                       key={val}
                                       type="button"
                                       onClick={() => handleScaleSelect(q.id, val)}
-                                      className={`h-12 sm:h-14 rounded-xl border-2 font-bold text-sm sm:text-base transition-all flex items-center justify-center cursor-pointer ${
+                                      className={`h-12 sm:h-14 rounded-xl border-2 font-bold text-base sm:text-lg transition-all flex items-center justify-center cursor-pointer ${
                                         isSelected
                                           ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
                                           : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 text-neutral-800 dark:text-neutral-200 bg-neutral-50/50 dark:bg-neutral-800/30"
@@ -1062,7 +1136,7 @@ export const PGResearchForm = () => {
                                   );
                                 })}
                               </div>
-                              <div className="flex items-center justify-between text-[11px] font-semibold text-neutral-500 dark:text-neutral-400 px-1">
+                              <div className="flex items-center justify-between text-xs sm:text-sm font-semibold text-neutral-500 dark:text-neutral-400 px-1">
                                 <span>{locQ.scaleMinLabel || "1 - Very poor"}</span>
                                 <span>{locQ.scaleMaxLabel || "5 - Excellent"}</span>
                               </div>
@@ -1082,7 +1156,7 @@ export const PGResearchForm = () => {
                                     ? "यहाँ अपने विचार लिखें..."
                                     : "Write your answer here...")
                                 }
-                                className="w-full text-xs sm:text-sm p-4 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400 leading-relaxed"
+                                className="w-full text-base sm:text-base p-4 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/40 focus:bg-white dark:focus:bg-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600 text-neutral-900 dark:text-white placeholder-neutral-400 leading-relaxed"
                               />
                             </div>
                           )}
@@ -1091,9 +1165,10 @@ export const PGResearchForm = () => {
                         {/* Inline Validation Error Banner */}
                         {hasError && (
                           <motion.div
-                            initial={{ opacity: 0, y: -4 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 flex items-center gap-2.5 text-xs text-red-700 dark:text-red-300 font-semibold"
+                            initial={{ opacity: 0, y: -4, x: 0 }}
+                            animate={{ opacity: 1, y: 0, x: [-8, 8, -6, 6, -3, 3, 0] }}
+                            transition={{ duration: 0.35, ease: "easeOut" }}
+                            className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 flex items-center gap-2.5 text-xs sm:text-sm text-red-700 dark:text-red-300 font-semibold"
                           >
                             <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
                             <span>
@@ -1111,7 +1186,7 @@ export const PGResearchForm = () => {
                           <button
                             type="button"
                             onClick={handleBackStep}
-                            className="px-5 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs sm:text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
+                            className="px-5 py-3 sm:py-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-semibold text-neutral-700 dark:text-neutral-300 transition-colors cursor-pointer"
                           >
                             {language === "hi"
                               ? "← पिछला प्रश्न"
@@ -1124,7 +1199,7 @@ export const PGResearchForm = () => {
                             type="button"
                             disabled={isSubmitting}
                             onClick={handleNextStep}
-                            className="px-6 sm:px-8 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-[0.99]"
+                            className="px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 text-sm sm:text-base font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-[0.99]"
                           >
                             {isSubmitting ? (
                               <span>
@@ -1184,7 +1259,7 @@ export const PGResearchForm = () => {
               <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white">
                 Thank you so much! 🎉
               </h2>
-              <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+              <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
                 Your responses have been recorded safely. Your input helps me design
                 realistic personas and functional solutions for the upcoming PG
                 Management UX Case Study and improve the User Experience of existing app like RentOK.
@@ -1195,7 +1270,7 @@ export const PGResearchForm = () => {
               <button
                 type="button"
                 onClick={handleResetForNewSubmission}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold transition-colors cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Submit Another Response</span>
@@ -1204,7 +1279,7 @@ export const PGResearchForm = () => {
               <Link
                 to={sourceExitPath}
                 onClick={handleExitToSource}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold transition-colors shadow-sm cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold transition-colors shadow-sm cursor-pointer"
               >
                 <Home className="w-4 h-4" />
                 <span>
@@ -1236,7 +1311,7 @@ export const PGResearchForm = () => {
               >
                 {/* Menu Header */}
                 <div className="px-4 py-2.5 border-b border-neutral-200/80 dark:border-neutral-800/80 flex items-center justify-between bg-neutral-50/60 dark:bg-neutral-800/40">
-                  <span className="text-xs font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5">
+                  <span className="text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5">
                     <Languages className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>Language / भाषा</span>
                   </span>
@@ -1294,10 +1369,10 @@ export const PGResearchForm = () => {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <span className="block text-xs font-bold leading-tight">
+                          <span className="block text-sm font-bold leading-tight">
                             {item.label}
                           </span>
-                          <span className="block text-[11px] text-neutral-500 dark:text-neutral-400 leading-tight mt-0.5">
+                          <span className="block text-xs text-neutral-500 dark:text-neutral-400 leading-tight mt-0.5">
                             {item.sublabel}
                           </span>
                         </div>
@@ -1321,7 +1396,7 @@ export const PGResearchForm = () => {
               <Languages className="w-3.5 h-3.5" />
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-800 dark:text-neutral-200">
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-200">
               <span>{language === "hi" ? "हिंदी" : language === "hinglish" ? "Hinglish" : "English"}</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 text-neutral-400 transition-transform duration-200 ${

@@ -132,13 +132,14 @@ export const TENANT_FORM_SCHEMA: FormSchema = {
           number: 8,
           question: "When you can't pay on time, what do you do?",
           type: "single",
-          required: false,
-          hint: "Optional — helps uncover psychological friction during payment delays",
+          required: true,
+          hint: "Helps uncover psychological friction during payment delays",
           options: [
             "Call or message the owner",
             "Tell in person",
             "Avoid the owner",
             "Just pay late without informing",
+            "I always pay on time / Never delayed",
           ],
         },
         {
@@ -528,13 +529,13 @@ export const OWNER_FORM_SCHEMA: FormSchema = {
           number: 18,
           question: "If stopped or never, why?",
           type: "single",
-          required: false,
-          hint: "Optional",
+          required: true,
           options: [
             "Too complicated",
             "Too costly",
             "Didn't know about it",
             "Not needed",
+            "Still using an app / Never stopped",
           ],
         },
         {
