@@ -328,18 +328,103 @@ export const PGResearchForm = () => {
     toast.success("Ready for a new submission! Form has been cleared.", { duration: 2500 });
   };
 
+  // Helper to find the parent section for any question ID in current schema
+  const getSectionForQuestion = (questionId: string): FormSection | undefined => {
+    return schema?.sections.find((s) => s.questions.some((q) => q.id === questionId));
+  };
+
+  // Helper to get options list for a specific language
+  const getOptionsForLang = (secId: string, q: FormQuestion, targetLang: Language): string[] => {
+    const translations =
+      selectedRole === "owner"
+        ? OWNER_TRANSLATIONS[targetLang]
+        : selectedRole === "tenant"
+        ? TENANT_TRANSLATIONS[targetLang]
+        : null;
+    const tSec = translations?.sections[secId];
+    const tQ = tSec?.questions[q.id];
+    return tQ?.options || q.options || [];
+  };
+
+  // Helper to resolve an option's 0-based index across languages or schema
+  const getOptionIndex = (secId: string, q: FormQuestion, val: string): number => {
+    if (!val) return -1;
+    if (q.options) {
+      const idx = q.options.indexOf(val);
+      if (idx !== -1) return idx;
+    }
+    const allLangs: Language[] = ["en", "hi", "hinglish"];
+    for (const l of allLangs) {
+      const opts = getOptionsForLang(secId, q, l);
+      const idx = opts.indexOf(val);
+      if (idx !== -1) return idx;
+    }
+    return -1;
+  };
+
+  // Helper to determine if an answer corresponds to the "Other" option in this question
+  const isOtherSelected = (secId: string, q: FormQuestion, answerVal: any): boolean => {
+    if (!q.hasOther) return false;
+    const otherIdx = q.options ? q.options.length - 1 : -1;
+    if (otherIdx === -1) return false;
+
+    if (typeof answerVal === "string") {
+      if (answerVal === "Other") return true;
+      return getOptionIndex(secId, q, answerVal) === otherIdx;
+    }
+    if (Array.isArray(answerVal)) {
+      return answerVal.some(
+        (item) => item === "Other" || getOptionIndex(secId, q, item) === otherIdx
+      );
+    }
+    return false;
+  };
+
+  // Robust check if an option is selected for single-select
+  const isOptionSelected = (
+    secId: string,
+    q: FormQuestion,
+    currentAnswer: any,
+    optIdx: number,
+    optText: string
+  ): boolean => {
+    if (currentAnswer === undefined || currentAnswer === null || currentAnswer === "") return false;
+    if (currentAnswer === optText) return true;
+    const savedIdx = getOptionIndex(secId, q, currentAnswer);
+    return savedIdx === optIdx;
+  };
+
+  // Robust check if an option is checked for multi-select
+  const isOptionChecked = (
+    secId: string,
+    q: FormQuestion,
+    currentAnswer: any,
+    optIdx: number,
+    optText: string
+  ): boolean => {
+    if (!Array.isArray(currentAnswer)) return false;
+    if (currentAnswer.includes(optText)) return true;
+    return currentAnswer.some((item) => getOptionIndex(secId, q, item) === optIdx);
+  };
+
   const handleSingleSelect = (questionId: string, option: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: option }));
     setValidationError(null);
   };
 
-  const handleMultiToggle = (questionId: string, option: string) => {
+  const handleMultiToggle = (secId: string, q: FormQuestion, option: string, optIdx: number) => {
     setAnswers((prev) => {
-      const currentList: string[] = Array.isArray(prev[questionId]) ? prev[questionId] : [];
-      const updated = currentList.includes(option)
-        ? currentList.filter((item) => item !== option)
-        : [...currentList, option];
-      return { ...prev, [questionId]: updated };
+      const currentList: string[] = Array.isArray(prev[q.id]) ? prev[q.id] : [];
+      const existingIndexInList = currentList.findIndex(
+        (item) => item === option || getOptionIndex(secId, q, item) === optIdx
+      );
+      let updated: string[];
+      if (existingIndexInList !== -1) {
+        updated = currentList.filter((_, idx) => idx !== existingIndexInList);
+      } else {
+        updated = [...currentList, option];
+      }
+      return { ...prev, [q.id]: updated };
     });
     setValidationError(null);
   };
@@ -363,15 +448,61 @@ export const PGResearchForm = () => {
     }
   };
 
+  // Language switch handler that strictly preserves and translates all previous answers!
+  const handleLanguageChange = (newLang: Language) => {
+    if (newLang === language) {
+      setIsLangMenuOpen(false);
+      return;
+    }
+
+    if (schema) {
+      setAnswers((prevAnswers) => {
+        const updated: Record<string, any> = { ...prevAnswers };
+
+        schema.sections.forEach((sec) => {
+          sec.questions.forEach((q) => {
+            const currentVal = prevAnswers[q.id];
+            if (currentVal === undefined || currentVal === null || currentVal === "") {
+              return;
+            }
+
+            const targetOptions = getOptionsForLang(sec.id, q, newLang);
+
+            if (q.type === "single" && typeof currentVal === "string") {
+              const idx = getOptionIndex(sec.id, q, currentVal);
+              if (idx !== -1 && targetOptions[idx]) {
+                updated[q.id] = targetOptions[idx];
+              }
+            } else if (q.type === "multi" && Array.isArray(currentVal)) {
+              updated[q.id] = currentVal.map((item) => {
+                const idx = getOptionIndex(sec.id, q, item);
+                return idx !== -1 && targetOptions[idx] ? targetOptions[idx] : item;
+              });
+            }
+            // Scale and free text responses remain unchanged
+          });
+        });
+
+        return updated;
+      });
+    }
+
+    setLanguage(newLang);
+    setIsLangMenuOpen(false);
+  };
+
   // Strict check if current question is answered before advancing
   const isCurrentQuestionAnswered = (q: FormQuestion): boolean => {
     if (!q.required) return true;
     const ans = answers[q.id];
     if (ans === undefined || ans === null || ans === "") return false;
 
+    const sec = getSectionForQuestion(q.id);
+    const secId = sec ? sec.id : "";
+
     if (q.type === "single") {
       if (typeof ans !== "string" || ans.trim().length === 0) return false;
-      if (ans === "Other" && q.hasOther) {
+      if (isOtherSelected(secId, q, ans)) {
         return !!otherValues[q.id] && otherValues[q.id].trim().length > 0;
       }
       return true;
@@ -379,7 +510,7 @@ export const PGResearchForm = () => {
 
     if (q.type === "multi") {
       if (!Array.isArray(ans) || ans.length === 0) return false;
-      if (ans.includes("Other") && q.hasOther) {
+      if (isOtherSelected(secId, q, ans)) {
         return !!otherValues[q.id] && otherValues[q.id].trim().length > 0;
       }
       return true;
@@ -449,12 +580,15 @@ export const PGResearchForm = () => {
         questionsMap[q.id] = `Q${q.number}: ${q.question}`;
         let answerVal = answers[q.id];
 
-        if (q.hasOther && otherValues[q.id]) {
-          if (answerVal === "Other") {
+        if (q.hasOther && otherValues[q.id] && isOtherSelected(sec.id, q, answerVal)) {
+          if (typeof answerVal === "string") {
             answerVal = `Other: ${otherValues[q.id]}`;
-          } else if (Array.isArray(answerVal) && answerVal.includes("Other")) {
+          } else if (Array.isArray(answerVal)) {
+            const otherIdx = q.options ? q.options.length - 1 : -1;
             answerVal = answerVal.map((item) =>
-              item === "Other" ? `Other: ${otherValues[q.id]}` : item
+              item === "Other" || getOptionIndex(sec.id, q, item) === otherIdx
+                ? `Other: ${otherValues[q.id]}`
+                : item
             );
           }
         }
@@ -978,10 +1112,16 @@ export const PGResearchForm = () => {
                           {/* 1. SINGLE SELECT (RADIO BUTTONS) */}
                           {q.type === "single" && locQ.options && (
                             <div className="space-y-2.5">
-                              {locQ.options.map((opt) => {
-                                const isSelected = currentAnswer === opt;
+                              {locQ.options.map((opt, optIdx) => {
+                                const isSelected = isOptionSelected(
+                                  currentStep.section.id,
+                                  q,
+                                  currentAnswer,
+                                  optIdx,
+                                  opt
+                                );
                                 return (
-                                   <div
+                                  <div
                                     key={opt}
                                     onClick={() => handleSingleSelect(q.id, opt)}
                                     className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl border-2 transition-all cursor-pointer ${
@@ -1010,7 +1150,12 @@ export const PGResearchForm = () => {
                               })}
 
                               {/* Custom "Other" Input */}
-                              {q.hasOther && currentAnswer === "Other" && (
+                              {q.hasOther &&
+                                isOtherSelected(
+                                  currentStep.section.id,
+                                  q,
+                                  currentAnswer
+                                ) && (
                                 <motion.div
                                   initial={{ opacity: 0, y: -4 }}
                                   animate={{ opacity: 1, y: 0 }}
@@ -1045,13 +1190,25 @@ export const PGResearchForm = () => {
                                   : "(Select all that apply)"}
                               </span>
 
-                              {locQ.options.map((opt) => {
-                                const isChecked =
-                                  Array.isArray(currentAnswer) && currentAnswer.includes(opt);
+                              {locQ.options.map((opt, optIdx) => {
+                                const isChecked = isOptionChecked(
+                                  currentStep.section.id,
+                                  q,
+                                  currentAnswer,
+                                  optIdx,
+                                  opt
+                                );
                                 return (
                                   <div
                                     key={opt}
-                                    onClick={() => handleMultiToggle(q.id, opt)}
+                                    onClick={() =>
+                                      handleMultiToggle(
+                                        currentStep.section.id,
+                                        q,
+                                        opt,
+                                        optIdx
+                                      )
+                                    }
                                     className={`flex items-center gap-3.5 p-3.5 sm:p-4 rounded-xl border-2 transition-all cursor-pointer ${
                                       isChecked
                                         ? "border-emerald-600 bg-emerald-50/40 dark:bg-emerald-950/20 text-neutral-900 dark:text-white shadow-xs"
@@ -1077,8 +1234,11 @@ export const PGResearchForm = () => {
 
                               {/* Custom "Other" Input */}
                               {q.hasOther &&
-                                Array.isArray(currentAnswer) &&
-                                currentAnswer.includes("Other") && (
+                                isOtherSelected(
+                                  currentStep.section.id,
+                                  q,
+                                  currentAnswer
+                                ) && (
                                   <motion.div
                                     initial={{ opacity: 0, y: -4 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -1335,9 +1495,8 @@ export const PGResearchForm = () => {
                       <label
                         key={item.id}
                         onClick={() => {
-                          setLanguage(item.id);
+                          handleLanguageChange(item.id);
                           toast.success(item.toastMsg, { duration: 1500 });
-                          setIsLangMenuOpen(false);
                         }}
                         className={`flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all ${
                           isSelected
