@@ -61,41 +61,21 @@ export const clearResearchSubmissionStatus = () => {
 };
 
 /**
- * Save draft responses to localStorage so users don't lose progress on reload
+ * Do not persist drafts to localStorage to ensure form starts clean every visit
  */
-export const saveFormDraft = (role: "tenant" | "owner", answers: Record<string, any>) => {
-  // If user already submitted, do not save any drafts
-  if (getResearchSubmissionStatus()?.submitted) return;
-
-  try {
-    localStorage.setItem(`${DRAFT_KEY_PREFIX}${role}`, JSON.stringify({
-      savedAt: new Date().toISOString(),
-      answers
-    }));
-  } catch (e) {
-    console.warn("Unable to save form draft to localStorage:", e);
-  }
+export const saveFormDraft = (_role: "tenant" | "owner", _answers: Record<string, any>) => {
+  // Intentionally no-op: drafts are never retained in localStorage across visits
 };
 
 /**
- * Retrieve saved draft responses from localStorage
+ * Never prefill drafts from localStorage
  */
-export const getFormDraft = (role: "tenant" | "owner"): Record<string, any> | null => {
-  // If user already submitted, never restore prefilled drafts
-  if (getResearchSubmissionStatus()?.submitted) return null;
-
-  try {
-    const raw = localStorage.getItem(`${DRAFT_KEY_PREFIX}${role}`);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return parsed?.answers || null;
-  } catch (e) {
-    return null;
-  }
+export const getFormDraft = (_role: "tenant" | "owner"): Record<string, any> | null => {
+  return null;
 };
 
 /**
- * Clear draft responses after successful submission
+ * Clear draft responses from localStorage completely
  */
 export const clearFormDraft = (role?: "tenant" | "owner") => {
   try {

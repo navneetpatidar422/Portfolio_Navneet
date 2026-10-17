@@ -34,11 +34,7 @@ import {
 } from "./pgTranslations";
 import {
   submitPGResearchForm,
-  saveFormDraft,
-  getFormDraft,
   clearFormDraft,
-  getResearchSubmissionStatus,
-  markResearchSubmitted,
   clearResearchSubmissionStatus,
 } from "../../utils/pgResearchSubmit";
 
@@ -136,10 +132,8 @@ export const PGResearchForm = () => {
   // Submitting state
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // Submitted state (persisted across visits so user cannot fill form again)
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(() => {
-    return getResearchSubmissionStatus()?.submitted === true;
-  });
+  // Submitted state (only true immediately after submitting in active session)
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   // Language for owner questionnaire (en = English, hi = Hindi, hinglish = Hinglish)
   const [language, setLanguage] = useState<Language>("en");
@@ -281,49 +275,34 @@ export const PGResearchForm = () => {
     };
   }, [isLangMenuOpen]);
 
-  // Role selection helper with clean draft isolation
+  // Lifecycle effect: thoroughly wipe any drafts or submission locks on mount, unmount, or page exit
+  useEffect(() => {
+    clearFormDraft();
+    clearResearchSubmissionStatus();
+
+    const handleBeforeUnload = () => {
+      clearFormDraft();
+      clearResearchSubmissionStatus();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      // Clear when leaving the survey page
+      clearFormDraft();
+      clearResearchSubmissionStatus();
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  // Role selection helper with clean fresh start (no stale prefilled drafts)
   const handleSelectRole = (role: "tenant" | "owner") => {
     setSelectedRole(role);
     setValidationError(null);
     setStepIndex(0);
-    const saved = getFormDraft(role);
-    if (saved && saved.answers && Object.keys(saved.answers).length > 0) {
-      setAnswers(saved.answers);
-      setOtherValues(saved.otherValues || {});
-      if (typeof saved.stepIndex === "number" && saved.stepIndex >= 0) {
-        setStepIndex(saved.stepIndex);
-      }
-    } else {
-      setAnswers({});
-      setOtherValues({});
-    }
+    setAnswers({});
+    setOtherValues({});
   };
-
-  // Restore draft if saved (only if not already submitted)
-  useEffect(() => {
-    if (isSubmitted) return;
-    if (selectedRole) {
-      const saved = getFormDraft(selectedRole);
-      if (saved && saved.answers && Object.keys(saved.answers).length > 0) {
-        setAnswers(saved.answers);
-        setOtherValues(saved.otherValues || {});
-        if (typeof saved.stepIndex === "number" && saved.stepIndex >= 0) {
-          setStepIndex(saved.stepIndex);
-        }
-      } else {
-        setAnswers({});
-        setOtherValues({});
-      }
-    }
-  }, [selectedRole, isSubmitted]);
-
-  // Auto-save draft
-  useEffect(() => {
-    if (isSubmitted) return;
-    if (selectedRole && Object.keys(answers).length > 0) {
-      saveFormDraft(selectedRole, { answers, otherValues, stepIndex });
-    }
-  }, [selectedRole, answers, otherValues, stepIndex, isSubmitted]);
 
   // Non-janky scroll to top
   const scrollToTop = () => {
@@ -492,16 +471,16 @@ export const PGResearchForm = () => {
         questionsMap,
       });
 
-      markResearchSubmitted(selectedRole);
       clearFormDraft();
+      clearResearchSubmissionStatus();
       setAnswers({});
       setOtherValues({});
       setIsSubmitting(false);
       setIsSubmitted(true);
       scrollToTop();
     } catch {
-      markResearchSubmitted(selectedRole);
       clearFormDraft();
+      clearResearchSubmissionStatus();
       setAnswers({});
       setOtherValues({});
       setIsSubmitting(false);
@@ -546,6 +525,12 @@ export const PGResearchForm = () => {
 
   const handleExitToSource = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
+    clearFormDraft();
+    clearResearchSubmissionStatus();
+    setAnswers({});
+    setOtherValues({});
+    setHasStarted(false);
+    setSelectedRole(null);
     navigate(sourceExitPath);
   };
 
@@ -574,8 +559,13 @@ export const PGResearchForm = () => {
             <button
               type="button"
               onClick={() => {
-                setHasStarted(false);
+                clearFormDraft();
+                setAnswers({});
+                setOtherValues({});
                 setValidationError(null);
+                setStepIndex(0);
+                setHasStarted(false);
+                setSelectedRole(null);
                 scrollToTop();
               }}
               className="inline-flex items-center gap-1.5 sm:gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white transition-colors flex-shrink-0 cursor-pointer"
