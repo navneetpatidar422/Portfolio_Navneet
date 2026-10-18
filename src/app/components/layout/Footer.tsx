@@ -187,7 +187,6 @@ export const Footer = () => {
 
             <p className="text-neutral-400 text-sm leading-relaxed max-w-xs font-body font-light">
               Designing research-backed, accessible interfaces and engineering them cleanly.
-              New Delhi, India.
             </p>
 
             {/* Socials */}

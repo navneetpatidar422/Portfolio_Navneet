@@ -953,7 +953,7 @@ export const INTRO_TRANSLATIONS: Record<Language, {
   en: {
     surveyBadge: "User Research Survey",
     heading: "Hey there! Help me build a better PG Management App UX Case Study.",
-    subheading: "Hi, I’m Navneet, a UI/UX designer building a UX case study for a simpler PG management app for owners and tenants. Existing apps like RentOk do a lot, but I believe the everyday experience can be much easier. Your 3-minute response will help me improve real frustrations like rent tracking, maintenance delays and document safety.",
+    subheading: "Hi, I’m Navneet, building a UX case study for a simpler PG management app for owners and tenants. Existing apps like RentOk do a lot, but I believe the everyday experience can be much easier. Your 3-minute response will help me improve real frustrations like rent tracking, maintenance delays and document safety.",
     whatToExpect: "What to expect",
     timeTitle: "Takes ~3 minutes",
     timeSub: "4 short, simple sections",
