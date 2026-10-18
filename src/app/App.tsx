@@ -124,7 +124,7 @@ function AppShell({ loading, setLoading }: { loading: boolean; setLoading: (v: b
         <Suspense fallback={null}>
           <Routes>
             <Route path="/links" element={<LinkInBio />} />
-            <Route path="/links" element={<LinkInBio />} />
+            <Route path="/bio" element={<LinkInBio />} />
           </Routes>
         </Suspense>
       </div>

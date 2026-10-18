@@ -18,6 +18,7 @@ import {
   RotateCcw,
   ChevronDown,
   X,
+  UserPlus,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -749,6 +750,17 @@ export const PGResearchForm = () => {
     setHasStarted(false);
     setSelectedRole(null);
     navigate(sourceExitPath);
+  };
+
+  const handleConnectMe = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    clearFormDraft();
+    clearResearchSubmissionStatus();
+    setAnswers({});
+    setOtherValues({});
+    setHasStarted(false);
+    setSelectedRole(null);
+    navigate("/links");
   };
 
   const locIntro = INTRO_TRANSLATIONS[language];
@@ -1496,15 +1508,13 @@ export const PGResearchForm = () => {
               </button>
 
               <Link
-                to={sourceExitPath}
-                onClick={handleExitToSource}
+                to="/links"
+                onClick={handleConnectMe}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-100 text-white dark:text-neutral-950 px-6 py-3.5 rounded-xl text-sm sm:text-base font-bold transition-colors shadow-sm cursor-pointer"
               >
-                <Home className="w-4 h-4" />
+                <UserPlus className="w-4 h-4" />
                 <span>
-                  {isFromBio
-                    ? (language === "hi" ? "लिंक इन बायो पर वापस" : "Return to Link in Bio")
-                    : (language === "hi" ? "पोर्टफोलियो पर वापस" : "Return to Portfolio")}
+                  {language === "hi" ? "मुझसे जुड़ें (Connect Me)" : "Connect Me"}
                 </span>
               </Link>
             </div>
