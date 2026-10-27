@@ -275,10 +275,27 @@ export const LinkInBio = () => {
       lastS = s;
       var ready = img && img.complete && img.naturalWidth > 0;
       if (!ready) { ctx.fillStyle = "#FFF8EC"; ctx.fillRect(0, 0, BW, BH); return; }
-      if (s <= 1) { ctx.imageSmoothingEnabled = true; ctx.drawImage(img, 0, 0, BW, BH); return; }
+
+      var nw = img.naturalWidth || BW, nh = img.naturalHeight || BH;
+      var targetRatio = BW / BH;
+      var imgRatio = nw / nh;
+      var sx = 0, sy = 0, sw = nw, sh = nh;
+      if (imgRatio > targetRatio) {
+        sw = nh * targetRatio;
+        sx = (nw - sw) / 2;
+      } else if (imgRatio < targetRatio) {
+        sh = nw / targetRatio;
+        sy = (nh - sh) / 2;
+      }
+
+      if (s <= 1) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, BW, BH);
+        return;
+      }
       var tw = Math.max(1, Math.round(BW / s)), th = Math.max(1, Math.round(BH / s));
       off.width = tw; off.height = th;
-      octx.drawImage(img, 0, 0, tw, th);
+      octx.drawImage(img, sx, sy, sw, sh, 0, 0, tw, th);
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(off, 0, 0, tw, th, 0, 0, BW, BH);
     }
@@ -299,14 +316,11 @@ export const LinkInBio = () => {
       bar.style.left = b.left + "px"; bar.style.top = b.top + "px"; bar.style.width = b.width + "px";
       load.style.left = w.left + "px";
 
-      var dp = clamp((t - 800) / 550), e = outCubic(dp);
-      var fw = f.width * e, fh = f.height * e;
       frame.style.left = f.left + "px"; frame.style.top = f.top + "px";
-      frame.style.width = fw + "px"; frame.style.height = fh + "px";
+      frame.style.width = f.width + "px"; frame.style.height = f.height + "px";
       cvs.style.width = Math.max(0, f.width - 3) + "px"; cvs.style.height = Math.max(0, f.height - 3) + "px";
-      if (t >= 800) { frame.style.opacity = "1"; frame.classList.add("show"); }
-      if (t >= 1500) frame.classList.add("on");
-      tag.textContent = Math.round(fw) + " × " + Math.round(fh);
+      if (t >= 800) { frame.style.opacity = "1"; frame.classList.add("show", "on"); }
+      tag.textContent = Math.round(f.width) + " × " + Math.round(f.height);
 
       var s = 1 + Math.round(46 * Math.pow(1 - clamp((t - 1300) / 1050), 2));
       pixelate(s);
@@ -318,19 +332,23 @@ export const LinkInBio = () => {
       var bx: number, by: number;
       if (t >= 500) {
         cur.style.opacity = "1";
+        var targetX = f.right - 2;
+        var targetY = f.bottom - 1.5;
         if (t < 800) {
           var u = outCubic(clamp((t - 500) / 300));
           bx = (f.left - 140) + (f.left - (f.left - 140)) * u;
           by = (f.top - 110) + (f.top - (f.top - 110)) * u - Math.sin(Math.PI * u) * 26;
           bx -= 2; by -= 1.5;
         } else if (t < 1350) {
-          bx = f.left + (f.width) * e - 2;
-          by = f.top + (f.height) * e - 1.5;
+          var u2 = outCubic(clamp((t - 800) / 550));
+          var startX = f.left - 2;
+          var startY = f.top - 1.5;
+          bx = startX + (targetX - startX) * u2;
+          by = startY + (targetY - startY) * u2;
         } else {
           var g = inOutCubic(clamp((t - 1350) / 550));
-          var sx = f.right - 2, sy = f.bottom - 1.5;
-          bx = sx + (c.left - sx) * g;
-          by = sy + (c.top - sy) * g;
+          bx = targetX + (c.left - targetX) * g;
+          by = targetY + (c.top - targetY) * g;
         }
         place(cur, bx, by);
       }
@@ -1148,6 +1166,10 @@ export const LinkInBio = () => {
           animation: rise .6s cubic-bezier(.2, .7, .2, 1) both;
           animation-delay: calc(var(--i, 0) * 55ms);
         }
+        .link-in-bio-page .hero.rise {
+          animation: none;
+          opacity: 1;
+        }
         @keyframes rise {
           from { opacity: 0; transform: translateY(12px); }
           to { opacity: 1; transform: none; }
@@ -1349,9 +1371,9 @@ export const LinkInBio = () => {
 
         .seq.go .s-bar, .seq.go .s-load, .seq.go .s-mq, .seq.go .g { opacity: 0; transition: opacity .25s; }
 
-        .ifr { position: absolute; left: 0; top: 0; width: 0; height: 0; border: 1.5px solid var(--paper); background: var(--pen); opacity: 0; transition: border-color .35s; }
+        .ifr { position: absolute; left: 0; top: 0; width: 176px; height: 220px; border: 1.5px solid var(--paper); background: var(--pen); opacity: 0; transition: border-color .35s; }
         .ifr .clip { position: absolute; inset: 0; overflow: hidden; }
-        .ifr canvas { position: absolute; left: 0; top: 0; display: block; }
+        .ifr canvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
         .ifr .h { background: var(--paper); border-color: var(--pen); opacity: 0; transform: scale(.3); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), opacity .2s, border-color .35s, background-color .35s; }
         .ifr.on .h { opacity: 1; transform: none; }
         .ifr .size-tag { top: calc(100% + 13.5px); background: var(--paper); color: var(--pen); box-shadow: 0 0 0 1.5px var(--pen); opacity: 0; transition: opacity .2s, background-color .35s, color .35s, box-shadow .35s; }
@@ -1400,7 +1422,7 @@ export const LinkInBio = () => {
             <span className="h tr"></span>
             <span className="h bl"></span>
             <span className="h br"></span>
-            <span className="size-tag" id="sTag">0 × 0</span>
+            <span className="size-tag" id="sTag">176 × 220</span>
           </div>
           <div className="cursor icur" id="sCur">
             <svg viewBox="0 0 18 18">
