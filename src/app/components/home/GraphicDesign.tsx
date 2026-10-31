@@ -16,6 +16,7 @@ const galleryItems = [
   { id: 10, image: "/gallery/Figmatrophy.jpeg" },
   { id: 11, image: "/gallery/kohli01.png" },
   { id: 12, image: "/gallery/kl-rahul.jpg" },
+  { id: 13, image: "/gallery/virat-unfiltered.jpg" },
 ];
 
 const ANIM_DURATION_MS = 55000;
