@@ -3,7 +3,7 @@ import { ArrowUpRight, Linkedin, Mail, FileDown, Instagram } from "lucide-react"
 import { Link, useNavigate, useLocation } from "react-router";
 
 const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=917878913449&text=Hi+Navneet%2C+I+came+across+your+portfolio+and+wanted+to+reach+out.+I%E2%80%99d+love+to+discuss+something+with+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com";
-const RESUME_URL = "https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2CJwA1S/view?usp=sharing";
+const RESUME_URL = "https://drive.google.com/file/d/10W2i9nJS0HHGQnJeOpkT-EdZDWvhud8c/view?usp=sharing";
 
 // Custom Behance Icon using the user-provided SVG
 const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
