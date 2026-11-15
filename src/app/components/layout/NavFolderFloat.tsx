@@ -3,7 +3,7 @@
 import FolderFloat from './FolderFloat';
 
 const RESUME_URL =
-  'https://drive.google.com/file/d/1spe6y2QQbvO8RYIzb0UBFQgtD2CJwA1S/view?usp=sharing';
+  'https://drive.google.com/file/d/10W2i9nJS0HHGQnJeOpkT-EdZDWvhud8c/view?usp=sharing?usp=sharing';
 
 const NAV_ITEMS = [
   { label: 'Home', value: 'home' },
