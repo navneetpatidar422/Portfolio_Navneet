@@ -19,6 +19,7 @@ const galleryItems = [
   { id: 13, image: "/gallery/virat-unfiltered.jpg" },
   { id: 14, image: "/gallery/kohli-stamp.jpg" },
   { id: 15, image: "/gallery/sovy-ai.png" },
+  { id: 16, image: "/gallery/Jassi.png" },
 ];
 
 const ANIM_DURATION_MS = 55000;
